@@ -10,6 +10,7 @@ class SpeachPageContainer extends Component {
       coins: 0,
       currentWordIndex: 0,
       score: 0,
+      showPrize: false,
       wordList: []
     };
     this.listen = this.listen.bind(this);
@@ -19,10 +20,17 @@ class SpeachPageContainer extends Component {
     const coins = window.localStorage.getItem('coins');
     this.setupSpeachRecognition();
     this.setState({ wordList: defaultWordList });
+    this.listen();
   }
 
   componentWillUnmount() {
     this.recognition.stop();
+  }
+
+  addCoin() {
+    this.setState({ showPrize: true });
+    const coins = this.state.coins + 1;
+    setTimeout(() => this.setState({ coins, showPrize: false }), 3000);
   }
 
   checkResponse(res) {
@@ -47,11 +55,12 @@ class SpeachPageContainer extends Component {
 
   correctAnswer() {
     const { coins, score } = this.state;
+
     const newScore = score + 1;
-    const newCoins = newScore % 5 === 0 ? coins + 1 : coins;
+    if (newScore % 5 === 0) this.addCoin();
+
     const nextIndex = this.getNextIndex();
     this.setState({
-      coins: newCoins,
       currentWordIndex: nextIndex,
       score: newScore
     });

@@ -1,12 +1,10 @@
 import SpeechPage from '../client/containers/SpeechPageContainer';
 import Head from 'next/head';
-import { BodyMargin, Viewport } from '../client/config/GlobalHeadTags';
 
 export default () => (
   <div>
     <Head>
-      <BodyMargin />
-      <Viewport />
+      <title>Read Sight Words</title>
     </Head>
     <SpeechPage />
   </div>
