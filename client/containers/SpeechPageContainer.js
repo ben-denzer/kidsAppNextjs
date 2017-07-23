@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import MainLayout from '../components/MainLayout';
+import SpeechPage from '../components/SpeechPage';
 import defaultWordList from '../config/defaultSightWords';
 
 class SpeachPageContainer extends Component {
@@ -8,7 +10,7 @@ class SpeachPageContainer extends Component {
       coins: 0,
       currentWordIndex: 0,
       score: 0,
-      wordList: defaultWordList
+      wordList: []
     };
     this.listen = this.listen.bind(this);
   }
@@ -16,6 +18,7 @@ class SpeachPageContainer extends Component {
   componentDidMount() {
     const coins = window.localStorage.getItem('coins');
     this.setupSpeachRecognition();
+    this.setState({ wordList: defaultWordList });
   }
 
   componentWillUnmount() {
@@ -54,7 +57,7 @@ class SpeachPageContainer extends Component {
     });
   }
 
-  getNextWord() {
+  getNextIndex() {
     const newWordIndex = this.state.currentWordIndex + 1;
     return newWordIndex < this.state.wordList.length ? newWordIndex : 0;
   }
@@ -86,17 +89,8 @@ class SpeachPageContainer extends Component {
   }
 
   render() {
-    const { coins, currentWordIndex, score, wordList } = this.state;
-    console.log(this.state);
-    console.log(`coins - ${coins}, score - ${score}`);
-    return (
-      <div>
-        <h1>{wordList[currentWordIndex]}</h1>
-        <h2>{coins} Coins</h2>
-        <button onClick={this.listen}>Start</button>
-      </div>
-    );
+    return <SpeechPage listen={this.listen} {...this.state} {...this.props} />;
   }
 }
 
-export default SpeachPageContainer;
+export default MainLayout(SpeachPageContainer);
