@@ -9,11 +9,17 @@ class SpeachPageContainer extends Component {
     this.state = {
       coins: 0,
       currentWordIndex: 0,
+      helpOpen: false,
+      mute: false,
       score: 0,
       showPrize: false,
+      skippedInARow: 0,
       wordList: []
     };
     this.listen = this.listen.bind(this);
+    this.skipWord = this.skipWord.bind(this);
+    this.toggleHelp = this.toggleHelp.bind(this);
+    this.toggleSound = this.toggleSound.bind(this);
   }
 
   componentDidMount() {
@@ -59,10 +65,15 @@ class SpeachPageContainer extends Component {
     const newScore = score + 1;
     if (newScore % 5 === 0) this.addCoin();
 
+    if (!this.state.mute) {
+      this.sound.play();
+    }
+
     const nextIndex = this.getNextIndex();
     this.setState({
       currentWordIndex: nextIndex,
-      score: newScore
+      score: newScore,
+      skippedInARow: 0
     });
   }
 
@@ -75,7 +86,9 @@ class SpeachPageContainer extends Component {
     this.recognition.start();
     this.recognition.onresult = res => this.checkResponse(res);
     this.recognition.onend = () => this.listen();
-    this.recognition.onerror = e => console.log(e.error);
+    this.recognition.onerror = e => {
+      console.log(e.error);
+    };
   }
 
   setupSpeachRecognition() {
@@ -97,8 +110,41 @@ class SpeachPageContainer extends Component {
     this.speechRecognitionList.addFromString(grammar, 1);
   }
 
+  skipWord() {
+    const { currentWordIndex, skippedInARow } = this.state;
+    this.setState({
+      currentWordIndex: currentWordIndex + 1,
+      skippedInARow: skippedInARow + 1
+    });
+  }
+
+  toggleHelp() {
+    this.setState({ helpOpen: !this.state.helpOpen });
+  }
+
+  toggleSound() {
+    this.setState({ mute: !this.state.mute });
+  }
+
   render() {
-    return <SpeechPage listen={this.listen} {...this.state} {...this.props} />;
+    return (
+      <div>
+        <SpeechPage
+          listen={this.listen}
+          skipWord={this.skipWord}
+          toggleHelp={this.toggleHelp}
+          toggleSound={this.toggleSound}
+          {...this.state}
+          {...this.props}
+        />
+        <audio
+          ref={sound => {
+            this.sound = sound;
+          }}
+          src="/static/media/shootingStar.mp3"
+        />
+      </div>
+    );
   }
 }
 

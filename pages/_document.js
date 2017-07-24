@@ -12,7 +12,16 @@ export default class MyDocument extends Document {
         <Head>
           {styleTags}
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <style>{`body { margin: 0 }`}</style>
+          <link
+            href="https://fonts.googleapis.com/css?family=Lato:400,700"
+            rel="stylesheet"
+          />
+          <style>{`
+            body { 
+              margin: 0;
+              font-family: Lato, Arial, Helvetica, sans-serif;
+            }
+          `}</style>
         </Head>
 
         <body>
