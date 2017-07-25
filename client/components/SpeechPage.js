@@ -1,6 +1,6 @@
 import React from 'react';
 import Help from './Help';
-import speechHelpText from '../helpText/speechPageHelpText';
+import SpeechHelpText from './helpText/SpeechHelpText';
 import {
   CoinImage,
   HelpButton,
@@ -24,6 +24,7 @@ function SpeechPage(props) {
     skipWord,
     toggleHelp,
     toggleSound,
+    url,
     wordList
   } = props;
 
@@ -35,7 +36,7 @@ function SpeechPage(props) {
     <div>
       <PageContainer>
         <MuteButton
-          src={`/static/img/${mute ? 'unmute' : 'mute'}.png`}
+          src={`/static/img/${mute ? 'mute' : 'unmute'}.png`}
           alt={`Turn Sound ${mute ? 'On' : 'Off'}`}
           onClick={toggleSound}
         />
@@ -56,12 +57,7 @@ function SpeechPage(props) {
           onClick={skipWord}
         />
       </PageContainer>
-      <Help
-        title={'Help'}
-        body={speechHelpText}
-        helpOpen={helpOpen}
-        toggleHelp={toggleHelp}
-      />
+      <Help Body={SpeechHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />
     </div>
   );
 }

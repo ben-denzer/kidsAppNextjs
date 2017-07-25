@@ -138,10 +138,11 @@ class SpeachPageContainer extends Component {
           {...this.props}
         />
         <audio
+          type="audio/mp3"
+          src="/static/media/shootingStar.mp3"
           ref={sound => {
             this.sound = sound;
           }}
-          src="/static/media/shootingStar.mp3"
         />
       </div>
     );
