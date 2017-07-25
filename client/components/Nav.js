@@ -1,45 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
+import { Hamburger, NavBar, NavItem, NavItemsContainer } from './NavStyles';
 
 const pages = [
-  { name: 'Online Games', href: '/online-games' },
-  { name: 'Printable Games', href: '/printable-games' },
-  { name: 'My Account', href: '/account' }
+  { name: 'Online Games', href: '/online-games', userState: 'all' },
+  { name: 'Printable Games', href: '/printable-games', userState: 'all' },
+  { name: 'My Account', href: '/account', userState: 'loggedIn' }
 ];
 
-export default function Nav(props) {
-  const navItems = pages.map(a => (
-    <NavItem key={a.name}>
-      <Link prefetch href={a.href}><a title={a.name}>{a.name}</a></Link>
-    </NavItem>
-  ));
+export default class Nav extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      navOpen: false
+    };
 
-  return <NavBar>{navItems}</NavBar>;
+    this.toggleNav = this.toggleNav.bind(this);
+  }
+
+  toggleNav() {
+    this.setState({ navOpen: !this.state.navOpen });
+  }
+
+  render() {
+    const { navOpen } = this.state;
+
+    const navItems = pages.map(a => (
+      <NavItem key={a.name}>
+        <Link prefetch href={a.href}><a title={a.name}>{a.name}</a></Link>
+      </NavItem>
+    ));
+
+    return (
+      <NavBar onClick={this.toggleNav}>
+        <Hamburger><div /><div /><div /></Hamburger>
+        <NavItemsContainer className={navOpen ? 'open' : ''}>
+          {navItems}
+        </NavItemsContainer>
+      </NavBar>
+    );
+  }
 }
-
-const NavBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-right: 10px;
-
-  a {
-    text-decoration: none;
-    color: #222;
-  
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-const NavItem = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  border-left: 1px solid #999;
-
-  :nth-child(1) {
-    border-left: 0;
-  }
-`;
