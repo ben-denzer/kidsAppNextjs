@@ -14,6 +14,7 @@ class SpeachPageContainer extends Component {
       score: 0,
       showPrize: false,
       skippedInARow: 0,
+      spinnerClassName: 'hide',
       wordList: []
     };
     this.listen = this.listen.bind(this);
@@ -30,13 +31,24 @@ class SpeachPageContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.recognition.stop();
+    if (this.recognition) {
+      this.recognition.stop();
+    }
   }
 
   addCoin() {
-    this.setState({ showPrize: true });
-    const coins = this.state.coins + 1;
-    setTimeout(() => this.setState({ coins, showPrize: false }), 3000);
+    const { coins } = this.state;
+    this.setState({ showPrize: true, spinnerClassName: 'show' });
+    setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
+    setTimeout(
+      () =>
+        this.setState({
+          coins: coins + 1,
+          showPrize: false,
+          spinnerClassName: 'hide'
+        }),
+      3500
+    );
   }
 
   checkResponse(res) {
@@ -61,15 +73,19 @@ class SpeachPageContainer extends Component {
 
   correctAnswer() {
     const { coins, score } = this.state;
-
     const newScore = score + 1;
-    if (newScore % 5 === 0) this.addCoin();
+    const nextIndex = this.getNextIndex();
 
-    if (!this.state.mute) {
-      this.sound.play();
+    let sound = this.correctSound;
+    if (newScore % 5 === 0) {
+      this.addCoin();
+      sound = this.coinSound;
     }
 
-    const nextIndex = this.getNextIndex();
+    if (!this.state.mute) {
+      sound.play();
+    }
+
     this.setState({
       currentWordIndex: nextIndex,
       score: newScore,
@@ -83,12 +99,16 @@ class SpeachPageContainer extends Component {
   }
 
   listen() {
-    this.recognition.start();
-    this.recognition.onresult = res => this.checkResponse(res);
-    this.recognition.onend = () => this.listen();
-    this.recognition.onerror = e => {
-      console.log(e.error);
-    };
+    if (this.recognition) {
+      this.recognition.start();
+      this.recognition.onresult = res => this.checkResponse(res);
+      this.recognition.onend = () => this.listen();
+      this.recognition.onerror = e => {
+        console.log(e.error);
+      };
+    } else {
+      console.log('need to show warning'); // TODO
+    }
   }
 
   setupSpeachRecognition() {
@@ -137,11 +157,19 @@ class SpeachPageContainer extends Component {
           {...this.state}
           {...this.props}
         />
+
         <audio
           type="audio/mp3"
           src="/static/media/shootingStar.mp3"
-          ref={sound => {
-            this.sound = sound;
+          ref={correctSound => {
+            this.correctSound = correctSound;
+          }}
+        />
+        <audio
+          type="audio/mp3"
+          src="/static/media/cheer.mp3"
+          ref={coinSound => {
+            this.coinSound = coinSound;
           }}
         />
       </div>
@@ -149,4 +177,4 @@ class SpeachPageContainer extends Component {
   }
 }
 
-export default MainLayout(SpeachPageContainer);
+export default SpeachPageContainer;

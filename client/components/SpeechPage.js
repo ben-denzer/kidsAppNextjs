@@ -1,6 +1,7 @@
 import React from 'react';
 import Help from './Help';
 import SpeechHelpText from './helpText/SpeechHelpText';
+import Spinner from './Spinner';
 import {
   CoinImage,
   HelpButton,
@@ -8,7 +9,6 @@ import {
   PageContainer,
   ScoreContainer,
   SkipWordButton,
-  Spinner,
   WordContainer
 } from './SpeechPageStyles';
 
@@ -22,6 +22,7 @@ function SpeechPage(props) {
     score,
     showPrize,
     skipWord,
+    spinnerClassName,
     toggleHelp,
     toggleSound,
     url,
@@ -29,7 +30,11 @@ function SpeechPage(props) {
   } = props;
 
   const WordDisplay = showPrize
-    ? <Spinner src="/static/img/spinningQuarter.gif-c200" alt="Success!" />
+    ? <Spinner
+        src="/static/img/spinningQuarter.gif-c200"
+        alt="Success!"
+        spinnerClassName={spinnerClassName}
+      />
     : wordList[currentWordIndex];
 
   return (

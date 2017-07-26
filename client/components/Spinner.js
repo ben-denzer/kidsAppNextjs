@@ -1,36 +1,36 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-class Spinner extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      spinnerClassName: ''
-    };
-  }
-  componentWillUnmount() {
-    this.setState({ spinnerClassName: 'fadeOut' });
-    setTimeout(() => this.setState({ spinnerClassName: 'hidden' }), 1000);
-  }
-  render() {
-    return (
-      <SpinnerImg
-        className={this.state.spinnerClassName}
-        src="/static/img/spinningQuarter.gif-c200"
-      />
-    );
-  }
+function Spinner(props) {
+  return (
+    <SpinnerImg
+      className={props.spinnerClassName}
+      src="/static/img/spinningQuarter.gif-c200"
+    />
+  );
 }
 
 const SpinnerImg = styled.img`
   height: 150px;
   width: 150px;
-  transition: all 1s ease-in-out;
+  transition: all .5s ease-in-out;
   position: absolute;
-
+  top: calc(50% - 75px);
+  right: calc(50% - 75px);
+  
+  &.hide {
+    display: none;
+  }
+  
   &.fadeOut {
     top: 10px;
-    left: 10px;
+    right: 10px;
+    height: 50px;
+    width: 50px;
+  }
+
+  &.show {
+    display: block;
   }
 `;
 
