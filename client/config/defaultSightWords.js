@@ -7,7 +7,6 @@ const defaultWordList = () => {
     'my',
     'like',
     'we',
-    'on',
     'the',
     'an',
     'a',

@@ -32,7 +32,7 @@ class SpeachPageContainer extends Component {
 
   componentWillUnmount() {
     if (this.recognition) {
-      this.recognition.stop();
+      this.recognition.abort();
     }
   }
 
@@ -77,7 +77,7 @@ class SpeachPageContainer extends Component {
     const nextIndex = this.getNextIndex();
 
     let sound = this.correctSound;
-    if (newScore % 5 === 0) {
+    if (newScore % 3 === 0) {
       this.addCoin();
       sound = this.coinSound;
     }

@@ -16,8 +16,9 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Lato:400,700"
             rel="stylesheet"
           />
+          <link rel="icon" href="/static/img/favicon.png" type="image/png" sizes="32x32" />
           <style>{`
-            body { 
+            body {
               margin: 0;
               font-family: Lato, Arial, Helvetica, sans-serif;
             }
