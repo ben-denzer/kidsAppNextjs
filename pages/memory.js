@@ -1,4 +1,5 @@
-import SpeechPage from '../client/containers/SpeechPageContainer';
+import MemoryPageContainer from '../client/containers/MemoryPageContainer';
+import MainLayout from '../client/components/MainLayout';
 import Head from 'next/head';
 
 export default function speech(props) {
@@ -7,7 +8,7 @@ export default function speech(props) {
       <Head>
         <title>Memory Matching Game</title>
       </Head>
-      <MemoryPage url={props.url} />
+      {MainLayout(MemoryPageContainer, props)}
     </div>
   );
 }

@@ -7,9 +7,13 @@ export const LayoutContainer = styled.div`
   align-items: center;
   min-height: 90vh;
   padding-top: 0;
-  background-image: url('/static/img/castle.png');
+  background-image: url('/static/img/castleBg.png');
   background-size: cover;
   background-position: center;
+
+  &.memory {
+    background-image: url('/static/img/neighborhoodBg.jpg');
+  }
 
   @media (max-width: 700px) {
     background-image: none;

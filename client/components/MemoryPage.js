@@ -1,6 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import Help from './Help';
-import SpeechHelpText from './helpText/SpeechHelpText';
+import MemoryHelpText from './helpText/MemoryHelpText';
 import Spinner from './Spinner';
 import {
   CoinImage,
@@ -10,31 +11,20 @@ import {
   ScoreContainer
 } from './GameStyles';
 
-import { SkipWordButton, WordContainer } from './SpeechPageStyles';
-
-function SpeechPage(props) {
+export default function MemoryPage(props) {
   const {
     coins,
-    currentWordIndex,
     helpOpen,
-    listen,
     mute,
     score,
     showPrize,
-    skipWord,
     spinnerClassName,
     toggleHelp,
     toggleSound,
     wordList
   } = props;
 
-  const WordDisplay = showPrize
-    ? <Spinner
-        src="/static/img/spinningQuarter.gif-c200"
-        alt="Success!"
-        spinnerClassName={spinnerClassName}
-      />
-    : wordList[currentWordIndex];
+  console.log(coins);
 
   return (
     <div>
@@ -47,23 +37,14 @@ function SpeechPage(props) {
         <ScoreContainer>
           {coins} <CoinImage src="/static/img/quarter.png" alt="Coins" />
         </ScoreContainer>
-        <WordContainer>
-          {WordDisplay}
-        </WordContainer>
+
         <HelpButton
           src="/static/img/help.png"
           alt="Help"
           onClick={toggleHelp}
         />
-        <SkipWordButton
-          src="/static/img/arrow.png"
-          alt="Skip Word"
-          onClick={skipWord}
-        />
       </PageContainer>
-      <Help Body={SpeechHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />
+      <Help Body={MemoryHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />
     </div>
   );
 }
-
-export default SpeechPage;

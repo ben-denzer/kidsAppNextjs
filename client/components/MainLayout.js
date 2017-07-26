@@ -4,7 +4,7 @@ import { LayoutContainer } from './MainLayoutStyles';
 
 function MainLayout(Child, props) {
   return (
-    <LayoutContainer>
+    <LayoutContainer className={props.url.pathname.slice(1)}>
       <Header />
       <Child {...props} />
     </LayoutContainer>
