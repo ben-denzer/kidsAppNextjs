@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "start": "next start",
+    "start": "npm run dev",
+    "start-production": "next start",
     "build": "next build",
+    "build-and-start": "next build && next start-production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Ben Denzer",
+  "license": "",
   "dependencies": {
     "next": "^3.0.1-beta.18",
     "react": "^15.6.1",
