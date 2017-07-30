@@ -9,7 +9,7 @@ export default class MemoryPageContainer extends Component {
     super(props);
     this.state = {
       cardList: [],
-      cardBack: 1,
+      cardBack: 3,
       coins: 0,
       gameSize: [4, 2],
       gameOver: true,
@@ -23,14 +23,18 @@ export default class MemoryPageContainer extends Component {
       wordList: []
     };
 
-    this.checkForMatch = this.checkForMatch.bind(this);
-    this.flipCard = this.flipCard.bind(this);
-    this.gameOver = this.gameOver.bind(this);
-    this.setupCards = this.setupCards.bind(this);
-    this.setupGame = this.setupGame.bind(this);
-    this.toggleHelp = this.toggleHelp.bind(this);
-    this.toggleOptions = this.toggleOptions.bind(this);
-    this.toggleSound = this.toggleSound.bind(this);
+    const boundFunctions = [
+      'cardChange',
+      'flipCard',
+      'gameOver',
+      'setupCards',
+      'sizeChange',
+      'toggleHelp',
+      'toggleOptions',
+      'toggleSound'
+    ];
+
+    boundFunctions.forEach(a => this[a] = this[a].bind(this));
   }
 
   componentDidMount() {
@@ -52,6 +56,10 @@ export default class MemoryPageContainer extends Component {
         }),
       3500
     );
+  }
+
+  cardChange(cardBack) {
+    this.setState({ cardBack });
   }
 
   checkForMatch(cards) {
@@ -133,9 +141,8 @@ export default class MemoryPageContainer extends Component {
     });
   }
 
-  setupGame(options) {
-    const { gameSize, cardBack } = options;
-    this.setState({ cardBack, gameSize, gameOver: false });
+  sizeChange(gameSize) {
+    this.setState({ gameSize });
   }
 
   toggleHelp() {
@@ -151,14 +158,16 @@ export default class MemoryPageContainer extends Component {
   }
 
   render() {
-    const { gameOver, gameSize, optionsOpen } = this.state;
+    const { cardBack, gameOver, gameSize, optionsOpen } = this.state;
     if (gameOver) {
       return (
         <MemoryStartScreen
+          cardBack={cardBack}
+          cardChange={this.cardChange}
           gameSize={gameSize}
           optionsOpen={optionsOpen}
           setupCards={this.setupCards}
-          setupGame={this.setupGame}
+          sizeChange={this.sizeChange}
           toggleOptions={this.toggleOptions}
         />
       );
