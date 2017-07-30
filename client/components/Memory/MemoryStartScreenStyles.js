@@ -4,20 +4,26 @@ export const color2 = '#327d32';
 
 export const Card = styled.div`
   height: 10px;
-  width: 7px;
+  width: 10px;
   margin: 2px;
   background-size: cover;
   backgroung-position: cover;
 `;
 
 export const CardBack = styled.div`
-  height: 150px;
+  height: 100px;
   width: 100px;
   background-position: center;
   background-size: cover;
-  margin: 0 5px;
+  margin: 5px;
   border-radius: 5px;
   box-sizing: border-box;
+  border: 2px solid black;
+
+  @media (max-width: 700px) {
+    height: 75px;
+    width: 75px;
+  }
 
   &.active {
     border: 7px solid black;

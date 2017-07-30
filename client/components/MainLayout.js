@@ -3,8 +3,9 @@ import Header from './Header/Header';
 import { LayoutContainer } from './MainLayoutStyles';
 
 function MainLayout(Child, props) {
+  const pathname = props.url.pathname;
   return (
-    <LayoutContainer className={props.url.pathname.slice(1)}>
+    <LayoutContainer className={pathname.slice(pathname.lastIndexOf('/') + 1)}>
       <Header />
       <Child {...props} />
     </LayoutContainer>
