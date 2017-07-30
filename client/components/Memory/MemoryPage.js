@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import Help from './Help';
-import MemoryHelpText from './helpText/MemoryHelpText';
-import Spinner from './Spinner';
+import Help from '../Help/Help';
+import MemoryHelpText from '../Help/helpText/MemoryHelpText';
+import Spinner from '../Spinner';
 import {
   CoinImage,
   HelpButton,
   MuteButton,
   PageContainer,
   ScoreContainer
-} from './GameStyles';
+} from '../GameStyles';
 
 export default function MemoryPage(props) {
   const {
+    cardBack,
     cardList,
     coins,
     flipCard,
@@ -33,6 +34,13 @@ export default function MemoryPage(props) {
         className={a.status}
         data-cardId={a.cardId}
         onClick={flipCard}
+        style={
+          a.status === 'faceDown'
+            ? {
+                backgroundImage: `url("/static/img/cardBacks/cardBack-${cardBack}.jpg")`
+              }
+            : {}
+        }
       >
         <p>{a.word}</p>
       </Card>
@@ -85,7 +93,6 @@ const Card = styled.div`
 
   &.faceDown {
     background-color: red;
-    background-image: url("/static/img/cardBacks/cardBack-1.jpg");
     background-position: center;
     background-size: cover;
 

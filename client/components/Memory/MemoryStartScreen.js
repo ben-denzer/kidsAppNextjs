@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import makeThumbnailGrid from '../utils/makeThumbnailGrid';
-import { PageContainer } from './GameStyles';
+import makeThumbnailGrid from '../../utils/makeThumbnailGrid';
+import { PageContainer } from '../GameStyles';
 import {
+  CardBack,
   ChangeSettings,
   Option,
   OptionHeadline,
@@ -41,8 +42,7 @@ function MemoryStartScreen(props) {
   }
 
   const sizeOptions = [[4, 2], [5, 2], [4, 3], [3, 4], [4, 4], [5, 4], [4, 5]];
-
-  const options = sizeOptions.map(a => (
+  const gameOptions = sizeOptions.map(a => (
     <Option
       key={a[0].toString() + a[1].toString()}
       onClick={() => sizeChange(a)}
@@ -54,11 +54,27 @@ function MemoryStartScreen(props) {
     </Option>
   ));
 
+  const cardBackOptions = [1, 2, 3, 4, 5];
+  const cardOptions = cardBackOptions.map(a => (
+    <CardBack
+      key={a}
+      className={Number(a) === Number(cardBack) ? 'active' : ''}
+      data-cardId={`card-${a}`}
+      style={{
+        backgroundImage: `url('/static/img/cardBacks/cardBack-${a}.jpg')`
+      }}
+    />
+  ));
+
   return (
     <PageContainer>
-      <Title>Options</Title>
+      <Title>Size</Title>
       <OptionsContainer>
-        {options}
+        {gameOptions}
+      </OptionsContainer>
+      <Title>Cards</Title>
+      <OptionsContainer onClick={cardChange}>
+        {cardOptions}
       </OptionsContainer>
       <StartGame onClick={setupCards}>START</StartGame>
     </PageContainer>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import shuffle from '../utils/shuffle';
 import defaultWordList from '../config/defaultSightWords';
-import MemoryPage from '../components/MemoryPage';
-import MemoryStartScreen from '../components/MemoryStartScreen';
+import MemoryPage from '../components/Memory/MemoryPage';
+import MemoryStartScreen from '../components/Memory/MemoryStartScreen';
 
 export default class MemoryPageContainer extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class MemoryPageContainer extends Component {
       cardList: [],
       cardBack: 3,
       coins: 0,
-      gameSize: [4, 2],
+      gameSize: [4, 3],
       gameOver: true,
       helpOpen: false,
       mute: false,
@@ -58,7 +58,9 @@ export default class MemoryPageContainer extends Component {
     );
   }
 
-  cardChange(cardBack) {
+  cardChange(e) {
+    console.log(e.target.dataset.cardid.slice(-1));
+    const cardBack = e.target.dataset.cardid.slice(-1);
     this.setState({ cardBack });
   }
 

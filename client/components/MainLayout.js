@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import Header from './Header/Header';
 import { LayoutContainer } from './MainLayoutStyles';
 
 function MainLayout(Child, props) {

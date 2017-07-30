@@ -10,6 +10,20 @@ export const Card = styled.div`
   backgroung-position: cover;
 `;
 
+export const CardBack = styled.div`
+  height: 150px;
+  width: 100px;
+  background-position: center;
+  background-size: cover;
+  margin: 0 5px;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  &.active {
+    border: 7px solid black;
+  }
+`;
+
 export const CardRow = styled.div`
   display: flex;
   justify-content: center;
@@ -98,6 +112,7 @@ export const StartGame = styled.button`
   color: white;
   background: ${color2};
   border: 3px solid black;
+  margin-top: 15px;
 
   &:hover {
     cursor: pointer;

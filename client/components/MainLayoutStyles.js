@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { headerHeight } from './HeaderStyles';
+import { headerHeight } from './Header/HeaderStyles';
 
 export const LayoutContainer = styled.div`
   display: flex;

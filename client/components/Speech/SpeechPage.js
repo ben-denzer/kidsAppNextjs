@@ -1,14 +1,14 @@
 import React from 'react';
-import Help from './Help';
-import SpeechHelpText from './helpText/SpeechHelpText';
-import Spinner from './Spinner';
+import Help from '../Help/Help';
+import SpeechHelpText from '../Help/helpText/SpeechHelpText';
+import Spinner from '../Spinner';
 import {
   CoinImage,
   HelpButton,
   MuteButton,
   PageContainer,
   ScoreContainer
-} from './GameStyles';
+} from '../GameStyles';
 
 import { SkipWordButton, WordContainer } from './SpeechPageStyles';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MainLayout from '../components/MainLayout';
-import SpeechPage from '../components/SpeechPage';
+import SpeechPage from '../components/Speech/SpeechPage';
 import defaultWordList from '../config/defaultSightWords';
 
 class SpeachPageContainer extends Component {

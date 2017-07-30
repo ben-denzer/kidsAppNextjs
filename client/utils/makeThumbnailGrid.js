@@ -1,4 +1,4 @@
-import { Card, CardRow } from '../components/MemoryStartScreenStyles';
+import { Card, CardRow } from '../components/Memory/MemoryStartScreenStyles';
 
 function makeThumbnailGrid(sizeArray, cardBack) {
   const [width, height] = sizeArray;
