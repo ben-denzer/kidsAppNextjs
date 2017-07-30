@@ -15,7 +15,6 @@ export default class MemoryPageContainer extends Component {
       gameOver: true,
       helpOpen: false,
       mute: false,
-      numberOfWords: 4,
       optionsOpen: true,
       score: 0,
       showPrize: false,
@@ -27,6 +26,7 @@ export default class MemoryPageContainer extends Component {
       'cardChange',
       'flipCard',
       'gameOver',
+      'getFromLocalStorage',
       'setupCards',
       'sizeChange',
       'toggleHelp',
@@ -40,7 +40,7 @@ export default class MemoryPageContainer extends Component {
   componentDidMount() {
     const coins = window.localStorage.getItem('coins');
     this.setState({ wordList: defaultWordList });
-    // this.setupCards();
+    this.getFromLocalStorage();
   }
 
   addCoin() {
@@ -59,9 +59,11 @@ export default class MemoryPageContainer extends Component {
   }
 
   cardChange(e) {
-    console.log(e.target.dataset.cardid.slice(-1));
-    const cardBack = e.target.dataset.cardid.slice(-1);
-    this.setState({ cardBack });
+    if (e.target.dataset.cardid) {
+      const cardBack = e.target.dataset.cardid.slice(-1);
+      this.setState({ cardBack });
+      window.localStorage.setItem('memoryCardBack', cardBack);
+    }
   }
 
   checkForMatch(cards) {
@@ -106,9 +108,13 @@ export default class MemoryPageContainer extends Component {
     const flippedCards = cards.filter(a => a.status === 'faceUp' && a);
     if (flippedCards.length > 1) return;
 
-    const cardToFlip = e.target.dataset.cardid;
-    cards[cardToFlip].status = 'faceUp';
-    flippedCards.push(cards[cardToFlip]);
+    const cardToFlip = cards[e.target.dataset.cardid];
+
+    // early return if already hidden
+    if (!cardToFlip || cardToFlip.status === 'hidden') return;
+
+    cardToFlip.status = 'faceUp';
+    flippedCards.push(cardToFlip);
 
     if (flippedCards.length === 2) {
       this.checkForMatch(cards);
@@ -127,8 +133,16 @@ export default class MemoryPageContainer extends Component {
     }, 5000);
   }
 
+  getFromLocalStorage() {
+    const size = window.localStorage.getItem('memoryGameSize');
+    if (size) this.setState({ gameSize: JSON.parse(size) });
+    const cardBack = window.localStorage.getItem('memoryCardBack');
+    if (cardBack) this.setState({ cardBack });
+  }
+
   setupCards() {
-    const { numberOfWords, wordList } = this.state;
+    const { gameSize, wordList } = this.state;
+    const numberOfWords = gameSize[0] * gameSize[1] / 2;
     const words = shuffle(wordList).slice(0, numberOfWords);
     const cardList = shuffle([...words, ...words]).map((a, i) => ({
       cardId: i,
@@ -145,6 +159,7 @@ export default class MemoryPageContainer extends Component {
 
   sizeChange(gameSize) {
     this.setState({ gameSize });
+    window.localStorage.setItem('memoryGameSize', JSON.stringify(gameSize));
   }
 
   toggleHelp() {

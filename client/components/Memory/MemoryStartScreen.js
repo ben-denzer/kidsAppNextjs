@@ -41,12 +41,22 @@ function MemoryStartScreen(props) {
     );
   }
 
-  const sizeOptions = [[4, 2], [5, 2], [4, 3], [3, 4], [4, 4], [5, 4], [4, 5]];
+  const sizeOptions = [
+    [2, 4],
+    [4, 2],
+    [2, 5],
+    [5, 2],
+    [4, 3],
+    [3, 4],
+    [4, 4],
+    [5, 4],
+    [4, 5]
+  ];
   const gameOptions = sizeOptions.map(a => (
     <Option
       key={a[0].toString() + a[1].toString()}
       onClick={() => sizeChange(a)}
-      className={a[0] === gameSize[0] && a[1] === gameSize[1] ? 'active' : ''}
+      className={`width${a[0]} ${a[0] === gameSize[0] && a[1] === gameSize[1] ? 'active' : ''}`}
     >
       <OptionTitle>{`${a[0]} X ${a[1]}`}</OptionTitle>
       <div>{makeThumbnailGrid(a, cardBack)}</div>

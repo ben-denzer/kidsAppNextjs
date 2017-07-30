@@ -22,6 +22,7 @@ export const LayoutContainer = styled.div`
 
   >div {
     width: 80%;
+    max-width: 1600px;
     margin-top: 15px;
     min-height: calc(70vh - ${headerHeight}px);
     padding: 25px;

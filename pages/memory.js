@@ -1,4 +1,4 @@
-import MemoryPageContainer from '../client/containers/MemoryPageContainer';
+import MemoryContainer from '../client/containers/MemoryContainer';
 import MainLayout from '../client/components/MainLayout';
 import Head from 'next/head';
 
@@ -8,7 +8,7 @@ export default function speech(props) {
       <Head>
         <title>Memory Matching Game</title>
       </Head>
-      {MainLayout(MemoryPageContainer, props)}
+      {MainLayout(MemoryContainer, props)}
     </div>
   );
 }

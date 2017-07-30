@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
-import Help from '../Help/Help';
+import makeMemoryGrid from '../../utils/makeMemoryGrid';
 import MemoryHelpText from '../Help/helpText/MemoryHelpText';
+import Help from '../Help/Help';
 import Spinner from '../Spinner';
+import { CardContainer } from './MemoryPageStyles';
 import {
   CoinImage,
   HelpButton,
@@ -17,6 +18,7 @@ export default function MemoryPage(props) {
     cardList,
     coins,
     flipCard,
+    gameSize,
     helpOpen,
     mute,
     score,
@@ -27,25 +29,8 @@ export default function MemoryPage(props) {
     wordList
   } = props;
 
-  const cards = cardList.map(a => {
-    return (
-      <Card
-        key={a.cardId}
-        className={a.status}
-        data-cardId={a.cardId}
-        onClick={flipCard}
-        style={
-          a.status === 'faceDown'
-            ? {
-                backgroundImage: `url("/static/img/cardBacks/cardBack-${cardBack}.jpg")`
-              }
-            : {}
-        }
-      >
-        <p>{a.word}</p>
-      </Card>
-    );
-  });
+  const options = { cardBack, cardList, flipCard, gameSize };
+  const cards = makeMemoryGrid(options);
 
   return (
     <div>
@@ -72,41 +57,3 @@ export default function MemoryPage(props) {
     </div>
   );
 }
-
-const CardContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 75px;
-  display: flex;
-  justify-content: center;
-`;
-
-const Card = styled.div`
-  height: 150px;
-  width: 100px;
-  margin: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid black;
-  border-radius: 5px;
-
-  &.faceDown {
-    background-color: red;
-    background-position: center;
-    background-size: cover;
-
-    p {
-      display: none;
-    }
-  }
-
-  &.faceUp {
-    background-color: white;
-  }
-
-  &.hidden {
-    opacity: .1;
-    background-color: white;
-  }
-`;

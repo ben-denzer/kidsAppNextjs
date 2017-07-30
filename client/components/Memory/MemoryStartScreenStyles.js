@@ -21,6 +21,16 @@ export const CardBack = styled.div`
 
   &.active {
     border: 7px solid black;
+
+    &:hover {
+      cursor: default;
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: .8;
   }
 `;
 
@@ -42,7 +52,7 @@ export const ChangeSettings = styled.p`
 export const Option = styled.div`
   height: 150px;
   width: 100px;
-  margin: 0 5px;
+  margin: 3px 5px;
   border: 2px solid black;
   display: flex;
   flex-direction: column;
@@ -57,6 +67,18 @@ export const Option = styled.div`
     &:hover {
       cursor: default;
       border: 7px solid black;
+    }
+  }
+
+  &.width5 {
+    @media (max-width: 500px) {
+      display: none;
+    }
+  }
+
+  &.width4 {
+    @media (max-width: 400px) {
+      display: none;
     }
   }
 
