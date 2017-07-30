@@ -5,7 +5,8 @@ function Spinner(props) {
   return (
     <SpinnerImg
       className={props.spinnerClassName}
-      src="/static/img/spinningQuarter.gif-c200"
+      src="/static/img/goldCoinSpinner.gif"
+      alt="Success!"
     />
   );
 }

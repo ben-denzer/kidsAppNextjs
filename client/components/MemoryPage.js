@@ -45,13 +45,14 @@ export default function MemoryPage(props) {
         <CardContainer>
           {cards}
         </CardContainer>
+        <Spinner spinnerClassName={spinnerClassName} />
         <MuteButton
           src={`/static/img/${mute ? 'mute' : 'unmute'}.png`}
           alt={`Turn Sound ${mute ? 'On' : 'Off'}`}
           onClick={toggleSound}
         />
         <ScoreContainer>
-          {coins} <CoinImage src="/static/img/quarter.png" alt="Coins" />
+          {coins} <CoinImage src="/static/img/goldCoin.png" alt="Coins" />
         </ScoreContainer>
         <HelpButton
           src="/static/img/help.png"
@@ -73,8 +74,8 @@ const CardContainer = styled.div`
 `;
 
 const Card = styled.div`
-  height: 200px;
-  width: 125px;
+  height: 150px;
+  width: 100px;
   margin: 15px;
   display: flex;
   justify-content: center;
@@ -83,7 +84,10 @@ const Card = styled.div`
   border-radius: 5px;
 
   &.faceDown {
-    background-color: blue;
+    background-color: red;
+    background-image: url("/static/img/cardBacks/cardBack-1.jpg");
+    background-position: center;
+    background-size: cover;
 
     p {
       display: none;
