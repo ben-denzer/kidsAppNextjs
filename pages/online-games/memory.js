@@ -1,5 +1,5 @@
-import MemoryContainer from '../client/containers/MemoryContainer';
-import MainLayout from '../client/components/MainLayout';
+import MemoryContainer from '../../client/containers/MemoryContainer';
+import MainLayout from '../../client/components/MainLayout';
 import Head from 'next/head';
 
 export default function speech(props) {
