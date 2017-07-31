@@ -1,4 +1,4 @@
-import HomepageContainer from '../client/containers/HomepageContainer';
+import Homepage from '../client/components/Homepage/Homepage';
 import MainLayout from '../client/components/MainLayout';
 import Head from 'next/head';
 
@@ -8,7 +8,7 @@ export default function hp(props) {
       <Head>
         <title>My Sight Words.com</title>
       </Head>
-      {MainLayout(HomepageContainer, props)}
+      {MainLayout(Homepage, props)}
     </div>
   );
 }

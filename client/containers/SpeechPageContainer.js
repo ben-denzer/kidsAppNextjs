@@ -148,7 +148,7 @@ class SpeachPageContainer extends Component {
 
   render() {
     return (
-      <div>
+      <div className="whiteBox">
         <SpeechPage
           listen={this.listen}
           skipWord={this.skipWord}

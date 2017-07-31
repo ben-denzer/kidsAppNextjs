@@ -178,20 +178,22 @@ export default class MemoryPageContainer extends Component {
     const { cardBack, gameOver, gameSize, optionsOpen } = this.state;
     if (gameOver) {
       return (
-        <MemoryStartScreen
-          cardBack={cardBack}
-          cardChange={this.cardChange}
-          gameSize={gameSize}
-          optionsOpen={optionsOpen}
-          setupCards={this.setupCards}
-          sizeChange={this.sizeChange}
-          toggleOptions={this.toggleOptions}
-        />
+        <div className="whiteBox">
+          <MemoryStartScreen
+            cardBack={cardBack}
+            cardChange={this.cardChange}
+            gameSize={gameSize}
+            optionsOpen={optionsOpen}
+            setupCards={this.setupCards}
+            sizeChange={this.sizeChange}
+            toggleOptions={this.toggleOptions}
+          />
+        </div>
       );
     }
 
     return (
-      <div>
+      <div className="whiteBox">
         <MemoryPage
           flipCard={this.flipCard}
           toggleHelp={this.toggleHelp}

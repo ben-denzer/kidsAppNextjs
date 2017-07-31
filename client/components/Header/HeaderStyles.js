@@ -10,6 +10,8 @@ export const HeaderContainer = styled.header`
   height: ${headerHeight}px;
   background-color: white;
   box-shadow: 0px 5px 5px #999;
+  position: relative;
+  z-index: 2;
 
   @media (max-width: 700px) {
     height: 65px;

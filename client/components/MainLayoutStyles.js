@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { headerHeight } from './Header/HeaderStyles';
+import { color2 } from '../config/globalStyles';
 
 export const LayoutContainer = styled.div`
   display: flex;
@@ -7,7 +8,7 @@ export const LayoutContainer = styled.div`
   align-items: center;
   min-height: 90vh;
   padding-top: 0;
-  background-image: url('/static/img/castleBg.png');
+  background-color: ${color2};
   background-size: cover;
   background-position: center;
 
@@ -15,12 +16,16 @@ export const LayoutContainer = styled.div`
     background-image: url('/static/img/neighborhoodBg.jpg');
   }
 
+  &.speech {
+    background-image: url('/static/img/castleBg.png');   
+  }
+
   @media (max-width: 700px) {
     background-image: none;
     background-color: lightskyblue;
   }
 
-  >div {
+  .whiteBox {
     width: 80%;
     max-width: 1600px;
     margin-top: 15px;
