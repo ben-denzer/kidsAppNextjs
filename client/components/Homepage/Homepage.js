@@ -14,24 +14,26 @@ export default function HomepageContainer(props) {
           <Link><CtaButton>Play For Free</CtaButton></Link>
         </TopSectionOverlay>
         <ThumbsSection>
-          <ThumbContainer
-            altText="Kids Playing Computer Games"
-            headline="Play Online"
-            picture="kidsAtComputer.jpg"
-            url="/online-games"
-          />
-          <ThumbContainer
-            altText="Children Playing Bingo"
-            headline="Printable Games"
-            picture="bingo.jpg"
-            url="/printable-games"
-          />
-          <ThumbContainer
-            altText="Mom Reading To Her Kids"
-            headline="For Parents"
-            picture="momAndKids.jpg"
-            url="/articles"
-          />
+          <ThumbsInner>
+            <ThumbContainer
+              altText="Kids Playing Computer Games"
+              headline="Play Online"
+              picture="kidsAtComputer.jpg"
+              url="/online-games"
+            />
+            <ThumbContainer
+              altText="Children Playing Bingo"
+              headline="Printable Games"
+              picture="bingo.jpg"
+              url="/printable-games"
+            />
+            <ThumbContainer
+              altText="Mom Reading To Her Kids"
+              headline="For Parents"
+              picture="momAndKids.jpg"
+              url="/articles"
+            />
+          </ThumbsInner>
         </ThumbsSection>
       </TopSection>
     </HpContainer>
@@ -43,6 +45,7 @@ const HpContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  background-color: ${color2};  
 `;
 
 const PageHeadline = styled.h2`
@@ -73,12 +76,23 @@ const PageTitle = styled.h1`
 
 const ThumbsSection = styled.div`
   width: 100%;
+  margin: 0;
+  height: 300px;
+  background-color: ${color2};
+  
+  @media (max-width: 900px) {
+    height: 1000px;
+  }
+`;
+
+const ThumbsInner = styled.div`
+  width: 100%;
   max-width: 1400px;
-  height: 400px;
+  height: 100%;
+  margin: 0 auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: ${color2};
 
   @media (max-width: 900px) {
     flex-direction: column;

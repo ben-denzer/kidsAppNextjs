@@ -1,44 +1,37 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { color1 } from '../../config/globalStyles';
 
 export default function ThumbContainer(props) {
   const { altText, headline, picture, url } = props;
+  const imgStyle = { backgroundImage: `url("/static/img/${picture}")` };
   return (
-    <ThumbOuter>
-      <Link prefetch href={url}>
-        <ThumbBox>
-          <Pic src={`/static/img/${picture}`} alt={altText} />
-          <Headline>{headline}</Headline>
-        </ThumbBox>
-      </Link>
-    </ThumbOuter>
+    <Link prefetch href={url}>
+      <ThumbBox style={imgStyle}>
+        <Headline>{headline}</Headline>
+      </ThumbBox>
+    </Link>
   );
 }
-
-const ThumbOuter = styled.div`
-  height: 320px;
-  width: 250px;
-  box-sizing: border-box;
-
-  &:hover {
-    cursor: pointer;
-    border: 1px solid #999;
-  }
-`;
 
 const ThumbBox = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 280px;
-`;
+  height: 200px;
+  width: 300px;
 
-const Pic = styled.img`
-  height: 250px;
-  width: 250px;
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
 `;
 
 const Headline = styled.h2`
+  margin-top: 150px;
   text-align: center;
+  color: white;
+  font-size: 28px;
+  text-shadow: 1px 1px #000;
 `;
