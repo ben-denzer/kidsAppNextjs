@@ -16,7 +16,7 @@ export default function HomepageContainer(props) {
       </TopSection>
       <TextSection>
         <TextInner>
-          <h1>Use Your Own Word List From Your Child's Teacher</h1>
+          <h1>Use The Word List From Your Child's Teacher</h1>
           <p className="center">This website is completely free to use, but if you want to use a custom word list and/or save your child's progress, <Link href="/login"><a>Log In</a></Link> or <Link href="/signup"><a>Sign Up</a></Link> for an account.</p>
         </TextInner>
       </TextSection>
@@ -60,6 +60,10 @@ export default function HomepageContainer(props) {
           <h3>Kids Learn By Playing</h3>
           <p>
             Playing games is important for a child's development. The only way to master a skill is with repeated practice, and turning this repetition into a game is one of the best ways for children (and adults!) to stay interested.
+          </p>
+          <h3>Personalize Your Experience</h3>
+          <p>
+            Each teacher will probably have a different list of words that they will test your child on. By creating an account it is easy to customize the games on this site. See our <Link href="/signup"><a>sign up page</a></Link> for more details.
           </p>
         </TextInner>
       </TextSection>
