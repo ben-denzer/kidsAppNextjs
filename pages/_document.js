@@ -13,10 +13,15 @@ export default class MyDocument extends Document {
           {styleTags}
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link
-            href="https://fonts.googleapis.com/css?family=Lato:400,700"
+            href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Lato:400,700"
             rel="stylesheet"
           />
-          <link rel="icon" href="/static/img/favicon.png" type="image/png" sizes="32x32" />
+          <link
+            rel="icon"
+            href="/static/img/favicon.png"
+            type="image/png"
+            sizes="32x32"
+          />
           <style>{`
             body {
               margin: 0;
