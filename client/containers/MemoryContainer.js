@@ -72,10 +72,6 @@ export default class MemoryPageContainer extends Component {
     const flippedCards = cards.filter(a => a.status === 'faceUp' && a);
 
     if (flippedCards[0].word === flippedCards[1].word) {
-      if (!this.state.mute) {
-        this.correctSound.play();
-      }
-
       const matchedIds = flippedCards.map(a => a.cardId);
       finalCards = cards.map(a => {
         if (matchedIds.indexOf(a.cardId) !== -1) {
@@ -86,7 +82,13 @@ export default class MemoryPageContainer extends Component {
 
       // check for winner
       const hiddenCards = finalCards.filter(a => a.status === 'hidden' && a);
-      if (hiddenCards.length === cards.length) gameOver = true;
+      if (hiddenCards.length === cards.length) {
+        setTimeout(this.gameOver, 300);
+      } else {
+        if (!this.state.mute) {
+          this.correctSound.play();
+        }
+      }
     } else {
       finalCards = cards.map(a => {
         if (a.status === 'faceUp') {
@@ -98,8 +100,7 @@ export default class MemoryPageContainer extends Component {
     this.setState({ cardList: cards });
     setTimeout(() => {
       this.setState({ cardList: finalCards });
-      if (gameOver) this.gameOver();
-    }, 3000);
+    }, 2500);
   }
 
   flipCard(e) {
