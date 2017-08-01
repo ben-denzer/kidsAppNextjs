@@ -13,32 +13,61 @@ export default function HomepageContainer(props) {
           <PageHeadline>Learn To Read By Playing Games</PageHeadline>
           <Link><CtaButton>Play For Free</CtaButton></Link>
         </TopSectionOverlay>
-        <ThumbsSection>
-          <ThumbsInner>
-            <ThumbContainer
-              altText="Kids Playing Computer Games"
-              headline="Play Online"
-              picture="kidsAtComputer.jpg"
-              url="/online-games"
-            />
-            <ThumbContainer
-              altText="Children Playing Bingo"
-              headline="Printable Games"
-              picture="bingo.jpg"
-              url="/printable-games"
-            />
-            <ThumbContainer
-              altText="Mom Reading To Her Kids"
-              headline="For Parents"
-              picture="momAndKids.jpg"
-              url="/articles"
-            />
-          </ThumbsInner>
-        </ThumbsSection>
       </TopSection>
+      <ThumbsSection>
+        <ThumbsInner>
+          <ThumbContainer
+            altText="Kids Playing Computer Games"
+            headline="Play Online"
+            picture="kidsAtComputer.jpg"
+            url="/online-games"
+          />
+          <ThumbContainer
+            altText="Children Playing Bingo"
+            headline="Printable Games"
+            picture="bingo.jpg"
+            url="/printable-games"
+          />
+          <ThumbContainer
+            altText="Mom Reading To Her Kids"
+            headline="For Parents"
+            picture="momAndKids.jpg"
+            url="/articles"
+          />
+        </ThumbsInner>
+      </ThumbsSection>
+      <TextSection>
+        <TextInner>
+          <h1>Teach Your Child To Read With My Sight Words.com</h1>
+          <ArticleImg
+            src="/static/img/classroom.jpg"
+            alt="Classroom with children and teachers"
+          />
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+        </TextInner>
+      </TextSection>
     </HpContainer>
   );
 }
+
+const ArticleImg = styled.img`
+  height: 250px;
+  width: auto;
+  float: right;
+  margin-left: 15px;
+
+  @media (max-width: 1100px) {
+    display: none;
+  }
+`;
 
 const HpContainer = styled.div`
   margin-top: 0;
@@ -71,6 +100,23 @@ const PageTitle = styled.h1`
 
   @media (max-width: 600px) {
     font-size: 30px;
+  }
+`;
+
+const TextInner = styled.div`
+  width: 100%;
+  max-width: 1400px;
+  padding: 10px;
+`;
+
+const TextSection = styled.div`
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+
+  h1 {
+    text-align: center;
   }
 `;
 
