@@ -14,6 +14,12 @@ export default function HomepageContainer(props) {
           <Link><CtaButton>Play For Free</CtaButton></Link>
         </TopSectionOverlay>
       </TopSection>
+      <TextSection>
+        <TextInner>
+          <h1>Use Your Own Word List From Your Child's Teacher</h1>
+          <p className="center">This website is completely free to use, but if you want to use a custom word list and/or save your child's progress, <Link href="/login"><a>Log In</a></Link> or <Link href="/signup"><a>Sign Up</a></Link> for an account.</p>
+        </TextInner>
+      </TextSection>
       <ThumbsSection>
         <ThumbsInner>
           <ThumbContainer
@@ -43,14 +49,17 @@ export default function HomepageContainer(props) {
             src="/static/img/classroom.jpg"
             alt="Classroom with children and teachers"
           />
+          <h3>Sight Words</h3>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Up to 80% of the words in your children's books are considered 'sight words'. If a beginning reader is able to memorize the sight words, they will be more able to concentrate on the meaning of the text instead of having to struggle with every word in the book. A lot of the words in this list have unusual spelling patterns so it is not easy to sound out the letters, and most of the words are hard to describe with a picture. Memorizing these patterns will give students a great start when learning to read.
           </p>
+          <h3>Dolch Word List</h3>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Dr. Edward William Dolch studied the most commonly occurring words in the children's books of the 1930s-40s. He created a list of 315 words (220 'service words' and 95 'high frequency nouns'). The Dolch words are usually split into groups for each grade level from pre-kindergarten to third grade.
           </p>
+          <h3>Kids Learn By Playing</h3>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Playing games is important for a child's development. The only way to master a skill is with repeated practice, and turning this repetition into a game is one of the best ways for children (and adults!) to stay interested.
           </p>
         </TextInner>
       </TextSection>
@@ -74,7 +83,7 @@ const HpContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${color2};  
+  background-color: ${color2};
 `;
 
 const PageHeadline = styled.h2`
@@ -107,6 +116,18 @@ const TextInner = styled.div`
   width: 100%;
   max-width: 1400px;
   padding: 10px;
+
+  h3 {
+    margin-bottom: 0px;
+  }
+  p {
+    margin-top: 5px;
+
+    &.center {
+      width: 100%;
+      text-align: center;
+    }
+  }
 `;
 
 const TextSection = styled.div`
@@ -125,9 +146,9 @@ const ThumbsSection = styled.div`
   margin: 0;
   height: 300px;
   background-color: ${color2};
-  
+
   @media (max-width: 900px) {
-    height: 1000px;
+    height: 800px;
   }
 `;
 
@@ -142,7 +163,7 @@ const ThumbsInner = styled.div`
 
   @media (max-width: 900px) {
     flex-direction: column;
-    height: 1000px;
+    height: 800px;
   }
 `;
 
