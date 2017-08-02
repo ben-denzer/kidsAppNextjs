@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header/Header';
+import Footer from './Footer/Footer';
 import { LayoutContainer } from './MainLayoutStyles';
 
 function MainLayout(Child, props) {
@@ -8,6 +9,7 @@ function MainLayout(Child, props) {
     <LayoutContainer className={pathname.slice(pathname.lastIndexOf('/') + 1)}>
       <Header />
       <Child {...props} />
+      <Footer />
     </LayoutContainer>
   );
 }

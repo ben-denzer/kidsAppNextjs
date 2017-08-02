@@ -6,11 +6,11 @@ export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 90vh;
   padding-top: 0;
   background-color: ${color2};
   background-size: cover;
   background-position: center;
+  padding-bottom: 110px;
 
   &.memory {
     background-image: url('/static/img/neighborhoodBg.jpg');

@@ -11,13 +11,23 @@ export default function HomepageContainer(props) {
         <TopSectionOverlay>
           <PageTitle>My Sight Words.com</PageTitle>
           <PageHeadline>Learn To Read By Playing Games</PageHeadline>
-          <Link><CtaButton>Play For Free</CtaButton></Link>
+          <Link href="/online-games"><CtaButton>Play For Free</CtaButton></Link>
         </TopSectionOverlay>
       </TopSection>
       <TextSection>
         <TextInner>
           <h1>Use The Word List From Your Child's Teacher</h1>
-          <p className="center">This website is completely free to use, but if you want to use a custom word list and/or save your child's progress, <Link href="/login"><a>Log In</a></Link> or <Link href="/signup"><a>Sign Up</a></Link> for an account.</p>
+          <p className="center">
+            This website is completely free to use, but if you want to use a custom word list and/or save your child's progress,
+            {' '}
+            <Link href="/login"><a>Log In</a></Link>
+            {' '}
+            or
+            {' '}
+            <Link href="/signup"><a>Sign Up</a></Link>
+            {' '}
+            for an account.
+          </p>
         </TextInner>
       </TextSection>
       <ThumbsSection>
@@ -63,7 +73,11 @@ export default function HomepageContainer(props) {
           </p>
           <h3>Personalize Your Experience</h3>
           <p>
-            Each teacher will probably have a different list of words that they will test your child on. By creating an account it is easy to customize the games on this site. See our <Link href="/signup"><a>sign up page</a></Link> for more details.
+            Each teacher will probably have a different list of words that they will test your child on. By creating an account it is easy to customize the games on this site. See our
+            {' '}
+            <Link href="/signup"><a>sign up page</a></Link>
+            {' '}
+            for more details.
           </p>
         </TextInner>
       </TextSection>
@@ -119,11 +133,16 @@ const PageTitle = styled.h1`
 const TextInner = styled.div`
   width: 100%;
   max-width: 1400px;
-  padding: 10px;
+  padding: 30px;
+
+  @media (max-width: 900px) {
+    padding: 10px;
+  }
 
   h3 {
     margin-bottom: 0px;
   }
+
   p {
     margin-top: 5px;
 
