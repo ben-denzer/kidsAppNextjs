@@ -47,7 +47,8 @@ const FooterContainer = styled.div`
     text-decoration: none;
 
     &:hover {
-      color: #ccc;
+      cursor: pointer;
+      color: #eee;
       text-decoration: underline;
     }
   }

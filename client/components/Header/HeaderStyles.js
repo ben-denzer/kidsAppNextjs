@@ -16,6 +16,12 @@ export const HeaderContainer = styled.header`
   @media (max-width: 700px) {
     height: 65px;
   }
+
+  a {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 export const HeaderLogo = styled.img`

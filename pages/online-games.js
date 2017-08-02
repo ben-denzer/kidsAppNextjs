@@ -1,4 +1,4 @@
-import OnlineGamesContainer from '../client/containers/OnlineGamesContainer';
+import OnlineGamesPage from '../client/components/OnlineGames/OnlineGamesPage';
 import MainLayout from '../client/components/MainLayout';
 import Head from 'next/head';
 
@@ -8,7 +8,7 @@ export default function hp(props) {
       <Head>
         <title>Online Reading Games | My Sight Words.com</title>
       </Head>
-      {MainLayout(OnlineGamesContainer, props)}
+      {MainLayout(OnlineGamesPage, props)}
     </div>
   );
 }

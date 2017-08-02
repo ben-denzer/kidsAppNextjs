@@ -10,7 +10,6 @@ export const LayoutContainer = styled.div`
   background-color: ${color2};
   background-size: cover;
   background-position: center;
-  padding-bottom: 110px;
 
   &.memory {
     background-image: url('/static/img/neighborhoodBg.jpg');
