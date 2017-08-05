@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import GameThumbnail from '../GameThumbnail';
+import { textColor } from '../../config/globalStyles';
 
 export default function OnlineGamesContainer(props) {
   return (
@@ -54,7 +55,7 @@ const PageContainer = styled.div`
 
   a {
     font-size: 16px;
-    color: #222;
+    color: ${textColor};
     text-decoration: none;
     display: flex;
     flex-direction: column;

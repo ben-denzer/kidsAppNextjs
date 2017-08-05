@@ -27,10 +27,10 @@ export default class MemoryPageContainer extends Component {
       'flipCard',
       'gameOver',
       'getFromLocalStorage',
+      'openOptions',
       'setupCards',
       'sizeChange',
       'toggleHelp',
-      'toggleOptions',
       'toggleSound'
     ];
 
@@ -167,8 +167,9 @@ export default class MemoryPageContainer extends Component {
     this.setState({ helpOpen: !this.state.helpOpen });
   }
 
-  toggleOptions() {
-    this.setState({ optionsOpen: !this.state.optionsOpen });
+  openOptions() {
+    console.log('called');
+    this.setState({ gameOver: true, optionsOpen: true });
   }
 
   toggleSound() {
@@ -184,10 +185,11 @@ export default class MemoryPageContainer extends Component {
             cardBack={cardBack}
             cardChange={this.cardChange}
             gameSize={gameSize}
+            openOptions={this.openOptions}
             optionsOpen={optionsOpen}
             setupCards={this.setupCards}
             sizeChange={this.sizeChange}
-            toggleOptions={this.toggleOptions}
+            openOptions={this.openOptions}
           />
         </div>
       );
@@ -198,6 +200,7 @@ export default class MemoryPageContainer extends Component {
         <MemoryPage
           flipCard={this.flipCard}
           toggleHelp={this.toggleHelp}
+          openOptions={this.openOptions}
           toggleSound={this.toggleSound}
           {...this.props}
           {...this.state}

@@ -24,7 +24,7 @@ function MemoryStartScreen(props) {
     setupCards,
     setupGame,
     sizeChange,
-    toggleOptions
+    openOptions
   } = props;
 
   if (!optionsOpen) {
@@ -34,7 +34,7 @@ function MemoryStartScreen(props) {
           <Title>Play Again?</Title>
           <Restart src="/static/img/restart.png" alt="Restart" />
         </RestartContainer>
-        <ChangeSettings onClick={toggleOptions}>
+        <ChangeSettings onClick={openOptions}>
           Change Settings
         </ChangeSettings>
       </PageContainer>

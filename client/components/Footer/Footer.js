@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { color1 } from '../../config/globalStyles';
+import { color3 } from '../../config/globalStyles';
 
 export default function Footer(props) {
   const date = new Date();
@@ -39,7 +39,7 @@ const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  background-color: ${color1};
+  background-color: ${color3};
   color: white;
 
   a {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -w server/ server/server.js",
+    "dev": "chromium-browser http://localhost:3000 && nodemon -w server/ server/server.js",
     "start": "npm run dev",
     "start-production": "node server/server.js",
     "build": "next build",

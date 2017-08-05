@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { color1 } from '../config/globalStyles';
+import { color1, color3 } from '../config/globalStyles';
 
 export default function GameThumbnail(props) {
   const { img, title } = props;
@@ -40,8 +40,6 @@ const ThumbInner = styled.div`
 `;
 
 const Title = styled.h2`
-  color: ${color1};
-  text-shadow: 1px 1px #000;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 0;

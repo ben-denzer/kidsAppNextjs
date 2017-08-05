@@ -1,4 +1,12 @@
 import styled from 'styled-components';
+import {
+  color1,
+  color2,
+  color3,
+  color4,
+  light,
+  textColor
+} from '../../config/globalStyles';
 
 export const headerHeight = '80';
 
@@ -8,7 +16,7 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   width: 100%;
   height: ${headerHeight}px;
-  background-color: white;
+  background-color: ${light};
   box-shadow: 0px 5px 5px #999;
   position: relative;
   z-index: 2;

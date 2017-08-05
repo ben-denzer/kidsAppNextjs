@@ -6,7 +6,7 @@ import Nav from './Nav';
 export default function Header(props) {
   return (
     <HeaderContainer>
-      <Link href="/"><a><HeaderLogo src="/static/img/logo.png" /></a></Link>
+      <Link href="/"><a><HeaderLogo src="/static/img/logo2.png" /></a></Link>
       <Nav />
     </HeaderContainer>
   );

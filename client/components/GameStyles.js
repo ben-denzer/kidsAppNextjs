@@ -54,6 +54,19 @@ export const ScoreContainer = styled.div`
   color: ${color1};
 `;
 
+export const SettingsButton = styled.img`
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .8;
+  }
+`;
+
 export const Spinner = styled.img`
   height: 150px;
   width: 150px;

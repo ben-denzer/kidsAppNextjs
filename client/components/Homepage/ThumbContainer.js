@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { color1 } from '../../config/globalStyles';
+import { textColor } from '../../config/globalStyles';
 
 export default function ThumbContainer(props) {
   const { altText, headline, picture, url } = props;
@@ -32,6 +32,6 @@ const Headline = styled.h2`
   margin-top: 150px;
   text-align: center;
   color: white;
+  text-shadow: 1px 1px ${textColor};
   font-size: 28px;
-  text-shadow: 1px 1px #000;
 `;

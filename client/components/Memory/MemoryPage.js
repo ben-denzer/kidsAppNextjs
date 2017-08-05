@@ -9,7 +9,8 @@ import {
   HelpButton,
   MuteButton,
   PageContainer,
-  ScoreContainer
+  ScoreContainer,
+  SettingsButton
 } from '../GameStyles';
 
 export default function MemoryPage(props) {
@@ -21,6 +22,7 @@ export default function MemoryPage(props) {
     gameSize,
     helpOpen,
     mute,
+    openOptions,
     score,
     showPrize,
     spinnerClassName,
@@ -51,6 +53,11 @@ export default function MemoryPage(props) {
           src="/static/img/help.png"
           alt="Help"
           onClick={toggleHelp}
+        />
+        <SettingsButton
+          src="/static/img/settings.png"
+          alt="Settings"
+          onClick={openOptions}
         />
       </PageContainer>
       <Help Body={MemoryHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />

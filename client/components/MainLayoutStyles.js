@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { headerHeight } from './Header/HeaderStyles';
-import { color2 } from '../config/globalStyles';
+import { color2, color4 } from '../config/globalStyles';
 
 export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 0;
-  background-color: ${color2};
+  background-color: ${color4};
   background-size: cover;
   background-position: center;
 
