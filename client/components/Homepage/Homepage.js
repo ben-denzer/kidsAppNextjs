@@ -25,7 +25,7 @@ export default function HomepageContainer(props) {
           <Link href="/online-games"><CtaButton>Play For Free</CtaButton></Link>
         </TopSectionOverlay>
       </TopSection>
-      <TextSection>
+      {/*<TextSection>
         <TextInner>
           <h1>Use The Word List From Your Child's Teacher</h1>
           <p className="center">
@@ -40,7 +40,7 @@ export default function HomepageContainer(props) {
             for an account.
           </p>
         </TextInner>
-      </TextSection>
+      </TextSection>*/}
       <ThumbsSection>
         <ThumbsInner>
           <ThumbContainer
@@ -49,6 +49,7 @@ export default function HomepageContainer(props) {
             picture="kidsAtComputer.jpg"
             url="/online-games"
           />
+          {/*}
           <ThumbContainer
             altText="Children Playing Bingo"
             headline="Printable Games"
@@ -61,6 +62,7 @@ export default function HomepageContainer(props) {
             picture="momAndKids.jpg"
             url="/articles"
           />
+          */}
         </ThumbsInner>
       </ThumbsSection>
       <TextSection>
@@ -82,7 +84,7 @@ export default function HomepageContainer(props) {
           <p>
             Playing games is important for a child's development. The only way to master a skill is with repeated practice, and turning this repetition into a game is one of the best ways for children (and adults!) to stay interested.
           </p>
-          <h3>Personalize Your Experience</h3>
+          {/*<h3>Personalize Your Experience</h3>
           <p>
             Each teacher will probably have a different list of words that they will test your child on. By creating an account it is easy to customize the games on this site. See our
             {' '}
@@ -90,6 +92,7 @@ export default function HomepageContainer(props) {
             {' '}
             for more details.
           </p>
+          */}
         </TextInner>
       </TextSection>
     </HpContainer>

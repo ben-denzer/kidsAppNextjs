@@ -23,10 +23,12 @@ export default function Footer(props) {
       <FooterRight>
         <Links>
           <Link href="/online-games"><a>Online Games</a></Link>
+          {/*
           {' | '}
           <Link href="/printable-games"><a>Printable Games</a></Link>
           {' | '}
           <Link href="/articles"><a>Tips For Teaching Your Child</a></Link>
+          */}
         </Links>
       </FooterRight>
     </FooterContainer>
