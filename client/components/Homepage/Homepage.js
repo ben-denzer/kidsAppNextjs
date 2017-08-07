@@ -27,7 +27,7 @@ export default function HomepageContainer(props) {
       </TopSection>
       {/*<TextSection>
         <TextInner>
-          <h1>Use The Word List From Your Child's Teacher</h1>
+          <h1>Use Your Own Word List To Customize The Games</h1>
           <p className="center">
             This website is completely free to use, but if you want to use a custom word list and/or save your child's progress,
             {' '}
