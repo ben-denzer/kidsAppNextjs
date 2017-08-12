@@ -2,7 +2,7 @@ import OnlineGamesPage from '../client/components/OnlineGames/OnlineGamesPage';
 import MainLayout from '../client/components/MainLayout';
 import Head from 'next/head';
 
-export default function hp(props) {
+export default function onlineGames(props) {
   return (
     <div>
       <Head>

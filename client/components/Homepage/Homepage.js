@@ -49,13 +49,13 @@ export default function HomepageContainer(props) {
             picture="kidsAtComputer.jpg"
             url="/online-games"
           />
-          {/*}
           <ThumbContainer
             altText="Children Playing Bingo"
             headline="Printable Games"
             picture="bingo.jpg"
             url="/printable-games"
           />
+          {/*
           <ThumbContainer
             altText="Mom Reading To Her Kids"
             headline="For Parents"

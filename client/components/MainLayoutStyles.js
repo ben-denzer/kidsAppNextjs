@@ -21,7 +21,6 @@ export const LayoutContainer = styled.div`
 
   @media (max-width: 700px) {
     background-image: none;
-    background-color: lightskyblue;
   }
 
   .whiteBox {
