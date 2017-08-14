@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import defaultWords from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
+import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
 
 export default class OnlineBingoContainer extends Component {
   constructor() {
     super();
 
     this.state = {
-      activeWords: {},
+      activeWords: [],
       allWords: [],
       currentIndex: 0,
       delay: 3,
@@ -29,11 +30,21 @@ export default class OnlineBingoContainer extends Component {
   }
 
   handleCheck(e) {
-    const { activeWords } = this.state;
+    console.log('clicked');
+    const { activeWords, currentIndex } = this.state;
+    const tempActiveWords = activeWords.slice(0);
     const { word, x, y } = e.target.dataset;
     if (!word) return;
-    if (activeWords[word].checked) return;
     // if (allWords.indexOf(word) > currentIndex) return;
+    for (let i of activeWords) {
+      for (let j of i) {
+        if (j.word === word) {
+          j.checked = true;
+          break;
+        }
+      }
+    }
+    this.setState({ activeWords: tempActiveWords });
   }
 
   makeBoard(allWords) {
@@ -41,15 +52,17 @@ export default class OnlineBingoContainer extends Component {
     const tempWords = shuffle(allWords.slice(0));
     const middle = Math.floor(size / 2);
 
-    const activeWords = {};
+    const activeWords = [];
     for (let y = 0; y < size; y++) {
+      let tempArray = [];
       for (let x = 0; x < size; x++) {
         if (x === middle && y === middle) {
-          activeWords['free space'] = { x, y, checked: true };
+          tempArray.push({ x, y, word: 'free space', checked: true });
           continue;
         }
-        activeWords[tempWords.shift()] = { x, y, checked: false };
+        tempArray.push({ x, y, word: tempWords.shift(), checked: false });
       }
+      activeWords.push(tempArray);
     }
     this.setState({ activeWords });
   }
@@ -74,7 +87,15 @@ export default class OnlineBingoContainer extends Component {
   render() {
     return (
       <div>
-        <h1>Bingo</h1>
+        <OnlineBingoPage
+          {...this.state}
+          {...this.props}
+          handleCheck={this.handleCheck}
+          makeBoard={this.makeBoard}
+          nextWord={this.nextWord}
+          noWinner={this.noWinner}
+          pauseGame={this.pauseGame}
+        />
       </div>
     );
   }
