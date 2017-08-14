@@ -9,6 +9,7 @@ class SpeachPageContainer extends Component {
     this.state = {
       coins: 0,
       currentWordIndex: 0,
+      error: '',
       helpOpen: false,
       mute: false,
       score: 0,
@@ -17,6 +18,8 @@ class SpeachPageContainer extends Component {
       spinnerClassName: 'hide',
       wordList: []
     };
+
+    this.displayError = this.displayError.bind(this);
     this.listen = this.listen.bind(this);
     this.skipWord = this.skipWord.bind(this);
     this.toggleHelp = this.toggleHelp.bind(this);
@@ -93,6 +96,12 @@ class SpeachPageContainer extends Component {
     });
   }
 
+  displayError(
+    err = "Sorry, this browser doesn't support speech recognition. Please try again with Google Chrome"
+  ) {
+    this.setState({ error: err });
+  }
+
   getNextIndex() {
     const newWordIndex = this.state.currentWordIndex + 1;
     return newWordIndex < this.state.wordList.length ? newWordIndex : 0;
@@ -102,9 +111,13 @@ class SpeachPageContainer extends Component {
     if (this.recognition) {
       this.recognition.start();
       this.recognition.onresult = res => this.checkResponse(res);
-      this.recognition.onend = () => this.listen();
+      this.recognition.onend = e => {
+        console.log('end event', e);
+        this.listen();
+      };
       this.recognition.onerror = e => {
-        console.log(e.error);
+        console.log('err event', e.error);
+        this.recognition = null;
       };
     } else {
       console.log('need to show warning'); // TODO
@@ -112,6 +125,11 @@ class SpeachPageContainer extends Component {
   }
 
   setupSpeachRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      this.displayError();
+      return;
+    }
+
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
     const SpeechGrammarList =

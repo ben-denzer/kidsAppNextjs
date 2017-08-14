@@ -10,12 +10,13 @@ import {
   ScoreContainer
 } from '../GameStyles';
 
-import { SkipWordButton, WordContainer } from './SpeechPageStyles';
+import { ErrorBox, SkipWordButton, WordContainer } from './SpeechPageStyles';
 
 function SpeechPage(props) {
   const {
     coins,
     currentWordIndex,
+    error,
     helpOpen,
     listen,
     mute,
@@ -35,6 +36,7 @@ function SpeechPage(props) {
   return (
     <div>
       <PageContainer>
+        {error && <ErrorBox>{error}</ErrorBox>}
         <MuteButton
           src={`/static/img/${mute ? 'mute' : 'unmute'}.png`}
           alt={`Turn Sound ${mute ? 'On' : 'Off'}`}
