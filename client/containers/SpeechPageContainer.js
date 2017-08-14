@@ -97,7 +97,7 @@ class SpeachPageContainer extends Component {
   }
 
   displayError(
-    err = "Sorry, this browser doesn't support speech recognition. Please try again with Google Chrome"
+    err = "Sorry, this browser doesn't support speech recognition. Please try again with Google Chrome. (If you are on an IPhone, switching browsers won't help.)"
   ) {
     this.setState({ error: err });
   }
@@ -116,8 +116,10 @@ class SpeachPageContainer extends Component {
         this.listen();
       };
       this.recognition.onerror = e => {
-        console.log('err event', e.error);
-        this.recognition = null;
+        if (!/no-speech/i.test(e.error)) {
+          console.log('speech error', e);
+          this.recognition = null;
+        }
       };
     } else {
       console.log('need to show warning'); // TODO
