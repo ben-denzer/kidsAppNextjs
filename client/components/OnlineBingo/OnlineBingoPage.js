@@ -11,6 +11,10 @@ export default function OnlineBingoPage(props) {
     wonGame
   } = props;
 
+  if (wonGame) {
+    return <div>WINNER</div>;
+  }
+
   let allBoxes = [];
   for (let i = 0; i < activeWords.length; i++) {
     const row = activeWords[i].map(a => (
@@ -57,9 +61,9 @@ const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
-  height: 100px;
-  width: 100px;
+  font-size: 16px;
+  height: 60px;
+  width: 60px;
   border-right: ${boxBorder};
   border-bottom: ${boxBorder};
   text-align: center;

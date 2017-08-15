@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import defaultWords from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
+import checkBingoCard from '../utils/checkBingoCard';
 import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
 
 export default class OnlineBingoContainer extends Component {
@@ -32,19 +33,23 @@ export default class OnlineBingoContainer extends Component {
   handleCheck(e) {
     console.log('clicked');
     const { activeWords, currentIndex } = this.state;
-    const tempActiveWords = activeWords.slice(0);
     const { word, x, y } = e.target.dataset;
     if (!word) return;
     // if (allWords.indexOf(word) > currentIndex) return;
-    for (let i of activeWords) {
-      for (let j of i) {
-        if (j.word === word) {
-          j.checked = true;
-          break;
+    const tempActiveWords = activeWords.map(a => {
+      return a.map(b => {
+        if (b.word === word) {
+          return Object.assign({}, b, { checked: true });
         }
-      }
-    }
-    this.setState({ activeWords: tempActiveWords });
+        return b;
+      });
+    });
+
+    checkBingoCard(x, y, tempActiveWords, this.state.size)
+      .then(wonGame => {
+        this.setState({ activeWords: tempActiveWords, wonGame });
+      })
+      .catch(err => console.log('error in checkBingoCard', err));
   }
 
   makeBoard(allWords) {
