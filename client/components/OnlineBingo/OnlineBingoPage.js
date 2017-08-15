@@ -4,6 +4,8 @@ import styled from 'styled-components';
 export default function OnlineBingoPage(props) {
   const {
     activeWords,
+    allWords,
+    currentIndex,
     handleCheck,
     noWinner,
     pauseGame,
@@ -32,12 +34,25 @@ export default function OnlineBingoPage(props) {
     allBoxes.push(<BoxRow key={i}>{row}</BoxRow>);
   }
 
+  console.log(allWords, currentIndex, allWords[currentIndex]);
+  const oldestWord = currentIndex > 6 ? currentIndex - 7 : 0;
+  const alreadyCalled = allWords
+    .slice(oldestWord, currentIndex)
+    .reverse()
+    .map(a => <OldWord key={a}>{a}</OldWord>);
+
   return (
     <div>
       <h1>Bingooooo</h1>
-      <BoxContainer>
-        {allBoxes}
-      </BoxContainer>
+      <h2>{allWords[currentIndex]}</h2>
+      <GameContainer>
+        <BoxContainer>
+          {allBoxes}
+        </BoxContainer>
+        <ListContainer>
+          {alreadyCalled}
+        </ListContainer>
+      </GameContainer>
     </div>
   );
 }
@@ -98,3 +113,14 @@ const Box = styled.div`
     font-size: 14px;
   }
 `;
+
+const GameContainer = styled.div`
+  display: flex;
+`;
+
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const OldWord = styled.div``;

@@ -12,9 +12,9 @@ export default class OnlineBingoContainer extends Component {
       activeWords: [],
       allWords: [],
       currentIndex: 0,
-      delay: 3,
+      delay: 7,
       paused: false,
-      size: 5,
+      size: 3,
       wonGame: false
     };
 
@@ -23,19 +23,23 @@ export default class OnlineBingoContainer extends Component {
     this.nextWord = this.nextWord.bind(this);
     this.noWinner = this.noWinner.bind(this);
     this.pauseGame = this.pauseGame.bind(this);
+    this.startGame = this.startGame.bind(this);
+
+    this.gameTimer = null;
   }
 
   componentDidMount() {
     this.setState({ allWords: defaultWords });
     this.makeBoard(defaultWords);
+    this.startGame();
   }
 
   handleCheck(e) {
     console.log('clicked');
-    const { activeWords, currentIndex } = this.state;
+    const { allWords, activeWords, currentIndex } = this.state;
     const { word, x, y } = e.target.dataset;
     if (!word) return;
-    // if (allWords.indexOf(word) > currentIndex) return;
+    if (allWords.indexOf(word) > currentIndex) return;
     const tempActiveWords = activeWords.map(a => {
       return a.map(b => {
         if (b.word === word) {
@@ -77,6 +81,7 @@ export default class OnlineBingoContainer extends Component {
     if (nextIndex < this.state.allWords.length) {
       this.setState({ currentIndex: nextIndex });
     } else {
+      clearInterval(this.gameTimer);
       this.noWinner();
     }
   }
@@ -86,7 +91,14 @@ export default class OnlineBingoContainer extends Component {
   }
 
   pauseGame() {
+    clearInterval(this.gameTimer);
     this.setState({ paused: !this.state.paused });
+  }
+
+  startGame() {
+    this.gameTimer = setInterval(() => {
+      this.setState({ currentIndex: this.state.currentIndex + 1 });
+    }, this.state.delay * 1000);
   }
 
   render() {
