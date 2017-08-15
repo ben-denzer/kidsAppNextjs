@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AnalyticsWrapper from '../../client/containers/AnalyticsWrapper';
 import styled from 'styled-components';
 
 export default class PrintFlashcards extends Component {
@@ -14,14 +15,14 @@ export default class PrintFlashcards extends Component {
 
   render() {
     if (!this.state.words.length) {
-      return <div />;
+      return <AnalyticsWrapper><div /></AnalyticsWrapper>;
     }
 
     const cards = this.state.words
       .filter(a => a.checked && a)
       .map(a => <Flashcard key={a.word}>{a.word}</Flashcard>);
 
-    return <div>{cards}</div>;
+    return <AnalyticsWrapper><div>{cards}</div></AnalyticsWrapper>;
   }
 }
 

@@ -1,4 +1,5 @@
 import OnlineBingoContainer from '../../client/containers/OnlineBingoContainer';
+import AnalyticsWrapper from '../../client/containers/AnalyticsWrapper';
 import MainLayout from '../../client/components/MainLayout';
 import Head from 'next/head';
 
@@ -6,9 +7,11 @@ export default function speech(props) {
   return (
     <div>
       <Head>
-        <title>Sight Word Bingo Online</title>
+        <title>Sight Word Bingo | My Sight Words.com</title>
       </Head>
-      {MainLayout(OnlineBingoContainer, props)}
+      <AnalyticsWrapper>
+        {MainLayout(OnlineBingoContainer, props)}
+      </AnalyticsWrapper>
     </div>
   );
 }

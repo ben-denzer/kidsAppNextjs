@@ -1,5 +1,6 @@
 import MainLayout from '../../client/components/MainLayout';
 import SpeechPageContainer from '../../client/containers/SpeechPageContainer';
+import AnalyticsWrapper from '../../client/containers/AnalyticsWrapper';
 import Head from 'next/head';
 
 export default function speech(props) {
@@ -8,7 +9,9 @@ export default function speech(props) {
       <Head>
         <title>Read Sight Words</title>
       </Head>
-      {MainLayout(SpeechPageContainer, props)}
+      <AnalyticsWrapper>
+        {MainLayout(SpeechPageContainer, props)}
+      </AnalyticsWrapper>
     </div>
   );
 }

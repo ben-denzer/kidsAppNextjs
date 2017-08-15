@@ -168,7 +168,6 @@ export default class MemoryPageContainer extends Component {
   }
 
   openOptions() {
-    console.log('called');
     this.setState({ gameOver: true, optionsOpen: true });
   }
 
