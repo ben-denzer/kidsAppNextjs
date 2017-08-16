@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const color2 = '#327d32';
+import { color1, color2, color3, color4 } from '../../config/globalStyles';
 
 export const Card = styled.div`
   height: 10px;
@@ -8,36 +8,6 @@ export const Card = styled.div`
   margin: 2px;
   background-size: cover;
   backgroung-position: cover;
-`;
-
-export const CardBack = styled.div`
-  height: 100px;
-  width: 100px;
-  background-position: center;
-  background-size: cover;
-  margin: 5px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  border: 2px solid black;
-
-  @media (max-width: 700px) {
-    height: 75px;
-    width: 75px;
-  }
-
-  &.active {
-    border: 7px solid black;
-
-    &:hover {
-      cursor: default;
-      opacity: 1;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-    opacity: .8;
-  }
 `;
 
 export const CardRow = styled.div`
@@ -55,7 +25,7 @@ export const ChangeSettings = styled.p`
   }
 `;
 
-export const DelayBox = styled.div`
+export const Option = styled.div`
   height: 40px;
   width: 120px;
   margin: 1px;
@@ -67,7 +37,8 @@ export const DelayBox = styled.div`
   border: 2px solid black;
 
   &.active {
-    border: 7px solid black;
+    background: ${color1};
+    color: white;
 
     &:hover {
       cursor: default;
@@ -79,46 +50,41 @@ export const DelayBox = styled.div`
     cursor: pointer;
     opacity: .8;
   }
-`;
 
-export const Option = styled.div`
-  height: 150px;
-  width: 100px;
-  margin: 3px 5px;
-  border: 2px solid black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-  justify-content: space-between;
-
-  &.active {
-    border: 7px solid black;
-    background: #fff;
-
-    &:hover {
-      cursor: default;
-      border: 7px solid black;
-    }
-  }
-
-  &.width5 {
-    @media (max-width: 500px) {
+  &.width7 {
+    @media (max-width: 1099px) {
       display: none;
     }
   }
-
-  &.width4 {
-    @media (max-width: 400px) {
-      display: none;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-    border: 4px solid black;
-  }
 `;
+
+// export const Option = styled.div`
+//   height: 150px;
+//   width: 150px;
+//   margin: 3px 5px;
+//   border: 2px solid black;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   box-sizing: border-box;
+//   justify-content: space-between;
+
+//   &.active {
+//     border: 7px solid black;
+//     background: ${color1};
+//     color: white;
+
+//     &:hover {
+//       cursor: default;
+//       border: 7px solid black;
+//     }
+//   }
+
+//   &:hover {
+//     cursor: pointer;
+//     border: 4px solid black;
+//   }
+// `;
 
 export const OptionsContainer = styled.div`
   width: 100%;
@@ -164,7 +130,7 @@ export const StartGame = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: blue;
+    background: ${color1};
   }
 `;
 

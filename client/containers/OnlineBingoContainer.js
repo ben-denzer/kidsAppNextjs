@@ -71,8 +71,7 @@ export default class OnlineBingoContainer extends Component {
     );
   }
 
-  delayChange(e) {
-    const newVal = Number(e.target.dataset.time);
+  delayChange(newVal) {
     this.setState({ delay: newVal });
   }
 

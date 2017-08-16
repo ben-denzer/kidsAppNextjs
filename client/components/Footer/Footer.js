@@ -23,9 +23,9 @@ export default function Footer(props) {
       <FooterRight>
         <Links>
           <Link href="/online-games"><a>Online Games</a></Link>
-          {/*
           {' | '}
           <Link href="/printable-games"><a>Printable Games</a></Link>
+          {/*
           {' | '}
           <Link href="/articles"><a>Tips For Teaching Your Child</a></Link>
           */}
@@ -44,6 +44,11 @@ const FooterContainer = styled.div`
   background-color: ${color3};
   color: white;
 
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   a {
     color: white;
     text-decoration: none;
@@ -60,6 +65,12 @@ const FooterLeft = styled.div`
   display: flex;
   align-items: center;
   padding-left: 20px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const FooterRight = styled.div`
@@ -67,6 +78,10 @@ const FooterRight = styled.div`
   align-items: center;
   justify-content: flex-end;
   padding-right: 20px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
 `;
 
 const Links = styled.div`

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { color2 } from '../../config/globalStyles';
 import MemoryHelpText from '../Help/helpText/MemoryHelpText';
 import Help from '../Help/Help';
 import Spinner from '../Spinner';
@@ -62,12 +63,14 @@ export default function OnlineBingoPage(props) {
   return (
     <div>
       <PageContainer>
-        <BoxContainer>
-          {allBoxes}
-        </BoxContainer>
-        <ListContainer>
-          {alreadyCalled}
-        </ListContainer>
+        <GameContainer>
+          <BoxContainer>
+            {allBoxes}
+          </BoxContainer>
+          <ListContainer>
+            {alreadyCalled}
+          </ListContainer>
+        </GameContainer>
         <Spinner spinnerClassName={spinnerClassName} />
         <MuteButton
           src={`/static/img/${mute ? 'mute' : 'unmute'}.png`}
@@ -98,6 +101,10 @@ const boxBorder = '1px solid black';
 const BoxContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 767px) {
+    margin-bottom: 100px;
+  }
 `;
 
 const BoxRow = styled.div`
@@ -113,8 +120,8 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  height: 60px;
-  width: 60px;
+  height: 75px;
+  width: 75px;
   border-right: ${boxBorder};
   border-bottom: ${boxBorder};
   text-align: center;
@@ -124,7 +131,7 @@ const Box = styled.div`
   }
 
   &.checked {
-    background: blue;
+    background: ${color2};
     color: white;
 
     &:hover {
@@ -138,11 +145,6 @@ const Box = styled.div`
     opacity: .8;
   }
 
-  @media (max-width: 550px) {
-    height: 75px;
-    width: 75px;
-  }
-
   @media (max-width: 400px) {
     height: 60px;
     width: 60px;
@@ -152,11 +154,39 @@ const Box = styled.div`
 
 const GameContainer = styled.div`
   display: flex;
+
+  @media (max-width: 767px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding-left: 50px;
+  min-width: 150px;
+
+  @media (max-width: 767px) {
+    padding-left: 0;
+    align-items: center;
+  }
 `;
 
-const OldWord = styled.div``;
+const OldWord = styled.div`
+  font-size: 18px;
+  
+  @media (max-width: 767px) {
+    display: none;
+  }
+
+  &:first-child {
+    display: block;
+    margin-bottom: 50px;
+    font-size: 48px;
+    font-weight: bold;
+
+    @media (max-width: 767px) {
+      margin-bottom: 20px;
+    }
+  }
+`;

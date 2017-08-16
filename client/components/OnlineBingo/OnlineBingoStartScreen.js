@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import makeThumbnailGrid from '../../utils/makeThumbnailGrid';
 import { PageContainer } from '../GameStyles';
 import {
-  CardBack,
   ChangeSettings,
   DelayBox,
   Option,
@@ -46,23 +45,23 @@ function OnlineBingoStartScreen(props) {
       <Option
         key={a[0].toString() + a[1].toString()}
         onClick={() => sizeChange(a[0])}
-        data-size={a[0]}
         className={`width${a[0]} ${a[0] === size ? 'active' : ''}`}
       >
         <OptionTitle>{`${a[0]} X ${a[1]}`}</OptionTitle>
-        <div>{makeThumbnailGrid(a)}</div>
       </Option>
     );
   });
 
   const delayValues = [7, 10, 15, 20, 25, 30];
   const delayOptions = delayValues.map(a => (
-    <DelayBox
+    <Option
       key={a}
-      onClick={delayChange}
+      onClick={() => delayChange(a)}
       data-time={a}
       className={a === delay ? 'active' : ''}
-    >{`${a}sec`}</DelayBox>
+    >
+      <OptionTitle>{`${a}sec`}</OptionTitle>
+    </Option>
   ));
 
   return (

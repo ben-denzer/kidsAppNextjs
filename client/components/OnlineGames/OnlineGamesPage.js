@@ -25,6 +25,20 @@ export default function OnlineGamesContainer(props) {
           </Link>
         </ThumbBox>
         <ThumbBox>
+          <Link prefetch href="/online-games/bingo">
+            <a>
+              <GameThumbnail
+                title="Online Bingo"
+                img="/static/img/onlineBingoThumb.jpg"
+              />
+              <Headline>
+                Pay attention to each word that is called and mark the word in your bingo card.
+                {' '}
+              </Headline>
+            </a>
+          </Link>
+        </ThumbBox>
+        <ThumbBox>
           <Link prefetch href="/online-games/speech">
             <a>
               <GameThumbnail

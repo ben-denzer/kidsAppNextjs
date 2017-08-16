@@ -43,6 +43,7 @@ export const LayoutContainer = styled.div`
 
     @media (max-width: 700px) {
       background: white;
+      width: 97%;
     }
   }
 `;
