@@ -1,15 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
+import MemoryHelpText from '../Help/helpText/MemoryHelpText';
+import Help from '../Help/Help';
+import Spinner from '../Spinner';
+import {
+  CoinImage,
+  HelpButton,
+  MuteButton,
+  PageContainer,
+  ScoreContainer,
+  SettingsButton
+} from '../GameStyles';
 
 export default function OnlineBingoPage(props) {
   const {
     activeWords,
     allWords,
+    coins,
     currentIndex,
     handleCheck,
+    helpOpen,
+    mute,
     noWinner,
+    openOptions,
     pauseGame,
+    showPrize,
     size,
+    spinnerClassName,
+    toggleHelp,
+    toggleSound,
     wonGame
   } = props;
 
@@ -34,25 +53,42 @@ export default function OnlineBingoPage(props) {
     allBoxes.push(<BoxRow key={i}>{row}</BoxRow>);
   }
 
-  console.log(allWords, currentIndex, allWords[currentIndex]);
   const oldestWord = currentIndex > 6 ? currentIndex - 7 : 0;
   const alreadyCalled = allWords
-    .slice(oldestWord, currentIndex)
+    .slice(oldestWord, currentIndex + 1)
     .reverse()
     .map(a => <OldWord key={a}>{a}</OldWord>);
 
   return (
     <div>
-      <h1>Bingooooo</h1>
-      <h2>{allWords[currentIndex]}</h2>
-      <GameContainer>
+      <PageContainer>
         <BoxContainer>
           {allBoxes}
         </BoxContainer>
         <ListContainer>
           {alreadyCalled}
         </ListContainer>
-      </GameContainer>
+        <Spinner spinnerClassName={spinnerClassName} />
+        <MuteButton
+          src={`/static/img/${mute ? 'mute' : 'unmute'}.png`}
+          alt={`Turn Sound ${mute ? 'On' : 'Off'}`}
+          onClick={toggleSound}
+        />
+        <ScoreContainer>
+          {coins} <CoinImage src="/static/img/goldCoin.png" alt="Coins" />
+        </ScoreContainer>
+        <HelpButton
+          src="/static/img/help.png"
+          alt="Help"
+          onClick={toggleHelp}
+        />
+        <SettingsButton
+          src="/static/img/settings.png"
+          alt="Settings"
+          onClick={openOptions}
+        />
+      </PageContainer>
+      <Help Body={MemoryHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />
     </div>
   );
 }

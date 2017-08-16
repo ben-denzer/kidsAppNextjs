@@ -188,7 +188,6 @@ export default class MemoryPageContainer extends Component {
             optionsOpen={optionsOpen}
             setupCards={this.setupCards}
             sizeChange={this.sizeChange}
-            openOptions={this.openOptions}
           />
         </div>
       );

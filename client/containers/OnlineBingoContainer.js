@@ -3,6 +3,8 @@ import defaultWords from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
 import checkBingoCard from '../utils/checkBingoCard';
 import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
+import OnlineBingoStartScreen
+  from '../components/OnlineBingo/OnlineBingoStartScreen';
 
 export default class OnlineBingoContainer extends Component {
   constructor() {
@@ -11,31 +13,80 @@ export default class OnlineBingoContainer extends Component {
     this.state = {
       activeWords: [],
       allWords: [],
+      coins: 0,
       currentIndex: 0,
-      delay: 7,
+      delay: 15,
+      gameOver: true,
+      helpOpen: false,
+      mute: false,
+      optionsOpen: true,
       paused: false,
-      size: 3,
+      score: 0,
+      showPrize: false,
+      size: 5,
+      spinnerClassName: 'hide',
       wonGame: false
     };
 
-    this.handleCheck = this.handleCheck.bind(this);
-    this.makeBoard = this.makeBoard.bind(this);
-    this.nextWord = this.nextWord.bind(this);
-    this.noWinner = this.noWinner.bind(this);
-    this.pauseGame = this.pauseGame.bind(this);
-    this.startGame = this.startGame.bind(this);
+    const boundFunctions = [
+      'delayChange',
+      'handleCheck',
+      'makeBoard',
+      'gameOver',
+      'noWinner',
+      'openOptions',
+      'pauseGame',
+      'sayWord',
+      // 'setupSpeech',
+      'sizeChange',
+      'startGame',
+      'toggleHelp',
+      'toggleSound'
+    ];
+    boundFunctions.forEach(a => this[a] = this[a].bind(this));
 
     this.gameTimer = null;
+    this.synth;
+    this.voices;
   }
 
   componentDidMount() {
     this.setState({ allWords: defaultWords });
     this.makeBoard(defaultWords);
-    this.startGame();
+    // this.setupSpeech();
+  }
+
+  addCoin(val = this.state.size) {
+    const { coins } = this.state;
+    this.setState({ showPrize: true, spinnerClassName: 'show' });
+    setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
+    setTimeout(
+      () =>
+        this.setState({
+          coins: coins + val,
+          showPrize: false,
+          spinnerClassName: 'hide'
+        }),
+      3500
+    );
+  }
+
+  delayChange(e) {
+    const newVal = Number(e.target.dataset.time);
+    this.setState({ delay: newVal });
+  }
+
+  gameOver() {
+    if (!this.state.mute) {
+      this.coinSound.play();
+    }
+    this.addCoin();
+    setTimeout(() => {
+      this.setState({ gameOver: true });
+    }, 5000);
   }
 
   handleCheck(e) {
-    console.log('clicked');
     const { allWords, activeWords, currentIndex } = this.state;
     const { word, x, y } = e.target.dataset;
     if (!word) return;
@@ -51,12 +102,16 @@ export default class OnlineBingoContainer extends Component {
 
     checkBingoCard(x, y, tempActiveWords, this.state.size)
       .then(wonGame => {
-        this.setState({ activeWords: tempActiveWords, wonGame });
+        if (wonGame) {
+          clearInterval(this.gameTimer);
+          this.gameOver();
+        }
+        this.setState({ activeWords: tempActiveWords });
       })
       .catch(err => console.log('error in checkBingoCard', err));
   }
 
-  makeBoard(allWords) {
+  makeBoard(allWords = this.state.allWords) {
     const { size } = this.state;
     const tempWords = shuffle(allWords.slice(0));
     const middle = Math.floor(size / 2);
@@ -76,18 +131,12 @@ export default class OnlineBingoContainer extends Component {
     this.setState({ activeWords });
   }
 
-  nextWord() {
-    const nextIndex = this.state.currentIndex + 1;
-    if (nextIndex < this.state.allWords.length) {
-      this.setState({ currentIndex: nextIndex });
-    } else {
-      clearInterval(this.gameTimer);
-      this.noWinner();
-    }
-  }
-
   noWinner() {
     alert('no winner');
+  }
+
+  openOptions() {
+    this.setState({ gameOver: true, optionsOpen: true });
   }
 
   pauseGame() {
@@ -95,23 +144,108 @@ export default class OnlineBingoContainer extends Component {
     this.setState({ paused: !this.state.paused });
   }
 
+  sayWord(word) {
+    if (!this.state.mute) {
+      this.newWordSound.play();
+    }
+    if (!this.synth) return;
+  }
+
+  sizeChange(newSize) {
+    if (newSize === this.state.size) return;
+    this.setState({ size: newSize });
+  }
+
   startGame() {
+    this.setState({
+      allWords: shuffle(this.state.allWords),
+      currentIndex: 0,
+      gameOver: false,
+      optionsOpen: false
+    });
+
+    this.makeBoard();
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+    }
     this.gameTimer = setInterval(() => {
       this.setState({ currentIndex: this.state.currentIndex + 1 });
+      this.sayWord(this.state.allWords[this.state.currentIndex + 1]);
     }, this.state.delay * 1000);
   }
 
+  toggleHelp() {
+    this.setState({ helpOpen: !this.state.helpOpen });
+  }
+
+  toggleSound() {
+    this.setState({ mute: !this.state.mute });
+  }
+
+  // setupSpeech() {
+  //   console.log('setupSpeech called');
+  //   const synth = window.speechSynthesis;
+  //   if (typeof window.speechSynthesis === 'undefined') {
+  //     console.log('it is undefined');
+  //     return;
+  //   }
+
+  //   const voices = synth.getVoices();
+  //   console.log('voices', voices);
+
+  //   for (let i = 0; i < voices.length; i++) {
+  //     console.log(voices[i].name + ' (' + voices[i].lang + ')');
+
+  //     if (voices[i].default) {
+  //       console.log(' -- DEFAULT');
+  //     }
+  //   }
+  // }
+
   render() {
+    if (this.state.gameOver) {
+      const { delay, optionsOpen, size } = this.state;
+      return (
+        <div className="whiteBox">
+          <OnlineBingoStartScreen
+            delay={delay}
+            delayChange={this.delayChange}
+            openOptions={this.openOptions}
+            optionsOpen={optionsOpen}
+            size={size}
+            sizeChange={this.sizeChange}
+            startGame={this.startGame}
+          />
+        </div>
+      );
+    }
+
     return (
-      <div>
+      <div className="whiteBox">
         <OnlineBingoPage
-          {...this.state}
-          {...this.props}
           handleCheck={this.handleCheck}
           makeBoard={this.makeBoard}
-          nextWord={this.nextWord}
+          toggleHelp={this.toggleHelp}
+          openOptions={this.openOptions}
+          toggleSound={this.toggleSound}
           noWinner={this.noWinner}
           pauseGame={this.pauseGame}
+          {...this.state}
+          {...this.props}
+        />
+        <audio
+          type="audio/mp3"
+          src="/static/media/shootingStar.mp3"
+          ref={newWordSound => {
+            this.newWordSound = newWordSound;
+          }}
+        />
+        <audio
+          type="audio/mp3"
+          src="/static/media/cheer.mp3"
+          ref={coinSound => {
+            this.coinSound = coinSound;
+          }}
         />
       </div>
     );
