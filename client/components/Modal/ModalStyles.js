@@ -20,7 +20,7 @@ export const FullScreen = styled.div`
   top: 0;
   left: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   background-color: rgba(0, 0, 0, .8);
@@ -41,7 +41,7 @@ export const FullScreen = styled.div`
   }
 `;
 
-export const Modal = styled.div`
+export const ModalContainer = styled.div`
   width: 90%;
   height: 60%;
   margin-top: 100px;
@@ -50,6 +50,24 @@ export const Modal = styled.div`
   position: relative;
   font-size: 16px;
   z-index: 3;
+
+  &.small {
+    height: 120px;
+
+    &>div {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+
+      img {
+        height: 80px;
+        width: 80px;
+      }
+    }
+  }
 
   h2 {
     text-align: center;

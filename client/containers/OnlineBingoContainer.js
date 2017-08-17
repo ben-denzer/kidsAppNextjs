@@ -17,7 +17,7 @@ export default class OnlineBingoContainer extends Component {
       currentIndex: 0,
       delay: 15,
       gameOver: true,
-      helpOpen: false,
+      modalOpen: false,
       mute: false,
       optionsOpen: true,
       paused: false,
@@ -40,7 +40,6 @@ export default class OnlineBingoContainer extends Component {
       // 'setupSpeech',
       'sizeChange',
       'startGame',
-      'toggleHelp',
       'toggleSound'
     ];
     boundFunctions.forEach(a => this[a] = this[a].bind(this));
@@ -54,6 +53,13 @@ export default class OnlineBingoContainer extends Component {
     this.setState({ allWords: defaultWords });
     this.makeBoard(defaultWords);
     // this.setupSpeech();
+  }
+
+  componentWillUnmount() {
+    if (this.gameTimer) {
+      clearTimeout(this.gameTimer);
+      this.gameTimer = null;
+    }
   }
 
   addCoin(val = this.state.size) {
@@ -139,7 +145,14 @@ export default class OnlineBingoContainer extends Component {
   }
 
   pauseGame() {
-    clearInterval(this.gameTimer);
+    if (this.state.paused) {
+      this.gameTimer = setInterval(() => {
+        this.setState({ currentIndex: this.state.currentIndex + 1 });
+        this.sayWord(this.state.allWords[this.state.currentIndex + 1]);
+      }, this.state.delay * 1000);
+    } else {
+      clearInterval(this.gameTimer);
+    }
     this.setState({ paused: !this.state.paused });
   }
 
@@ -156,6 +169,7 @@ export default class OnlineBingoContainer extends Component {
   }
 
   startGame() {
+    setTimeout(() => this.newWordSound.play());
     this.setState({
       allWords: shuffle(this.state.allWords),
       currentIndex: 0,
@@ -171,10 +185,6 @@ export default class OnlineBingoContainer extends Component {
       this.setState({ currentIndex: this.state.currentIndex + 1 });
       this.sayWord(this.state.allWords[this.state.currentIndex + 1]);
     }, this.state.delay * 1000);
-  }
-
-  toggleHelp() {
-    this.setState({ helpOpen: !this.state.helpOpen });
   }
 
   toggleSound() {
@@ -224,7 +234,6 @@ export default class OnlineBingoContainer extends Component {
         <OnlineBingoPage
           handleCheck={this.handleCheck}
           makeBoard={this.makeBoard}
-          toggleHelp={this.toggleHelp}
           openOptions={this.openOptions}
           toggleSound={this.toggleSound}
           noWinner={this.noWinner}

@@ -3,7 +3,7 @@ import React from 'react';
 export default function SpeechHelpText() {
   return (
     <div id="helpTextContainer">
-      <strong>Nothing is working</strong>
+      <strong>If The Page Seems Broken</strong>
       <p>
         Please make sure that you are using one of the following browsers, if you are using something else please click on the link(s) to download one.
       </p>

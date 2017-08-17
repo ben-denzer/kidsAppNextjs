@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { CloseButton, FullScreen, Modal, ModalBody } from './HelpStyles';
-import SpeechHelpText from './helpText/SpeechHelpText';
+import {
+  CloseButton,
+  FullScreen,
+  ModalContainer,
+  ModalBody
+} from './ModalStyles';
 
-class Help extends Component {
+class Modal extends Component {
   constructor(props) {
     super(props);
     this.state = { modalClass: 'closed' };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.helpOpen !== nextProps.helpOpen) {
-      if (nextProps.helpOpen) {
+    if (this.props.modalOpen !== nextProps.helpOpen) {
+      if (nextProps.modalOpen) {
         this.setState({ modalClass: 'transition' });
         setTimeout(() => this.setState({ modalClass: 'open' }), 0);
       } else {
@@ -22,30 +26,34 @@ class Help extends Component {
   }
 
   render() {
-    const { Body, helpOpen, toggleHelp } = this.props;
+    const { Body, small, toggleModal } = this.props;
     const { modalClass } = this.state;
     return (
-      <FullScreen className={modalClass} onClick={toggleHelp}>
-        <Modal>
+      <FullScreen className={modalClass} onClick={toggleModal}>
+        <ModalContainer className={small ? 'small' : ''}>
           <CloseButton src="/static/img/close.png" alt="close" />
           <ModalBody
             onClick={e => {
               e.stopPropagation();
             }}
           >
-            <h2>Help</h2>
             <Body />
           </ModalBody>
-        </Modal>
+        </ModalContainer>
       </FullScreen>
     );
   }
 }
 
-Help.propTypes = {
-  Body: PropTypes.func.isRequired,
-  helpOpen: PropTypes.bool.isRequired,
-  toggleHelp: PropTypes.func.isRequired
+Modal.defaultProps = {
+  small: false
 };
 
-export default Help;
+Modal.propTypes = {
+  Body: PropTypes.func.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
+  small: PropTypes.bool,
+  toggleModal: PropTypes.func.isRequired
+};
+
+export default Modal;

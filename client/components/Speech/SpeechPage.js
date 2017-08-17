@@ -1,6 +1,6 @@
 import React from 'react';
-import Help from '../Help/Help';
-import SpeechHelpText from '../Help/helpText/SpeechHelpText';
+import Modal from '../Modal/Modal';
+import SpeechHelpText from '../Modal/helpText/SpeechHelpText';
 import Spinner from '../Spinner';
 import {
   CoinImage,
@@ -59,7 +59,11 @@ function SpeechPage(props) {
           onClick={skipWord}
         />
       </PageContainer>
-      <Help Body={SpeechHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />
+      <Modal
+        Body={SpeechHelpText}
+        modalOpen={helpOpen}
+        toggleModal={toggleHelp}
+      />
     </div>
   );
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { color2 } from '../../config/globalStyles';
-import MemoryHelpText from '../Help/helpText/MemoryHelpText';
-import Help from '../Help/Help';
+import Modal from '../Modal/Modal';
 import Spinner from '../Spinner';
 import {
   CoinImage,
@@ -20,15 +19,15 @@ export default function OnlineBingoPage(props) {
     coins,
     currentIndex,
     handleCheck,
-    helpOpen,
     mute,
     noWinner,
     openOptions,
+    paused,
     pauseGame,
     showPrize,
     size,
     spinnerClassName,
-    toggleHelp,
+    toggleModal,
     toggleSound,
     wonGame
   } = props;
@@ -80,10 +79,11 @@ export default function OnlineBingoPage(props) {
         <ScoreContainer>
           {coins} <CoinImage src="/static/img/goldCoin.png" alt="Coins" />
         </ScoreContainer>
+
         <HelpButton
-          src="/static/img/help.png"
+          src="/static/img/pauseButton.png"
           alt="Help"
-          onClick={toggleHelp}
+          onClick={pauseGame}
         />
         <SettingsButton
           src="/static/img/settings.png"
@@ -91,7 +91,20 @@ export default function OnlineBingoPage(props) {
           onClick={openOptions}
         />
       </PageContainer>
-      <Help Body={MemoryHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />
+      <Modal
+        Body={() => (
+          <div>
+            <img
+              src="/static/img/playButton.png"
+              alt="Re Start"
+              onClick={pauseGame}
+            />
+          </div>
+        )}
+        modalOpen={paused}
+        small={true}
+        toggleModal={pauseGame}
+      />
     </div>
   );
 }

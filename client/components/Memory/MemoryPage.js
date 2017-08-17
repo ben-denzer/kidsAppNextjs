@@ -1,7 +1,7 @@
 import React from 'react';
 import makeMemoryGrid from '../../utils/makeMemoryGrid';
-import MemoryHelpText from '../Help/helpText/MemoryHelpText';
-import Help from '../Help/Help';
+import MemoryHelpText from '../Modal/helpText/MemoryHelpText';
+import Modal from '../Modal/Modal';
 import Spinner from '../Spinner';
 import { CardContainer } from './MemoryPageStyles';
 import {
@@ -60,7 +60,11 @@ export default function MemoryPage(props) {
           onClick={openOptions}
         />
       </PageContainer>
-      <Help Body={MemoryHelpText} helpOpen={helpOpen} toggleHelp={toggleHelp} />
+      <Modal
+        Body={MemoryHelpText}
+        modalOpen={helpOpen}
+        toggleModal={toggleHelp}
+      />
     </div>
   );
 }
