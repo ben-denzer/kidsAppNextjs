@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-
-export const color2 = '#327d32';
+import { color1, color2 } from '../../config/globalStyles';
 
 export const Card = styled.div`
   height: 10px;
@@ -144,7 +143,7 @@ export const StartGame = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: blue;
+    background: ${color1};
   }
 `;
 
