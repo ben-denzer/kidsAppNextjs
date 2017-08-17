@@ -169,7 +169,9 @@ export default class OnlineBingoContainer extends Component {
   }
 
   startGame() {
-    setTimeout(() => this.newWordSound.play());
+    if (!this.state.mute) {
+      setTimeout(() => this.newWordSound.play());
+    }
     this.setState({
       allWords: shuffle(this.state.allWords),
       currentIndex: 0,
