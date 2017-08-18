@@ -1,17 +1,16 @@
 const express = require('express');
 const apiController = express.Router();
 const connection = require('../keys/sqlConnection');
+const jsonParser = require('body-parser').json();
+const userServices = require('../services/userServices');
 
 function apiRouter(req, res) {
-  try {
-    connection.connect();
-  } catch (e) {
-    console.log(`error in catch ${e}`);
-  }
-  apiController.get('/', (req, res) => {
-    connection.query('SELECT * FROM children', (err, results) => {
-      if (err) return res.status(500).send(err.toString());
-      res.status(200).send(results[0].username);
+  connection.connect();
+
+  apiController.post('/addUser', jsonParser, (req, res) => {
+    userServices.addUser(connection, req.body, (err, success) => {
+      if (err) return res.status(500).send(JSON.stringify({ error: err }));
+      res.status(200).send(JSON.stringify({ success: 'User Added' }));
     });
   });
 
