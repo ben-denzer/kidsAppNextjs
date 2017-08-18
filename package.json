@@ -15,6 +15,7 @@
   "license": "",
   "dependencies": {
     "express": "^4.15.3",
+    "mysql": "^2.14.1",
     "next": "^3.0.1-beta.18",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
