@@ -9,8 +9,23 @@ function apiRouter(req, res) {
 
   apiController.post('/addUser', jsonParser, (req, res) => {
     userServices.addUser(connection, req.body, (err, success) => {
-      if (err) return res.status(500).send(JSON.stringify({ error: err }));
+      if (err)
+        return res
+          .status(err.status)
+          .send(JSON.stringify({ error: err.error }));
       res.status(200).send(JSON.stringify({ success: 'User Added' }));
+    });
+  });
+
+  apiController.post('/login', jsonParser, (req, res) => {
+    userServices.login(connection, req.body, (err, success) => {
+      if (err)
+        return res
+          .status(err.status)
+          .send(JSON.stringify({ error: err.error }));
+      res
+        .status(200)
+        .send(JSON.stringify({ success: 'Successfully Logged In' }));
     });
   });
 
