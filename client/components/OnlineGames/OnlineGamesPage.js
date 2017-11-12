@@ -53,6 +53,9 @@ export default function OnlineGamesContainer(props) {
               </Headline>
             </a>
           </Link>
+          <Link prefetch href="/online-games/fishing">
+            <a>Fishing</a>
+          </Link>
         </ThumbBox>
       </ThumbContainer>
     </PageContainer>
