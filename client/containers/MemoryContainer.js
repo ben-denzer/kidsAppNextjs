@@ -39,7 +39,7 @@ export default class MemoryPageContainer extends Component {
 
   componentDidMount() {
     const coins = window.localStorage.getItem('coins');
-    this.setState({ wordList: defaultWordList });
+    this.setState({ coins, wordList: defaultWordList });
     this.getFromLocalStorage();
   }
 

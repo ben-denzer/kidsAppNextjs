@@ -8,18 +8,41 @@ export default class FishingContainer extends Component {
     super(props);
 
     this.state = {
-      wordList: [],
+      coins: 0,
       currentIndex: null,
-      fishOnBoard: []
+      fishOnBoard: [],
+      mute: false,
+      showPrize: false,
+      spinnerClassName: 'hide',
+      winCount: 0,
+      wordList: [],
     };
 
+    this.addCoin = this.addCoin.bind(this);
     this.addFish = this.addFish.bind(this);
     this.handleUserChoice = this.handleUserChoice.bind(this);
     this.setupBoard = this.setupBoard.bind(this);
+    this.toggleSound = this.toggleSound.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ wordList: defaultWordList }, () => { this.setupBoard() });
+    const coins = window.localStorage.getItem('coins') || 0;
+    this.setState({ coins, wordList: defaultWordList }, () => { this.setupBoard() });
+  }
+
+  addCoin() {
+    const { coins } = this.state;
+    this.setState({ showPrize: true, spinnerClassName: 'show' });
+    setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
+    setTimeout(
+      () =>
+        this.setState({
+          coins: coins + 1,
+          showPrize: false,
+          spinnerClassName: 'hide'
+        }),
+      3500
+    );
   }
 
   addFish() {
@@ -34,12 +57,18 @@ export default class FishingContainer extends Component {
   }
 
   handleUserChoice(e) {
-    const { currentIndex, fishOnBoard } = this.state;
+    const { currentIndex, fishOnBoard, winCount } = this.state;
     const target = e.target;    
     if (target.innerText === fishOnBoard[currentIndex]) {
+      this.setState({ winCount: winCount + 1 });
       target.classList.add('caught');
       setTimeout(() => target.classList.add('reeling'), 700);
-      setTimeout(this.setupBoard, 2500);
+      if ((winCount + 1) % 5 === 0) {
+        setTimeout(this.addCoin, 2500);
+        setTimeout(this.setupBoard, 5500);
+      } else {
+        setTimeout(this.setupBoard, 2500);
+      }
     } else {
       target.classList.add('incorrect');
       setTimeout(() => target.classList.remove('incorrect'), 500);
@@ -53,8 +82,8 @@ export default class FishingContainer extends Component {
     });
   }
 
-  success(target) {
-
+  toggleSound() {
+    this.setState({ mute: !this.state.mute });
   }
 
   render() {
@@ -64,6 +93,7 @@ export default class FishingContainer extends Component {
           {...this.props}
           {...this.state}
           handleUserChoice={this.handleUserChoice}
+          toggleSound={this.toggleSound}
         />
         <audio
           type="audio/mp3"

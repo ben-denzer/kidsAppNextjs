@@ -1,8 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+import Spinner from '../Spinner';
+
+import {
+  CoinImage,
+  HelpButton,
+  MuteButton,
+  PageContainer,
+  ScoreContainer,
+  SettingsButton
+} from '../GameStyles';
 
 const FishingPage = (props) => {
-  const { currentIndex, fishOnBoard, handleUserChoice } = props;
+  const {
+    coins,
+    currentIndex,
+    fishOnBoard,
+    handleUserChoice,
+    mute,
+    spinnerClassName,
+    toggleSound
+  } = props;
   const currentWord = fishOnBoard[currentIndex];
 
   const choices = fishOnBoard.map((a, i) => (
@@ -16,14 +34,23 @@ const FishingPage = (props) => {
   ));
 
   return (
-    <World>
+    <PageContainer>
+      <Spinner spinnerClassName={spinnerClassName} />
+      <MuteButton
+        src={`/static/img/${mute ? 'mute' : 'unmute'}.png`}
+        alt={`Turn Sound ${mute ? 'On' : 'Off'}`}
+        onClick={toggleSound}
+      />
+      <ScoreContainer>
+        {coins} <CoinImage src="/static/img/goldCoin.png" alt="Coins" />
+        </ScoreContainer>
       <AboveWater>
         <h1>{currentWord}</h1>
       </AboveWater>
       <BelowWater>
         {choices}
       </BelowWater>
-    </World>
+    </PageContainer>
   );
 };
 
@@ -36,6 +63,7 @@ const AboveWater = styled.div`
 const BelowWater = styled.div`
   display: flex;
   justify-content: space-around;
+  width: 100%;
   margin-bottom: 100px;
 `;
 
@@ -125,12 +153,6 @@ const Fish = styled.div`
       opacity: 1;
     }
   }
-`;
-
-const World = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify: space-between;
 `;
 
 export default FishingPage;
