@@ -40,7 +40,7 @@ export default function MemoryPage(props) {
         <CardContainer>
           {cards}
         </CardContainer>
-        <Spinner spinnerClassName={spinnerClassName} />
+        <Spinner id="spinner" spinnerClassName={spinnerClassName} />
         <MuteButton
           src={`/static/img/${mute ? 'mute' : 'unmute'}.png`}
           alt={`Turn Sound ${mute ? 'On' : 'Off'}`}

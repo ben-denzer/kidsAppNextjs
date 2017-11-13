@@ -18,6 +18,7 @@ const SpinnerImg = styled.img`
   position: absolute;
   top: calc(50% - 75px);
   right: calc(50% - 75px);
+  z-index: 20;
   
   &.hide {
     display: none;

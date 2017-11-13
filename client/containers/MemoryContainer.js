@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
+import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import shuffle from '../utils/shuffle';
-import defaultWordList from '../config/defaultSightWords';
 import MemoryPage from '../components/Memory/MemoryPage';
 import MemoryStartScreen from '../components/Memory/MemoryStartScreen';
 
-export default class MemoryPageContainer extends Component {
+class MemoryContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cardList: [],
       cardBack: 3,
-      coins: 0,
       gameSize: [4, 3],
       gameOver: true,
       helpOpen: false,
-      mute: false,
       optionsOpen: true,
       score: 0,
-      showPrize: false,
-      spinnerClassName: 'hide',
-      wordList: []
     };
 
     const boundFunctions = [
@@ -31,31 +26,13 @@ export default class MemoryPageContainer extends Component {
       'setupCards',
       'sizeChange',
       'toggleHelp',
-      'toggleSound'
     ];
 
     boundFunctions.forEach(a => this[a] = this[a].bind(this));
   }
 
   componentDidMount() {
-    const coins = window.localStorage.getItem('coins');
-    this.setState({ coins, wordList: defaultWordList });
     this.getFromLocalStorage();
-  }
-
-  addCoin() {
-    const { coins } = this.state;
-    this.setState({ showPrize: true, spinnerClassName: 'show' });
-    setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
-    setTimeout(
-      () =>
-        this.setState({
-          coins: coins + 1,
-          showPrize: false,
-          spinnerClassName: 'hide'
-        }),
-      3500
-    );
   }
 
   cardChange(e) {
@@ -86,7 +63,7 @@ export default class MemoryPageContainer extends Component {
         setTimeout(this.gameOver, 300);
       } else {
         if (!this.state.mute) {
-          this.correctSound.play();
+          this.props.correctSound.play();
         }
       }
     } else {
@@ -125,10 +102,7 @@ export default class MemoryPageContainer extends Component {
   }
 
   gameOver() {
-    if (!this.state.mute) {
-      this.coinSound.play();
-    }
-    this.addCoin();
+    this.props.addCoin();
     setTimeout(() => {
       this.setState({ gameOver: true });
     }, 5000);
@@ -142,7 +116,8 @@ export default class MemoryPageContainer extends Component {
   }
 
   setupCards() {
-    const { gameSize, wordList } = this.state;
+    const { gameSize } = this.state;
+    const { wordList } = this.props;
     const numberOfWords = gameSize[0] * gameSize[1] / 2;
     const words = shuffle(wordList).slice(0, numberOfWords);
     const cardList = shuffle([...words, ...words]).map((a, i) => ({
@@ -169,10 +144,6 @@ export default class MemoryPageContainer extends Component {
 
   openOptions() {
     this.setState({ gameOver: true, optionsOpen: true });
-  }
-
-  toggleSound() {
-    this.setState({ mute: !this.state.mute });
   }
 
   render() {
@@ -203,21 +174,9 @@ export default class MemoryPageContainer extends Component {
           {...this.props}
           {...this.state}
         />
-        <audio
-          type="audio/mp3"
-          src="/static/media/shootingStar.mp3"
-          ref={correctSound => {
-            this.correctSound = correctSound;
-          }}
-        />
-        <audio
-          type="audio/mp3"
-          src="/static/media/cheer.mp3"
-          ref={coinSound => {
-            this.coinSound = coinSound;
-          }}
-        />
       </div>
     );
   }
 }
+
+export default OnlineGameWrapper(MemoryContainer);
