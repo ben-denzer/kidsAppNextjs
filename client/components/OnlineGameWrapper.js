@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MainLayout from './MainLayout';
 import defaultWordList from '../config/defaultSightWords';
+import shuffle from '../utils/shuffle';
+
 
 const OnlineGameWrapper = (WrappedComponent) => {
   return class extends Component {
@@ -16,6 +18,8 @@ const OnlineGameWrapper = (WrappedComponent) => {
       }
 
       this.addCoin = this.addCoin.bind(this);
+      this.playCoinSound = this.playCoinSound.bind(this);
+      this.playSuccessSound = this.playSuccessSound.bind(this);
       this.toggleSound = this.toggleSound.bind(this);
     }
 
@@ -24,21 +28,29 @@ const OnlineGameWrapper = (WrappedComponent) => {
     }
 
     addCoin() {
-      if (!this.state.mute) {
-        this.coinSound.play();
-      }
+      this.playCoinSound();
       const { coins } = this.state;
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
       setTimeout(
-        () =>
+        () => {
           this.setState({
             coins: coins + 1,
             showPrize: false,
             spinnerClassName: 'hide'
-          }),
-        3500
+          }), 3500
+        }
       );
+    }
+
+    playCoinSound() {
+      if (this.state.mute) return;
+      this.coinSound.play();
+    }
+
+    playSuccessSound() {
+      if (this.state.mute) return;
+      this.successSound.play();
     }
 
     toggleSound() {
@@ -52,16 +64,16 @@ const OnlineGameWrapper = (WrappedComponent) => {
           {...this.props}
           {...this.state}
           addCoin={this.addCoin}
-          coinSound={this.coinSound}
-          correctSound={this.correctSound}
+          playCoinSound={this.playCoinSound}
+          playSuccessSound={this.playSuccessSound}
           toggleSound={this.toggleSound}
         />,
         <audio
           key="audio1"
           type="audio/mp3"
           src="/static/media/shootingStar.mp3"
-          ref={correctSound => {
-            this.correctSound = correctSound;
+          ref={successSound => {
+            this.successSound = successSound;
           }}
         />,
         <audio

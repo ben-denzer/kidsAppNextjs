@@ -43,7 +43,7 @@ const FishingPage = (props) => {
       />
       <ScoreContainer>
         {coins} <CoinImage src="/static/img/goldCoin.png" alt="Coins" />
-        </ScoreContainer>
+      </ScoreContainer>
       <AboveWater>
         <h1>{currentWord}</h1>
       </AboveWater>

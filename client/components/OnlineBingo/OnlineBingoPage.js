@@ -21,6 +21,8 @@ import {
 } from './OnlineBingoPageStyles';
 
 export default function OnlineBingoPage(props) {
+  if (!props.allWords.length) return null;
+  
   const {
     activeWords,
     allWords,
@@ -37,7 +39,7 @@ export default function OnlineBingoPage(props) {
     spinnerClassName,
     toggleModal,
     toggleSound,
-    wonGame
+    wonGame,
   } = props;
 
   let allBoxes = [];

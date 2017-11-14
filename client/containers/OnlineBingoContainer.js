@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import defaultWords from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
 import checkBingoCard from '../utils/checkBingoCard';
@@ -6,25 +7,21 @@ import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
 import OnlineBingoStartScreen
   from '../components/OnlineBingo/OnlineBingoStartScreen';
 
-export default class OnlineBingoContainer extends Component {
+class OnlineBingoContainer extends Component {
   constructor() {
     super();
 
     this.state = {
       activeWords: [],
       allWords: [],
-      coins: 0,
       currentIndex: 0,
       delay: 15,
       gameOver: true,
       modalOpen: false,
-      mute: false,
       optionsOpen: true,
       paused: false,
       score: 0,
-      showPrize: false,
       size: 5,
-      spinnerClassName: 'hide',
       wonGame: false
     };
 
@@ -40,7 +37,6 @@ export default class OnlineBingoContainer extends Component {
       // 'setupSpeech',
       'sizeChange',
       'startGame',
-      'toggleSound'
     ];
     boundFunctions.forEach(a => this[a] = this[a].bind(this));
 
@@ -50,9 +46,19 @@ export default class OnlineBingoContainer extends Component {
   }
 
   componentDidMount() {
-    this.setState({ allWords: defaultWords });
-    this.makeBoard(defaultWords);
-    // this.setupSpeech();
+    this.setState({ allWords: this.props.wordList }, () => {
+      this.makeBoard(defaultWords);
+      // this.setupSpeech();
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.wordList.length && nextProps.wordList.length) {
+      this.setState({ allWords: nextProps.wordList }, () => {
+        this.makeBoard(defaultWords);
+        // this.setupSpeech();
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -62,30 +68,12 @@ export default class OnlineBingoContainer extends Component {
     }
   }
 
-  addCoin(val = this.state.size) {
-    const { coins } = this.state;
-    this.setState({ showPrize: true, spinnerClassName: 'show' });
-    setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
-    setTimeout(
-      () =>
-        this.setState({
-          coins: coins + val,
-          showPrize: false,
-          spinnerClassName: 'hide'
-        }),
-      3500
-    );
-  }
-
   delayChange(newVal) {
     this.setState({ delay: newVal });
   }
 
   gameOver() {
-    if (!this.state.mute) {
-      this.coinSound.play();
-    }
-    this.addCoin();
+    this.props.addCoin();
     setTimeout(() => {
       this.setState({ gameOver: true });
     }, 5000);
@@ -157,9 +145,7 @@ export default class OnlineBingoContainer extends Component {
   }
 
   sayWord(word) {
-    if (!this.state.mute) {
-      this.newWordSound.play();
-    }
+    this.props.playSuccessSound();
     if (!this.synth) return;
   }
 
@@ -169,9 +155,7 @@ export default class OnlineBingoContainer extends Component {
   }
 
   startGame() {
-    if (!this.state.mute) {
-      setTimeout(() => this.newWordSound.play());
-    }
+    this.props.playSuccessSound();
     this.setState({
       allWords: shuffle(this.state.allWords),
       currentIndex: 0,
@@ -187,10 +171,6 @@ export default class OnlineBingoContainer extends Component {
       this.setState({ currentIndex: this.state.currentIndex + 1 });
       this.sayWord(this.state.allWords[this.state.currentIndex + 1]);
     }, this.state.delay * 1000);
-  }
-
-  toggleSound() {
-    this.setState({ mute: !this.state.mute });
   }
 
   // setupSpeech() {
@@ -243,21 +223,9 @@ export default class OnlineBingoContainer extends Component {
           {...this.state}
           {...this.props}
         />
-        <audio
-          type="audio/mp3"
-          src="/static/media/shootingStar.mp3"
-          ref={newWordSound => {
-            this.newWordSound = newWordSound;
-          }}
-        />
-        <audio
-          type="audio/mp3"
-          src="/static/media/cheer.mp3"
-          ref={coinSound => {
-            this.coinSound = coinSound;
-          }}
-        />
       </div>
     );
   }
 }
+
+export default OnlineGameWrapper(OnlineBingoContainer);
