@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
-import defaultWords from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
 import checkBingoCard from '../utils/checkBingoCard';
 import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
@@ -28,7 +27,6 @@ class OnlineBingoContainer extends Component {
     const boundFunctions = [
       'delayChange',
       'handleCheck',
-      'makeBoard',
       'gameOver',
       'noWinner',
       'openOptions',
@@ -46,18 +44,14 @@ class OnlineBingoContainer extends Component {
   }
 
   componentDidMount() {
-    this.setState({ allWords: this.props.wordList }, () => {
-      this.makeBoard(defaultWords);
-      // this.setupSpeech();
-    });
+    if (this.props.wordList.length) {
+      this.makeBoard();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.wordList.length && nextProps.wordList.length) {
-      this.setState({ allWords: nextProps.wordList }, () => {
-        this.makeBoard(defaultWords);
-        // this.setupSpeech();
-      });
+      this.makeBoard(nextProps.wordList);
     }
   }
 
@@ -104,9 +98,13 @@ class OnlineBingoContainer extends Component {
       .catch(err => console.log('error in checkBingoCard', err));
   }
 
-  makeBoard(allWords = this.state.allWords) {
+  makeBoard(allWords = this.props.wordList) {
     const { size } = this.state;
-    const tempWords = shuffle(allWords.slice(0));
+    const shuffledWords = shuffle([...allWords]);
+    const wordCount = (size * size) + size; // size + 1 words won't match the board (free space is the +1)
+    console.log(wordCount);
+    const gameWords = shuffledWords.slice(0, wordCount);
+    const tempWords = shuffle([...gameWords]);
     const middle = Math.floor(size / 2);
 
     const activeWords = [];
@@ -121,7 +119,7 @@ class OnlineBingoContainer extends Component {
       }
       activeWords.push(tempArray);
     }
-    this.setState({ activeWords });
+    this.setState({ activeWords, allWords: gameWords });
   }
 
   noWinner() {
@@ -157,7 +155,6 @@ class OnlineBingoContainer extends Component {
   startGame() {
     this.props.playSuccessSound();
     this.setState({
-      allWords: shuffle(this.state.allWords),
       currentIndex: 0,
       gameOver: false,
       optionsOpen: false
@@ -215,7 +212,6 @@ class OnlineBingoContainer extends Component {
       <div className="whiteBox">
         <OnlineBingoPage
           handleCheck={this.handleCheck}
-          makeBoard={this.makeBoard}
           openOptions={this.openOptions}
           toggleSound={this.toggleSound}
           noWinner={this.noWinner}

@@ -11,7 +11,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
 
       this.state = {
         coins: 12,
-        mute: false,
+        mute: true,
         showPrize: false,
         spinnerClassName: 'hide',
         wordList: []
@@ -32,15 +32,11 @@ const OnlineGameWrapper = (WrappedComponent) => {
       const { coins } = this.state;
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
-      setTimeout(
-        () => {
-          this.setState({
-            coins: coins + 1,
-            showPrize: false,
-            spinnerClassName: 'hide'
-          }), 3500
-        }
-      );
+      setTimeout(() => this.setState({ 
+        coins: coins + 1,
+        showPrize: false,
+        spinnerClassName: 'hide'
+      }), 3500);
     }
 
     playCoinSound() {
