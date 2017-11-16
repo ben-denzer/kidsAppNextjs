@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import shuffle from '../utils/shuffle';
+import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import MemoryPage from '../components/Memory/MemoryPage';
 import MemoryStartScreen from '../components/Memory/MemoryStartScreen';
 
@@ -12,7 +13,6 @@ class MemoryContainer extends Component {
       cardBack: 3,
       gameSize: [4, 3],
       gameOver: true,
-      helpOpen: false,
       optionsOpen: true,
       score: 0,
     };
@@ -21,11 +21,9 @@ class MemoryContainer extends Component {
       'cardChange',
       'flipCard',
       'gameOver',
-      'getFromLocalStorage',
       'openOptions',
       'setupCards',
       'sizeChange',
-      'toggleHelp',
     ];
 
     boundFunctions.forEach(a => this[a] = this[a].bind(this));
@@ -39,7 +37,7 @@ class MemoryContainer extends Component {
     if (e.target.dataset.cardid) {
       const cardBack = e.target.dataset.cardid.slice(-1);
       this.setState({ cardBack });
-      window.localStorage.setItem('memoryCardBack', cardBack);
+      setInStorage('memoryCardBack', cardBack);
     }
   }
 
@@ -107,9 +105,9 @@ class MemoryContainer extends Component {
   }
 
   getFromLocalStorage() {
-    const size = window.localStorage.getItem('memoryGameSize');
-    if (size) this.setState({ gameSize: JSON.parse(size) });
-    const cardBack = window.localStorage.getItem('memoryCardBack');
+    const gameSize = getFromStorage('memoryGameSize');
+    if (gameSize) this.setState({ gameSize });
+    const cardBack = getFromStorage('memoryCardBack');
     if (cardBack) this.setState({ cardBack });
   }
 
@@ -133,11 +131,7 @@ class MemoryContainer extends Component {
 
   sizeChange(gameSize) {
     this.setState({ gameSize });
-    window.localStorage.setItem('memoryGameSize', JSON.stringify(gameSize));
-  }
-
-  toggleHelp() {
-    this.setState({ helpOpen: !this.state.helpOpen });
+    setInStorage('memoryGameSize', gameSize);
   }
 
   openOptions() {
@@ -166,9 +160,7 @@ class MemoryContainer extends Component {
       <div className="whiteBox">
         <MemoryPage
           flipCard={this.flipCard}
-          toggleHelp={this.toggleHelp}
           openOptions={this.openOptions}
-          toggleSound={this.toggleSound}
           {...this.props}
           {...this.state}
         />

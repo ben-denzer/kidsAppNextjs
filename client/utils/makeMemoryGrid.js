@@ -5,7 +5,7 @@ function makeCard(a, cardBack, flipCard) {
     <Card
       key={a.cardId}
       className={a.status}
-      data-cardId={a.cardId}
+      data-cardid={a.cardId}
       onClick={flipCard}
       style={
         a.status === 'faceDown'

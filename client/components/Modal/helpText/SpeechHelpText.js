@@ -5,22 +5,12 @@ export default function SpeechHelpText() {
     <div id="helpTextContainer">
       <strong>If The Page Seems Broken</strong>
       <p>
-        Please make sure that you are using one of the following browsers, if you are using something else please click on the link(s) to download one.
+        <strong>This game only works in Google Chrome, and it also requires you to have a microphone.</strong>
+        <br />
+        <a href="https://www.google.com/chrome/browser/desktop/index.html">
+          Google Chrome
+        </a>
       </p>
-      <ul>
-        <li>
-          <a href="https://www.google.com/chrome/browser/desktop/index.html">
-            Google Chrome
-          </a>
-        </li>
-        <li>
-          <a href="https://www.mozilla.org/en-US/firefox/">Mozilla Firefox</a>
-          {' '}
-          <span>
-            (This is a link to the United States Mozilla site. If you are in a different country you can just type "download firefox" into any search engine.)
-          </span>
-        </li>
-      </ul>
       <strong>Do I need to allow access to my computer's microphone?</strong>
       <p>
         Yes. If you clicked on the "don't allow" button, please visit

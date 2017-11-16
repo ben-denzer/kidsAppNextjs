@@ -69,7 +69,7 @@ function MemoryStartScreen(props) {
     <CardBack
       key={a}
       className={Number(a) === Number(cardBack) ? 'active' : ''}
-      data-cardId={`card-${a}`}
+      data-cardid={`card-${a}`}
       style={{
         backgroundImage: `url('/static/img/cardBacks/cardBack-${a}.jpg')`
       }}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MainLayout from './MainLayout';
 import defaultWordList from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
-
+import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 
 const OnlineGameWrapper = (WrappedComponent) => {
   return class extends Component {
@@ -10,7 +10,8 @@ const OnlineGameWrapper = (WrappedComponent) => {
       super();
 
       this.state = {
-        coins: 12,
+        coins: 0,
+        helpOpen: false,
         mute: true,
         showPrize: false,
         spinnerClassName: 'hide',
@@ -20,20 +21,25 @@ const OnlineGameWrapper = (WrappedComponent) => {
       this.addCoin = this.addCoin.bind(this);
       this.playCoinSound = this.playCoinSound.bind(this);
       this.playSuccessSound = this.playSuccessSound.bind(this);
+      this.toggleHelp = this.toggleHelp.bind(this);
       this.toggleSound = this.toggleSound.bind(this);
     }
 
     componentDidMount() {
-      this.setState({ wordList: defaultWordList });
+      const coins = getFromStorage('coins') || 0;
+      const mute = getFromStorage('mute');
+      this.setState({ coins, mute, wordList: defaultWordList });
     }
 
     addCoin() {
       this.playCoinSound();
       const { coins } = this.state;
+      const newCoins = coins + 1;
+      setInStorage('coins', newCoins);
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
       setTimeout(() => this.setState({ 
-        coins: coins + 1,
+        coins: newCoins,
         showPrize: false,
         spinnerClassName: 'hide'
       }), 3500);
@@ -49,8 +55,13 @@ const OnlineGameWrapper = (WrappedComponent) => {
       this.successSound.play();
     }
 
+    toggleHelp() {
+      this.setState({ helpOpen: !this.state.helpOpen });
+    }
+
     toggleSound() {
       this.setState({ mute: !this.state.mute });
+      setInStorage('mute', !this.state.mute);
     }
 
     render() {
@@ -62,6 +73,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
           addCoin={this.addCoin}
           playCoinSound={this.playCoinSound}
           playSuccessSound={this.playSuccessSound}
+          toggleHelp={this.toggleHelp}
           toggleSound={this.toggleSound}
         />,
         <audio

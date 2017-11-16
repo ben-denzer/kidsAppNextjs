@@ -9,7 +9,6 @@ class SpeachPageContainer extends Component {
     this.state = {
       currentWordIndex: 0,
       error: '',
-      helpOpen: false,
       score: 0,
       skippedInARow: 0,
     };
@@ -17,7 +16,6 @@ class SpeachPageContainer extends Component {
     this.displayError = this.displayError.bind(this);
     this.listen = this.listen.bind(this);
     this.skipWord = this.skipWord.bind(this);
-    this.toggleHelp = this.toggleHelp.bind(this);
   }
 
   componentDidMount() {
@@ -137,17 +135,12 @@ class SpeachPageContainer extends Component {
     });
   }
 
-  toggleHelp() {
-    this.setState({ helpOpen: !this.state.helpOpen });
-  }
-
   render() {
     return (
       <div className="whiteBox">
         <SpeechPage
           listen={this.listen}
           skipWord={this.skipWord}
-          toggleHelp={this.toggleHelp}
           {...this.state}
           {...this.props}
         />
