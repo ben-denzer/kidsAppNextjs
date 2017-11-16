@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MainLayout from '../components/MainLayout';
+import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import SpeechPage from '../components/Speech/SpeechPage';
 import defaultWordList from '../config/defaultSightWords';
 
@@ -7,30 +7,29 @@ class SpeachPageContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coins: 0,
       currentWordIndex: 0,
       error: '',
       helpOpen: false,
-      mute: false,
       score: 0,
-      showPrize: false,
       skippedInARow: 0,
-      spinnerClassName: 'hide',
-      wordList: []
     };
 
     this.displayError = this.displayError.bind(this);
     this.listen = this.listen.bind(this);
     this.skipWord = this.skipWord.bind(this);
     this.toggleHelp = this.toggleHelp.bind(this);
-    this.toggleSound = this.toggleSound.bind(this);
   }
 
   componentDidMount() {
-    const coins = window.localStorage.getItem('coins');
-    this.setupSpeachRecognition();
-    this.setState({ wordList: defaultWordList });
-    this.listen();
+    if (this.props.wordList.length) {
+      this.setupSpeachRecognition();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.wordList.length && nextProps.wordList.length) {
+      this.setupSpeachRecognition(nextProps.wordList);
+    }
   }
 
   componentWillUnmount() {
@@ -39,23 +38,9 @@ class SpeachPageContainer extends Component {
     }
   }
 
-  addCoin() {
-    const { coins } = this.state;
-    this.setState({ showPrize: true, spinnerClassName: 'show' });
-    setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
-    setTimeout(
-      () =>
-        this.setState({
-          coins: coins + 1,
-          showPrize: false,
-          spinnerClassName: 'hide'
-        }),
-      3500
-    );
-  }
-
   checkResponse(res) {
-    const { currentWordIndex, wordList } = this.state;
+    const { currentWordIndex } = this.state;
+    const { wordList } = this.props;
     if (res && res.results && res.results.length) {
       const responseList = res.results[0];
       if (responseList.length) {
@@ -75,18 +60,14 @@ class SpeachPageContainer extends Component {
   }
 
   correctAnswer() {
-    const { coins, score } = this.state;
+    const { score } = this.state;
     const newScore = score + 1;
     const nextIndex = this.getNextIndex();
 
-    let sound = this.correctSound;
     if (newScore % 3 === 0) {
-      this.addCoin();
-      sound = this.coinSound;
-    }
-
-    if (!this.state.mute) {
-      sound.play();
+      this.props.addCoin();
+    } else {
+      this.props.playSuccessSound();
     }
 
     this.setState({
@@ -104,7 +85,7 @@ class SpeachPageContainer extends Component {
 
   getNextIndex() {
     const newWordIndex = this.state.currentWordIndex + 1;
-    return newWordIndex < this.state.wordList.length ? newWordIndex : 0;
+    return newWordIndex < this.props.wordList.length ? newWordIndex : 0;
   }
 
   listen() {
@@ -122,32 +103,30 @@ class SpeachPageContainer extends Component {
         }
       };
     } else {
-      console.log('need to show warning'); // TODO
+      this.displayError();
     }
   }
 
-  setupSpeachRecognition() {
+  setupSpeachRecognition(wordList = this.props.wordList) {
     if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
       this.displayError();
       return;
     }
 
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    const SpeechGrammarList =
-      window.SpeechGrammarList || window.webkitSpeechGrammarList;
-    const SpeechRecognitionEvent =
-      window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
+    const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
     this.recognition = new SpeechRecognition();
     this.recognition.lang = 'en-US';
     this.recognition.interimResults = false;
     this.recognition.maxAlternatives = 15;
 
-    const words = this.state.wordList;
-    const grammar = `#JSGF V1.0; grammar words; public <words> = ${words.join(' | ')} ;`;
+    const grammar = `#JSGF V1.0; grammar words; public <words> = ${wordList.join(' | ')} ;`;
     this.speechRecognitionList = new SpeechGrammarList();
     this.speechRecognitionList.addFromString(grammar, 1);
+
+    this.listen();
   }
 
   skipWord() {
@@ -162,10 +141,6 @@ class SpeachPageContainer extends Component {
     this.setState({ helpOpen: !this.state.helpOpen });
   }
 
-  toggleSound() {
-    this.setState({ mute: !this.state.mute });
-  }
-
   render() {
     return (
       <div className="whiteBox">
@@ -173,28 +148,12 @@ class SpeachPageContainer extends Component {
           listen={this.listen}
           skipWord={this.skipWord}
           toggleHelp={this.toggleHelp}
-          toggleSound={this.toggleSound}
           {...this.state}
           {...this.props}
-        />
-
-        <audio
-          type="audio/mp3"
-          src="/static/media/shootingStar.mp3"
-          ref={correctSound => {
-            this.correctSound = correctSound;
-          }}
-        />
-        <audio
-          type="audio/mp3"
-          src="/static/media/cheer.mp3"
-          ref={coinSound => {
-            this.coinSound = coinSound;
-          }}
         />
       </div>
     );
   }
 }
 
-export default SpeachPageContainer;
+export default OnlineGameWrapper(SpeachPageContainer);
