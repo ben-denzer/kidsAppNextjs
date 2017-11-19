@@ -10,7 +10,7 @@ class MemoryContainer extends Component {
     super(props);
     this.state = {
       cardList: [],
-      cardBack: 3,
+      cardBack: 1,
       gameSize: [4, 3],
       gameOver: true,
       optionsOpen: true,
@@ -30,7 +30,9 @@ class MemoryContainer extends Component {
   }
 
   componentDidMount() {
-    this.getFromLocalStorage();
+    const gameSize = getFromStorage('memoryGameSize') || [4, 3];
+    const cardBack = getFromStorage('memoryCardBack') || 1;
+    this.setState({ cardBack, gameSize });
   }
 
   cardChange(e) {
@@ -102,13 +104,6 @@ class MemoryContainer extends Component {
     setTimeout(() => {
       this.setState({ gameOver: true });
     }, 5000);
-  }
-
-  getFromLocalStorage() {
-    const gameSize = getFromStorage('memoryGameSize');
-    if (gameSize) this.setState({ gameSize });
-    const cardBack = getFromStorage('memoryCardBack');
-    if (cardBack) this.setState({ cardBack });
   }
 
   setupCards() {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import shuffle from '../utils/shuffle';
+import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import checkBingoCard from '../utils/checkBingoCard';
 import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
-import OnlineBingoStartScreen
-  from '../components/OnlineBingo/OnlineBingoStartScreen';
+import OnlineBingoStartScreen from '../components/OnlineBingo/OnlineBingoStartScreen';
 
 class OnlineBingoContainer extends Component {
   constructor() {
@@ -47,6 +47,9 @@ class OnlineBingoContainer extends Component {
     if (this.props.wordList.length) {
       this.makeBoard();
     }
+    const size = getFromStorage('bingoSize') || 5;
+    const delay = getFromStorage('bingoDelay') || 15;
+    this.setState({ delay, size });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,6 +67,7 @@ class OnlineBingoContainer extends Component {
 
   delayChange(newVal) {
     this.setState({ delay: newVal });
+    setInStorage('bingoDelay', newVal);
   }
 
   gameOver() {
@@ -150,6 +154,7 @@ class OnlineBingoContainer extends Component {
   sizeChange(newSize) {
     if (newSize === this.state.size) return;
     this.setState({ size: newSize });
+    setInStorage('bingoSize', newSize);
   }
 
   startGame() {

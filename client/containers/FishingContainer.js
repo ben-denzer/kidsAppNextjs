@@ -40,6 +40,7 @@ class FishingContainer extends Component {
     if (target.innerText === fishOnBoard[currentIndex]) {
       this.setState({ winCount: winCount + 1 });
       target.classList.add('caught');
+      this.props.playSuccessSound();
       setTimeout(() => target.classList.add('reeling'), 700);
       if ((winCount + 1) % 5 === 0) {
         setTimeout(this.props.addCoin, 2500);
@@ -62,7 +63,7 @@ class FishingContainer extends Component {
 
   render() {
     return (
-      <div className="whiteBox">
+      <div className="whiteBox fishing">
         <FishingPage
           {...this.props}
           {...this.state}

@@ -53,9 +53,20 @@ export default function OnlineGamesContainer(props) {
               </Headline>
             </a>
           </Link>
+          <ThumbBox>
           <Link prefetch href="/online-games/fishing">
-            <a>Fishing</a>
+            <a>
+              <GameThumbnail
+                title="Fishing"
+                img="/static/img/fishingThumb.jpg"
+              />
+              <Headline>
+                Catch the fish by matching words.
+                {' '}
+              </Headline>
+            </a>
           </Link>
+        </ThumbBox>
         </ThumbBox>
       </ThumbContainer>
     </PageContainer>

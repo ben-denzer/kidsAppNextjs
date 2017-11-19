@@ -16,7 +16,7 @@ export const LayoutContainer = styled.div`
   }
 
   &.speech {
-    background-image: url('/static/img/castleBg.png');   
+    background-image: url('/static/img/castleBg.png');
   }
 
   @media (max-width: 700px) {
@@ -32,6 +32,11 @@ export const LayoutContainer = styled.div`
     background: rgba(255, 255, 255, .9);
     border: 3px solid #999;
     border-radius: 20px;
+
+    &.fishing {
+      background-image: url('/static/img/fishingBg.svg');
+      background-size: cover;
+    }
 
     @media (max-width: 1000px) {
       width: 90%;
