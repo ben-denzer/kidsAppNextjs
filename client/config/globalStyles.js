@@ -2,6 +2,7 @@ export const color1 = '#558C89';
 export const color2 = '#74AFAD';
 export const color3 = '#D9853B';
 export const color4 = '#ECECEA';
+export const mainBg = 'lightskyblue';
 export const textColor = '#222';
 export const light = '#FEFFFF';
 export const transparentLight = 'rgba(0, 0, 0, .5)';

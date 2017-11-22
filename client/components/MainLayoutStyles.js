@@ -1,30 +1,48 @@
 import styled from 'styled-components';
 import { headerHeight } from './Header/HeaderStyles';
-import { color2, color4 } from '../config/globalStyles';
+import { color2, color4, mainBg } from '../config/globalStyles';
+
+const mobileBgColor = 'lightskyblue';
 
 export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 0;
-  background-color: ${color4};
+  background-color: ${mainBg};
   background-size: cover;
   background-position: center;
 
   &.memory {
     background-image: url('/static/img/neighborhoodBg.jpg');
+
+    @media (max-width: 767px) {
+      background-image: none;
+    }
   }
 
   &.speech {
     background-image: url('/static/img/castleBg.png');
+
+    @media (max-width: 767px) {
+      background-image: none;
+    }
   }
 
   &.online-games {
     background-image: url('/static/img/playgroundBg.jpg');
+
+    @media (max-width: 767px) {
+      background-image: none;
+    }
   }
 
   &.bingo {
     background-image: url('/static/img/farmBg.jpg');
+
+    @media (max-width: 767px) {
+      background-image: none;
+    }
   }
 
   @media (max-width: 700px) {
