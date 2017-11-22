@@ -13,16 +13,18 @@ nextApp
   .then(() => {
     server.use(express.static(path.join(__dirname, '../static')));
 
-    const apiController = require('./controllers/apiController');
-    server.use('/api', apiController);
+    // const apiController = require('./controllers/apiController');
+    // server.use('/api', apiController);
 
     server.get('*', (req, res) => {
       nextApp.render(req, res, url.parse(req.url).pathname);
     });
 
     server.listen(port, err => {
-      if (err) return console.error(err);
+      if (dev && err) return console.error(err);
       if (dev) console.log(`listening on ${port}`);
     });
   })
-  .catch(err => console.error(err));
+  .catch(err => {
+    if (dev) console.error(err);
+  });
