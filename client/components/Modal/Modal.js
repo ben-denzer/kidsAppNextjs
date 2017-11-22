@@ -14,12 +14,11 @@ class Modal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.modalOpen !== nextProps.helpOpen) {
+    if (this.props.modalOpen !== nextProps.modalOpen) {
+      this.setState({ modalClass: 'transition' });
       if (nextProps.modalOpen) {
-        this.setState({ modalClass: 'transition' });
         setTimeout(() => this.setState({ modalClass: 'open' }), 0);
       } else {
-        this.setState({ modalClass: 'transition' });
         setTimeout(() => this.setState({ modalClass: 'closed' }), 500);
       }
     }

@@ -16,7 +16,6 @@ class OnlineBingoContainer extends Component {
       currentIndex: 0,
       delay: 15,
       gameOver: true,
-      modalOpen: false,
       optionsOpen: true,
       paused: false,
       score: 0,
@@ -106,7 +105,6 @@ class OnlineBingoContainer extends Component {
     const { size } = this.state;
     const shuffledWords = shuffle([...allWords]);
     const wordCount = (size * size) + size; // size + 1 words won't match the board (free space is the +1)
-    console.log(wordCount);
     const gameWords = shuffledWords.slice(0, wordCount);
     const tempWords = shuffle([...gameWords]);
     const middle = Math.floor(size / 2);
@@ -170,8 +168,9 @@ class OnlineBingoContainer extends Component {
       clearInterval(this.gameTimer);
     }
     this.gameTimer = setInterval(() => {
-      this.setState({ currentIndex: this.state.currentIndex + 1 });
-      this.sayWord(this.state.allWords[this.state.currentIndex + 1]);
+      const newIndex = this.state.currentIndex + 1;
+      this.sayWord(this.state.allWords[newIndex]);
+      this.setState({ currentIndex: newIndex });
     }, this.state.delay * 1000);
   }
 
