@@ -19,6 +19,14 @@ export const LayoutContainer = styled.div`
     background-image: url('/static/img/castleBg.png');
   }
 
+  &.online-games {
+    background-image: url('/static/img/playgroundBg.jpg');
+  }
+
+  &.bingo {
+    background-image: url('/static/img/farmBg.jpg');
+  }
+
   @media (max-width: 700px) {
     background-image: none;
   }

@@ -6,7 +6,7 @@ import { textColor } from '../../config/globalStyles';
 
 export default function OnlineGamesContainer(props) {
   return (
-    <PageContainer>
+    <PageContainer className="whiteBox">
       <h1>Online Games</h1>
       <h2>Make learning fun with these free online sight word games.</h2>
       <ThumbContainer>
@@ -53,7 +53,8 @@ export default function OnlineGamesContainer(props) {
               </Headline>
             </a>
           </Link>
-          <ThumbBox>
+        </ThumbBox>
+        <ThumbBox>
           <Link prefetch href="/online-games/fishing">
             <a>
               <GameThumbnail
@@ -67,7 +68,6 @@ export default function OnlineGamesContainer(props) {
             </a>
           </Link>
         </ThumbBox>
-        </ThumbBox>
       </ThumbContainer>
     </PageContainer>
   );
@@ -76,6 +76,8 @@ export default function OnlineGamesContainer(props) {
 const PageContainer = styled.div`
   min-height: 600px;
   padding: 50px;
+  max-width: 100%;
+  box-sizing: border-box;
 
   @media (max-width: 900px) {
     padding: 15px;
@@ -122,8 +124,12 @@ const ThumbContainer = styled.div`
 `;
 
 const Headline = styled.div`
+  box-sizing: border-box;
+  max-width: 100%;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
 `;

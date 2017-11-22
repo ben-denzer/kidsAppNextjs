@@ -75,6 +75,10 @@ export const ListContainer = styled.div`
     padding-left: 0;
     align-items: center;
   }
+
+  @media (min-width: 767px) and (max-width: 1100px) {
+    padding-top: 65px;
+  }
 `;
 
 export const OldWord = styled.div`
