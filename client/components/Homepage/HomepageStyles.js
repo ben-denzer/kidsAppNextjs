@@ -87,6 +87,10 @@ export const TextInner = styled.div`
     padding: 10px;
   }
 
+  h1 {
+    margin-top: 0;
+  }
+
   h3 {
     margin-bottom: 0px;
   }
@@ -97,6 +101,13 @@ export const TextInner = styled.div`
     &.center {
       width: 100%;
       text-align: center;
+    }
+  }
+
+  &.hpFirstParagraph {
+    h3 {
+      text-align: center;
+      font-weight: normal;
     }
   }
 `;

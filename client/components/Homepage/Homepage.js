@@ -25,6 +25,17 @@ export default function HomepageContainer(props) {
           <Link href="/online-games"><CtaButton>Play For Free</CtaButton></Link>
         </TopSectionOverlay>
       </TopSection>
+      <TextSection>
+        <TextInner className="hpFirstParagraph">
+          <h1>Online Reading Games For Kids</h1>
+          <h3>
+            Give your young reader a head start with My Sight Words.com - Using games to practice your sight words and spelling words is the best way to keep a child interested in learning. They'll earn gold coins as they complete the games, and gain confidence with their reading skills along the way.
+          </h3>
+          <h3>
+            Click a link below to get started.
+          </h3>
+        </TextInner>
+      </TextSection>
       {/*<TextSection>
         <TextInner>
           <h1>Use Your Own Word List To Customize The Games</h1>

@@ -8,6 +8,7 @@ export default function onlineGames(props) {
     <div>
       <Head>
         <title>Online Reading Games | My Sight Words.com</title>
+        <meta name="description" content="Learn Sight Words And Spelling Words Online For Free - Speech recognition flashcards, bingo, memory, and more" />
       </Head>
       <AnalyticsWrapper>
         {MainLayout(OnlineGamesPage, props)}
