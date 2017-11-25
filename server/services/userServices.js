@@ -3,7 +3,6 @@ const salt = require('../keys/saltRounds');
 
 module.exports = {
   addUser(connection, body, cb) {
-    console.log('body is ', body);
     if (!connection) {
       return cb({ error: 'Server Error 1', status: 500 });
     }

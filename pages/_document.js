@@ -2,6 +2,33 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
+
+  getStatCounterCode() {
+    return {
+      __html: `
+        <!-- Start of StatCounter Code for Default Guide -->
+        <script type="text/javascript">
+          var sc_project=11554301; 
+          var sc_invisible=1; 
+          var sc_security="cbe58c9c"; 
+          var scJsHost = (("https:" == document.location.protocol) ?
+          "https://secure." : "http://www.");
+          document.write("<sc"+"ript type='text/javascript' src='" +
+          scJsHost+
+          "statcounter.com/counter/counter.js'></"+"script>");
+        </script>
+        <noscript>
+          <div class="statcounter">
+            <a title="Web Analytics Made Easy - StatCounter" href="http://statcounter.com/" target="_blank">
+              <img class="statcounter" src="//c.statcounter.com/11554301/0/cbe58c9c/1/" alt="Web Analytics Made Easy - StatCounter">
+            </a>
+          </div>
+        </noscript>
+        <!-- End of StatCounter Code for Default Guide -->
+      `
+    }
+  }
+
   render() {
     const sheet = new ServerStyleSheet();
     const main = sheet.collectStyles(<Main />);
@@ -35,6 +62,7 @@ export default class MyDocument extends Document {
             {main}
           </div>
           <NextScript />
+          <div dangerouslySetInnerHTML={this.getStatCounterCode()} />
         </body>
       </html>
     );

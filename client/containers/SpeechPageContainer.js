@@ -91,12 +91,10 @@ class SpeachPageContainer extends Component {
       this.recognition.start();
       this.recognition.onresult = res => this.checkResponse(res);
       this.recognition.onend = e => {
-        console.log('end event', e);
         this.listen();
       };
       this.recognition.onerror = e => {
         if (!/no-speech/i.test(e.error)) {
-          console.log('speech error', e);
           this.recognition = null;
         }
       };
