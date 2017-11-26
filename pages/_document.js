@@ -4,6 +4,9 @@ import { ServerStyleSheet } from 'styled-components';
 export default class MyDocument extends Document {
 
   getStatCounterCode() {
+    if (process.env.NODE_ENV === 'development') {
+      return { __html: '' };
+    }
     return {
       __html: `
         <!-- Start of StatCounter Code for Default Guide -->

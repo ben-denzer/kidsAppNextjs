@@ -13,9 +13,6 @@ nextApp
   .then(() => {
     server.use(express.static(path.join(__dirname, '../static')));
 
-    // const apiController = require('./controllers/apiController');
-    // server.use('/api', apiController);
-
     server.get('*', (req, res) => {
       nextApp.render(req, res, url.parse(req.url).pathname);
     });
