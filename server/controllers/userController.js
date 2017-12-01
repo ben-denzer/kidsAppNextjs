@@ -2,7 +2,7 @@ const userController          = require('express').Router();
 const passport                = require('passport');
 const jsonParser              = require('body-parser').json();
 const jwt                     = require('jsonwebtoken');
-const jwtInfo                 = require('../config/.jwtinfo').key;
+const jwtInfo                 = require('../keys/.jwtinfo').key;
 
 const changePw                = require('../services/changePw');
 const checkEmailVerification  = require('../services/checkEmailVerification');
@@ -55,6 +55,8 @@ function userRouter(connection) {
   //         res.status(err.status || 500).send(err.error || 'Server Error');
   //       });
   //   });
+
+  userController.get('/', (req, res) => res.send('working'));
 
 
   userController.route('/login')
@@ -206,4 +208,4 @@ function userRouter(connection) {
     return userController;
 }
 
-module.exports = userRouter;
+module.exports = userRouter();

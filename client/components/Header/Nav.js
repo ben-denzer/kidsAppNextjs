@@ -4,7 +4,8 @@ import { Hamburger, NavBar, NavItem, NavItemsContainer } from './NavStyles';
 
 const pages = [
   { name: 'Online Games', href: '/online-games', userState: 'all' },
-  { name: 'Printable Games', href: '/printable-games', userState: 'all' }
+  { name: 'Printable Games', href: '/printable-games', userState: 'all' },
+  { name: 'Sign Up', href: '/account/signup', userState: 'all' }
   // { name: 'My Account', href: '/account', userState: 'loggedIn' }
 ];
 

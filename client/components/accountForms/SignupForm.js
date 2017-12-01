@@ -1,4 +1,12 @@
 import React, { Component } from 'react';
+import verifySignupInfo from '../../utils/verifySignupInfo';
+import {
+  AccountForm,
+  FormButton,
+  FormErrorBox,
+  FormLabel,
+  FormTextInput
+} from './formStyles';
 
 export default class SignupForm extends Component {
   constructor(props) {
@@ -7,6 +15,7 @@ export default class SignupForm extends Component {
     this.state = {
       childCount: 1,
       email: '',
+      error: '',
       password: '',
       p2: ''
     }
@@ -21,46 +30,52 @@ export default class SignupForm extends Component {
     this.setState({ [inputId]: value });
   }
 
-  submitForm() {
-    verifyInfo(this.state)
-      .then(result => this.showResult(result))
-      .catch(e => showResult(e));
+  submitForm(e) {
+    e.preventDefault();
+    const { childCount, email, password, p2 } = this.state;
+    verifySignupInfo(this.state)
+      .then(result => this.setState({ error: 'verified' }))
+      .catch(error => this.setState({ error }));
   }
 
   render() {
     const { childCount, email, password, p2 } = this.state;
     return (
-      <form>
-        <label>Email</label>
-        <input
-          onChange={this.handleInput}
-          data-input-id="email"
-          type="email"
-          value={email}
-        />
-        <label>Password</label>
-        <input
-          onChange={this.handleInput}
-          data-input-id="password"
-          type="password"
-          value={password}
-        />
-        <label>Re-Enter Password</label>
-        <input
-          onChange={this.handleInput}
-          data-input-id="p2"
-          type="password"
-          value={p2}
-        />
-        <label>Number of Students</label>
-        <input
-          onChange={this.handleInput}
-          data-input-id="childCount"
-          type="number"
-          value={childCount}
-        />
-        <button type="submit" onClick={this.submitForm} value="Submit" />
-      </form>
+      <div className="whiteBox">
+        <AccountForm>
+          <h1>Sign Up</h1>
+          <FormLabel>Email</FormLabel>
+          <FormTextInput
+            onChange={this.handleInput}
+            data-input-id="email"
+            type="email"
+            value={email}
+          />
+          <FormLabel>Password</FormLabel>
+          <FormTextInput
+            onChange={this.handleInput}
+            data-input-id="password"
+            type="password"
+            value={password}
+          />
+          <FormLabel>Re-Enter Password</FormLabel>
+          <FormTextInput
+            onChange={this.handleInput}
+            data-input-id="p2"
+            type="password"
+            value={p2}
+          />
+          <FormLabel>Number of Students</FormLabel>
+          <FormTextInput
+            onChange={this.handleInput}
+            data-input-id="childCount"
+            type="number"
+            value={childCount}
+          />
+          { this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox> }
+          <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
+        </AccountForm>
+      </div>
     );
   }
 }

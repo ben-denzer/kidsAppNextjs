@@ -1,4 +1,4 @@
-const mailchimp = require('../config/.mailchimpTokens');
+const mailchimp = require('../keys/.mailchimpTokens');
 const request = require('request');
 const md5 = require('md5');
 

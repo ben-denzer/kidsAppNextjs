@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 const mg = require('nodemailer-mailgun-transport');
-const mailgunAuth = require('../config/.mailgun_conf.js');
+const mailgunAuth = require('../keys/.mailgun_conf.js');
 const jwt = require('jsonwebtoken');
-const jwtInfo = require('../config/.jwtinfo').key;
+const jwtInfo = require('../keys/.jwtinfo').key;
 
 const auth = {
   auth: {

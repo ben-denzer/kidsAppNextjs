@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const jwtInfo = require('../config/.jwtinfo').key;
-const sessionSecret = require('../config/.sessionSecret');
+const jwtInfo = require('../keys/.jwtinfo').key;
+const sessionSecret = require('../keys/.sessionSecret');
 
 function checkLoginToken(token, connection) {
   return new Promise((resolve, reject) => {
