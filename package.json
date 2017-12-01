@@ -9,7 +9,8 @@
     "start-production": "NODE_ENV=production node server/server.js",
     "build": "next build",
     "build-and-start": "next build && next start-production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test-server",
+    "test-server": "mocha './server/**/*.test.js'"
   },
   "author": "Ben Denzer",
   "license": "",
@@ -25,6 +26,9 @@
     "styled-components": "^2.2.3"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.11.0",
+    "sinon": "^4.1.2"
   }
 }

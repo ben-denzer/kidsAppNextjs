@@ -5,6 +5,11 @@ function unsubscribeUserEmail(email, connection) {
       return reject(); // sending 200 back
     }
 
+    if (!connection) {
+      logError('Connection is undefined or null in unsubscribeUserEmail');
+      return reject();
+    }
+
     connection.query(
       'UPDATE users SET email_list = false WHERE email = ?',
       [ email ],

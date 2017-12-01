@@ -12,12 +12,19 @@ export default class SignupForm extends Component {
     }
 
     this.handleInput = this.handleInput.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   handleInput(e) {
     const { dataset, value } = e.target;
     const inputId = dataset.inputId;
     this.setState({ [inputId]: value });
+  }
+
+  submitForm() {
+    verifyInfo(this.state)
+      .then(result => this.showResult(result))
+      .catch(e => showResult(e));
   }
 
   render() {
@@ -52,6 +59,7 @@ export default class SignupForm extends Component {
           type="number"
           value={childCount}
         />
+        <button type="submit" onClick={this.submitForm} value="Submit" />
       </form>
     );
   }
