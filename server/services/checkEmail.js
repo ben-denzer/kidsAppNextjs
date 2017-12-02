@@ -6,7 +6,7 @@ function checkEmail(email, connection) {
     }
 
     connection.query(
-      'SELECT user_id FROM users WHERE email = ?',
+      'SELECT parent_id FROM parent WHERE email = ?',
       [email],
       (err, result) => {
         if (err) {
@@ -17,7 +17,7 @@ function checkEmail(email, connection) {
           // don't log this
           return reject({ status: 200, error: 'Email Is Already In Use' });
         }
-        
+
         resolve();
       }
     );

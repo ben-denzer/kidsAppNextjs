@@ -53,6 +53,8 @@ export const FormLabel = styled.label`
   margin-bottom: 4px;
 `;
 
+export const FormRadioButton = styled.input``;
+
 export const FormTextInput = styled.input`
   margin-bottom: 15px;
 `;

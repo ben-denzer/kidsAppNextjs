@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import verifySignupInfo from '../../utils/verifySignupInfo';
+import signupUser from '../../api/signupUser';
 import {
   AccountForm,
   FormButton,
   FormErrorBox,
   FormLabel,
+  FormRadioButton,
   FormTextInput
 } from './formStyles';
 
@@ -15,31 +17,38 @@ export default class SignupForm extends Component {
     this.state = {
       childCount: 1,
       email: '',
+      emailList: true,
       error: '',
       password: '',
       p2: ''
     }
 
+    this.handleCheck = this.handleCheck.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
+  handleCheck(e) {
+    const { dataset, checked } = e.target;
+    this.setState({ [dataset.inputId]: checked });
+  }
+
   handleInput(e) {
     const { dataset, value } = e.target;
-    const inputId = dataset.inputId;
-    this.setState({ [inputId]: value });
+    this.setState({ [dataset.inputId]: value });
   }
 
   submitForm(e) {
     e.preventDefault();
     const { childCount, email, password, p2 } = this.state;
     verifySignupInfo(this.state)
-      .then(result => this.setState({ error: 'verified' }))
+      .then(result => signupUser(this.state))
+      .then(() => console.log('user inserted!!'))
       .catch(error => this.setState({ error }));
   }
 
   render() {
-    const { childCount, email, password, p2 } = this.state;
+    const { childCount, email, emailList, password, p2 } = this.state;
     return (
       <div className="whiteBox">
         <AccountForm>
@@ -71,6 +80,15 @@ export default class SignupForm extends Component {
             data-input-id="childCount"
             type="number"
             value={childCount}
+          />
+          <FormLabel>
+            I would like to receive news about site updates and other learning resources
+          </FormLabel>
+          <FormRadioButton
+            onChange={this.handleCheck}
+            data-input-id="emailList"
+            type="checkbox"
+            checked={emailList}
           />
           { this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox> }
           <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>

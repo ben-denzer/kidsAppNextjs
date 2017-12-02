@@ -17,7 +17,7 @@ const subscribeUserToList     = require('../services/subscribeUserToList');
 const verifyUser              = require('../services/verifyUser');
 
 function userRouter(connection) {
-  userController.use(jsonParser);
+  // userController.use(jsonParser);
 
   // userController.post('/changePw', (req, res) => {
   //   const { oldPw, newPw } = req.body;
@@ -29,7 +29,7 @@ function userRouter(connection) {
   //     logError({ reqBody: req.body }, 'bad request in user/changePw');
   //     return res.status(400).send('Bad Request');
   //   }
-    
+
   //   changePw(req.user.userId, oldPw, newPw, connection)
   //     .then(() => res.status(200).send('Changed Password Successfully'))
   //     .catch(err => {
@@ -41,7 +41,7 @@ function userRouter(connection) {
 
   // userController.route('/forgotPw')
   //   .get((req, res) => {
-  //     res.status(200).render('account/forgotPw', { 
+  //     res.status(200).render('account/forgotPw', {
   //       headline: 'Forgot Password',
   //       user: req.user
   //     });
@@ -58,15 +58,14 @@ function userRouter(connection) {
 
   userController.get('/', (req, res) => res.send('working'));
 
-
   userController.route('/login')
     .get((req, res) => {
       const message = req.flash('error');
       res.status(200).render(
         'account/login',
-        { 
-          headline: 'Log In', 
-          user: req.user, 
+        {
+          headline: 'Log In',
+          user: req.user,
           message,
         }
       );
@@ -159,19 +158,22 @@ function userRouter(connection) {
   //   });
 
   userController.post('/signup', jsonParser, (req, res) => {
-      const { username } = req.body;
-      signup(req.body, connection)
-        .then((userId, emailListBool) => {
-          const user = { userId, username };
-          req.login(user, () => res.redirect('/user/account'));
-        })
-        .catch(err => {
-          if (err.status !== 200) {
-            logError(err, 'post user/signup');
-          }
-          res.status(err.status || 500).redirect('/user/signup')
-        });
-    });
+    console.log(req.body, 'reqBody');
+    signup(req.body, connection)
+      .then(userId => {
+        const user = { userId, coins: 0 };
+        res.status(200).send('success');
+        return;
+        // req.login(user, () => res.status(200).send({ success }));
+      })
+      .catch(err => {
+        console.log('error', err);
+        if (err.status !== 200) {
+          logError(err, 'post user/signup');
+        }
+        res.status(err.status || 500).send(err.error || 'Server Error');
+      });
+  });
 
     // userController.get('/verifyAccount/:token', (req, res) => {
     //   if (!req.params.token) return res.status(200).redirect('/');
@@ -208,4 +210,4 @@ function userRouter(connection) {
     return userController;
 }
 
-module.exports = userRouter();
+module.exports = userRouter;

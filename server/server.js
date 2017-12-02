@@ -8,12 +8,18 @@ const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 const path = require('path');
 
+const mysql = require('mysql');
+const dbInfo = require('./keys/.dbKeys');
+const connection = mysql.createConnection(dbInfo);
+
+global.logError = require('./services/logError');
+
 nextApp
   .prepare()
   .then(() => {
     server.use(express.static(path.join(__dirname, '../static')));
 
-    const apiController = require('./controllers/apiController');
+    const apiController = require('./controllers/apiController')(connection);
     server.use('/api', apiController);
 
     server.get('*', (req, res) => {
