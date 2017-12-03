@@ -12,7 +12,7 @@ const getUserFromEmail        = require('../services/getUserFromEmail');
 const resetPw                 = require('../services/resetPw');
 const sendPwReset             = require('../services/sendPwReset');
 const sendVerificationEmail   = require('../services/sendVerificationEmail');
-const signup                  = require('../services/signup');
+const signup                  = require('../services/signup').signup;
 const subscribeUserToList     = require('../services/subscribeUserToList');
 const verifyUser              = require('../services/verifyUser');
 

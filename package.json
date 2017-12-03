@@ -10,7 +10,7 @@
     "build": "next build",
     "build-and-start": "next build && next start-production",
     "test": "npm run test-server",
-    "test-server": "mocha './server/**/*.test.js'"
+    "test-server": "mocha './server/**/*.test.js' --watch"
   },
   "author": "Ben Denzer",
   "license": "",

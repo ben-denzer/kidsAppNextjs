@@ -1,41 +1,31 @@
 const bcrypt = require('bcrypt');
 const checkEmail = require('./checkEmail');
+const hashPassword = require('./hashPassword');
 const sendVerificationEmail = require('./sendVerificationEmail');
 
 function verifyArgs(body) {
   return new Promise((resolve, reject) => {
     const { childCount, email, password, p2 } = body;
     if (
-         email.length < 5
+      !childCount || !email || !password || !p2
+
+      || email.length < 6
       || email.length > 255
       || email.indexOf('@') === -1
       || email.indexOf('.') === -1
-      || email.lastIndexOf('.') < email.indexOf('@')
+      || email.lastIndexOf('.') < email.indexOf('@') + 2
       || email.indexOf('@') !== email.lastIndexOf('@')
-      || email.lastIndexOf('.') > email.length - 2
+      || email.lastIndexOf('.') > email.length - 3
 
-      || !password
       || password.length < 7
-      || !p2
       || password !== p2
 
-      || childCount <= 0
+      || Number.isNaN(parseInt(childCount))
+      || parseInt(childCount) <= 0
     ) {
       return reject({ status: 400, error: 'Bad Request' });
     }
-    resolve();
-  });
-}
-
-function hashPassword(password) {
-  return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 11, (err, hash) => {
-      if (err) {
-        logError(err, 'bcrypt hash error in signup');
-        return reject({ status: 500, error: 'Server Error' });
-      }
-      resolve(hash);
-    });
+    resolve('valid');
   });
 }
 
@@ -68,7 +58,7 @@ function signup(body, connection) {
     setTimeout(() => {
       verifyArgs(body)
         .then(() => checkEmail(body.email, connection))
-        .then(() => hashPassword(body.password))
+        .then(() => hashPassword(body.password, bcrypt))
         .then(hash => insertUser(body, hash, connection))
         .then(insertId => resolve(insertId))
         .catch(err => {
@@ -79,4 +69,4 @@ function signup(body, connection) {
   });
 }
 
-module.exports = signup;
+module.exports = { hashPassword, insertUser, signup, verifyArgs };
