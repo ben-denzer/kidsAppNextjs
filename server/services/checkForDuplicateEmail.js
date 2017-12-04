@@ -1,8 +1,13 @@
-function checkEmail(email, connection) {
+function checkForDuplicateEmail(email, connection) {
   return new Promise((resolve, reject) => {
     if (!email) {
       logError('no email provided to checkEmail');
-      return reject({ status: 400, error: 'No email provided to checkEmail' });
+      return reject({ status: 500, error: 'Server Error' });
+    }
+
+    if (!connection) {
+      logError('no connection provided to checkEmail');
+      return reject({ status: 500, error: 'Server Error' });
     }
 
     connection.query(
@@ -18,10 +23,10 @@ function checkEmail(email, connection) {
           return reject({ status: 200, error: 'Email Is Already In Use' });
         }
 
-        resolve();
+        resolve('ok');
       }
     );
   });
 }
 
-module.exports = checkEmail;
+module.exports = checkForDuplicateEmail;

@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
-const checkEmail = require('./checkEmail');
+const checkForDuplicateEmail = require('./checkForDuplicateEmail');
 const hashPassword = require('./hashPassword');
+const insertParent = require('./insertParent');
 const sendVerificationEmail = require('./sendVerificationEmail');
 
 function verifyArgs(body) {
@@ -29,44 +30,26 @@ function verifyArgs(body) {
   });
 }
 
-function insertUser(body, hash, connection) {
-  const { childCount, email, emailList, password } = body;
-  const apiUrl = body.apiUrl || 'https://mysightwords.com';
-  const month = 60 * 60 * 24 * 30 * 1000;
-
-  return new Promise((resolve, reject) => {
-    connection.query(
-      `INSERT INTO parent (email, email_list, password, children_allowed, signup_utc, expiration_utc)
-        VALUES(?,?,?,?,?,?)`,
-      [email, emailList, hash, childCount, Date.now(), Date.now() + month ],
-      (err, success) => {
-        if (err) {
-          logError(err, 'db error in signup #1');
-          return reject({ status: 500, error: 'DB Error 77' });
-        }
-
-        console.log('sending email... commented out at the moment');
-        // sendVerificationEmail({ email, apiUrl }, connection);
-        resolve(success.insertId);
-      }
-    )
-  });
-}
-
 function signup(body, connection) {
+  const apiUrl = body.apiUrl || 'https://mysightwords.com';
+
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       verifyArgs(body)
-        .then(() => checkEmail(body.email, connection))
+        .then(() => checkForDuplicateEmail(body.email, connection))
         .then(() => hashPassword(body.password, bcrypt))
-        .then(hash => insertUser(body, hash, connection))
-        .then(insertId => resolve(insertId))
+        .then(hash => insertParent(body, hash, connection))
+        .then(insertId => {
+          console.log('sending email... commented out at the moment');
+          // sendVerificationEmail({ body.email, apiUrl }, connection);
+          resolve(insertId)
+        })
         .catch(err => {
-          logError(err, 'in signup.js');
-          return reject({ status: err.status || 500, error: err.error || 'Server Error 777' });
+          logError(err || 'mystery error', 'in signup.js');
+          return reject({ status: err.status || 500, error: err.error || 'Server Error' });
         });
     }, 1000);
   });
 }
 
-module.exports = { hashPassword, insertUser, signup, verifyArgs };
+module.exports = { signup, verifyArgs };
