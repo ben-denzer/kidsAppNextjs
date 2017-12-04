@@ -56,8 +56,6 @@ function userRouter(connection) {
   //       });
   //   });
 
-  userController.get('/', (req, res) => res.send('working'));
-
   userController.route('/login')
     .get((req, res) => {
       const message = req.flash('error');
@@ -158,7 +156,6 @@ function userRouter(connection) {
   //   });
 
   userController.post('/signup', jsonParser, (req, res) => {
-    console.log(req.body, 'reqBody');
     signup(req.body, connection)
       .then(userId => {
         const user = { userId, coins: 0 };
@@ -167,7 +164,6 @@ function userRouter(connection) {
         // req.login(user, () => res.status(200).send({ success }));
       })
       .catch(err => {
-        console.log('error', err);
         if (err.status !== 200) {
           logError(err, 'post user/signup');
         }
