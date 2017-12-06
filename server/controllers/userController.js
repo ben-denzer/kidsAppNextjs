@@ -1,4 +1,4 @@
-const signup = require('../services/signup').signup;
+import signup from '../services/signup';
 
 function userRouter(connection) {
   const postToSignup = async function(req, res, next) {
@@ -18,4 +18,4 @@ function userRouter(connection) {
 
 }
 
-module.exports = userRouter;
+export default userRouter;

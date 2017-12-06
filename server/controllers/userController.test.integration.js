@@ -1,14 +1,19 @@
-const expect = require('chai').expect;
-const sinon = require('sinon');
-const mysql = require('mysql');
-const dbInfo = require('../keys/.dbKeys');
+import chai from 'chai';
+import sinon from 'sinon';
+import mysql from 'mysql';
+import dbInfo from '../keys/.dbKeys';
+import signup from '../services/signup';
+import userControllerModule from './userController';
 const connection = mysql.createConnection(dbInfo);
-const signup = require('../services/signup').signup;
-const userController = require('./userController')(connection);
+const expect = chai.expect;
+const userController = userControllerModule(connection);
 
 describe('User Controller', function() {
   let req;
   let res;
+  let resStatus;
+  let resSend;
+
   beforeEach('setting up req and res', function() {
     req = {
       login: sinon.stub()

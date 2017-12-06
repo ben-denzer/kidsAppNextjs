@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt');
-const checkForDuplicateEmail = require('./checkForDuplicateEmail');
-const hashPassword = require('./hashPassword');
-const insertParent = require('./insertParent');
-const sendVerificationEmail = require('./sendVerificationEmail');
+import bcrypt from 'bcrypt';
+import checkForDuplicateEmail from './checkForDuplicateEmail';
+import hashPassword from './hashPassword';
+import insertParent from './insertParent';
+import sendVerificationEmail from './sendVerificationEmail';
 
 function verifyArgs(body) {
   return new Promise((resolve, reject) => {
@@ -52,4 +52,5 @@ function signup(body, connection) {
   });
 }
 
-module.exports = { signup, verifyArgs };
+export { verifyArgs };
+export default signup;

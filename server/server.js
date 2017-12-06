@@ -1,26 +1,28 @@
-const express = require('express');
+import express from 'express';
+import apiRouter from './routes/apiRouter';
+import dbInfo from './keys/.dbKeys';
+import logError from './services/logError';
+import mysql from 'mysql';
+import path from 'path';
+import next from 'next';
+import url from 'url';
+
 const server = express();
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const url = require('url');
-const next = require('next');
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
-const path = require('path');
 
-const mysql = require('mysql');
-const dbInfo = require('./keys/.dbKeys');
 const connection = mysql.createConnection(dbInfo);
 
-global.logError = require('./services/logError');
+global.logError = logError;
 
 nextApp
   .prepare()
   .then(() => {
-    server.use(express.static(path.join(__dirname, '../static')));
+    server.use(express.static('../static'));
 
-    const apiRouter = require('./routes/apiRouter')(connection);
-    server.use('/api', apiRouter);
+    server.use('/api', apiRouter(connection));
 
     server.get('*', (req, res) => {
       nextApp.render(req, res, url.parse(req.url).pathname);

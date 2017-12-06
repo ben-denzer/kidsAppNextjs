@@ -1,10 +1,9 @@
-const expect = require('chai').expect;
-const signupModule = require('./signup');
-const { hashPassword, insertUser, signup, verifyArgs } = signupModule;
-const sinon = require('sinon');
+import chai from 'chai';
+import signup, { verifyArgs } from './signup';
+import sinon from 'sinon';
+const expect = chai.expect;
 
 describe('Signup.js', function() {
-
   describe('Verify Args', function() {
     let body;
     beforeEach('setup valid arguments', function() {

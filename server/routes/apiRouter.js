@@ -1,6 +1,8 @@
-const apiRouter = require('express').Router();
-const jsonParser = require('body-parser').json();
-const userController = require('../controllers/userController');
+import express from 'express';
+import bodyParser from 'body-parser';
+import userController from '../controllers/userController';
+const apiRouter = express.Router();
+const jsonParser = bodyParser.json();
 
 function router(connection) {
   const { postToSignup } = userController(connection);
@@ -10,4 +12,4 @@ function router(connection) {
   return apiRouter;
 }
 
-module.exports = router;
+export default router;
