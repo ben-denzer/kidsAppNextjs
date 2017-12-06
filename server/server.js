@@ -19,8 +19,8 @@ nextApp
   .then(() => {
     server.use(express.static(path.join(__dirname, '../static')));
 
-    const apiController = require('./controllers/apiController')(connection);
-    server.use('/api', apiController);
+    const apiRouter = require('./routes/apiRouter')(connection);
+    server.use('/api', apiRouter);
 
     server.get('*', (req, res) => {
       nextApp.render(req, res, url.parse(req.url).pathname);

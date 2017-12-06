@@ -9,8 +9,11 @@
     "start-production": "NODE_ENV=production node server/server.js",
     "build": "next build",
     "build-and-start": "next build && next start-production",
-    "test": "npm run test-server",
-    "test-server": "mocha './server/**/*.test.js' --watch"
+    "test": "npm run test-all",
+    "test-all": "npm run server-unit-tests && npm run server-integration-tests",
+    "test-dev": "mocha './server/**/*.test.js' --watch",
+    "server-unit-tests": "mocha './server/**/*.test.js'",
+    "server-integration-tests": "mocha './server/**/*.test.integration.js'"
   },
   "author": "Ben Denzer",
   "license": "",
