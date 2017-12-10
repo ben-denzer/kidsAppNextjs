@@ -20,7 +20,7 @@ function checkForDuplicateEmail(email, connection) {
         }
         if (result && result.length) {
           // don't log this
-          return reject({ status: 200, error: 'Email Is Already In Use' });
+          return reject({ status: 401, error: 'Email Is Already In Use' });
         }
 
         resolve('ok');

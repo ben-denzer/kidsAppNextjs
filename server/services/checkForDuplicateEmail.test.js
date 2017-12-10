@@ -50,7 +50,7 @@ describe('Check For Duplicate Email', function() {
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.called).to.be.false;
-        expect(e.status).to.equal(200);
+        expect(e.status).to.equal(401);
         expect(e.error).to.equal('Email Is Already In Use');
       });
   });

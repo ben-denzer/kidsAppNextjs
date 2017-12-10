@@ -7,7 +7,8 @@ describe('Insert Parent', function() {
   beforeEach('setting up logError and body', function() {
     global.logError = sinon.spy();
     body = {
-      childCount: 1,
+      childCount: '1',
+      children: ['child1'],
       email: 'fake@gmail.com',
       emailList: false,
     };
@@ -61,6 +62,20 @@ describe('Insert Parent', function() {
       });
   });
 
+  it('should reject if children array doesnt match childcount', function() {
+    body = Object.assign({}, body, { childCount: 2 });
+    const connection = {
+      query: sinon.stub()
+    };
+
+    return insertParent(body, 'sdlfasdlkfjdso', connection)
+      .then(success => expect(success).to.be.false)
+      .catch(e => {
+        expect(logError.calledOnce).to.be.true;
+        expect(e.status).to.equal(500);
+      });
+  });
+
   it('should reject on db error', function() {
     const connection = {
       query: sinon.stub().callsArgWithAsync(2, { error: true })
@@ -92,11 +107,27 @@ describe('Insert Parent', function() {
 
   it('should resolve with insertId', function() {
     const mockId = 10;
-    const connection = {
-      query: sinon.stub().callsArgWithAsync(2, null, { insertId: mockId })
-    };
+    const connection = { query: () => {}};
+    const query = sinon.stub(connection, 'query');
+    query.onCall(0).callsArgWithAsync(2, null, { insertId: mockId });
+    query.onCall(1).callsArgWithAsync(2, null, { success: true });
 
     return insertParent(body, 'slfjaoiwj', connection)
-      .then(insertId => expect(insertId).to.equal(mockId));
+      .then(insertId => {
+        expect(query.calledTwice).to.be.true;
+        expect(insertId).to.equal(10)
+      });
+  });
+
+  it('should call query as many times as needed for children', function() {
+    body = Object.assign({}, body, { childCount: 3, children: ['child1', 'child2', 'child3'] });
+    const connection = { query: () => {}};
+    const query = sinon.stub(connection, 'query');
+    query.onCall(0).callsArgWithAsync(2, null, { insertId: 1 });
+
+    return insertParent(body, 'slfjaoiwj', connection)
+      .then(insertId => {
+        expect(query.callCount).to.equal(4);
+      });
   });
 });

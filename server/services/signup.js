@@ -1,14 +1,16 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import checkForDuplicateEmail from './checkForDuplicateEmail';
+import createJwt from './createJwt';
 import hashPassword from './hashPassword';
 import insertParent from './insertParent';
-import sendVerificationEmail from './sendVerificationEmail';
+// import sendVerificationEmail from './sendVerificationEmail';
 
 function verifyArgs(body) {
   return new Promise((resolve, reject) => {
-    const { childCount, email, password, p2 } = body;
+    const { childCount, children, email, password, p2 } = body;
     if (
-      !childCount || !email || !password || !p2
+      !childCount || !children.length || !email || !password || !p2
 
       || email.length < 6
       || email.length > 255
@@ -23,7 +25,9 @@ function verifyArgs(body) {
 
       || Number.isNaN(parseInt(childCount))
       || parseInt(childCount) <= 0
+      || children.length !== Number(childCount)
     ) {
+      logError(body, 'body in signup')
       return reject({ status: 400, error: 'Bad Request' });
     }
     resolve('valid');
@@ -39,10 +43,13 @@ function signup(body, connection) {
         .then(() => checkForDuplicateEmail(body.email, connection))
         .then(() => hashPassword(body.password, bcrypt))
         .then(hash => insertParent(body, hash, connection))
-        .then(insertId => {
+        .then(insertId => createJwt(insertId, jwt))
+        .then(token => {
+          const children = body.children.map(name => ({ name, coins: 0 }));
+          const userData = { token, children };
           console.log('sending email... commented out at the moment');
           // sendVerificationEmail({ body.email, apiUrl }, connection);
-          resolve(insertId)
+          resolve(userData);
         })
         .catch(err => {
           logError(err || 'mystery error', 'in signup.js');

@@ -8,7 +8,8 @@ describe('Signup.js', function() {
     let body;
     beforeEach('setup valid arguments', function() {
       body = {
-        childCount: 1,
+        childCount: '1',
+        children: ['child1'],
         email: 'fake.email@gmail.com',
         password: 'fakePassword',
         p2: 'fakePassword'
@@ -27,6 +28,20 @@ describe('Signup.js', function() {
         .then(success => expect(success).to.be.false)
         .catch((e) => { expect(e.status).to.equal(400) });
     });
+
+    it('should reject if children.length and childCount dont match', function() {
+      body = Object.assign({}, body, { children: ['child1', 'child2'] });
+      return verifyArgs(body)
+      .then(success => expect(success).to.be.false)
+      .catch((e) => { expect(e.status).to.equal(400) });
+    });
+
+    it('should reject on no children', function() {
+      body = Object.assign({}, body, { children: [] });
+      return verifyArgs(body)
+        .then(success => expect(success).to.be.false)
+        .catch((e) => { expect(e.status).to.equal(400) });
+    })
 
     it('should reject if no email', function() {
       body = Object.assign({}, body, { email: '' });

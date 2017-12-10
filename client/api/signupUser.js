@@ -14,8 +14,12 @@ function signupUser(body) {
     };
 
     fetch(`${baseUserUrl}/signup`, options)
-      .then(res => { if (res.ok) resolve() })
-      .catch(err => reject(err));
+      .then(res => {
+        if (res.ok) return resolve(res.json())
+        if (res.status === 401) return reject('Email Is Already In Use');
+        return reject('There Was An Error, Please Try Again');
+      })
+      .catch(err => { console.log(err) });
   });
 }
 

@@ -1,6 +1,6 @@
 function verifySignupInfo(data) {
   return new Promise((resolve, reject) => {
-    const { childCount, email, password, p2 } = data;
+    const { childCount, children, email, password, p2 } = data;
 
     if (email.length < 5 || email.length > 255) return reject('Invalid Email');
     if (email.indexOf('@') === -1) return reject('Invalid Email');
@@ -15,6 +15,10 @@ function verifySignupInfo(data) {
     if (password !== data.p2) return reject('Passwords Do Not Match');
 
     if (childCount <= 0) return reject('You Must Have At Least 1 Child Account');
+
+    for (let i = 0; i < childCount; i++) {
+      if (!children[i]) return reject('Please Enter A Name For Each Child');
+    }
 
     resolve();
   });

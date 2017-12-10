@@ -21,9 +21,7 @@ nextApp
   .prepare()
   .then(() => {
     server.use(express.static('../static'));
-
     server.use('/api', apiRouter(connection));
-
     server.get('*', (req, res) => {
       nextApp.render(req, res, url.parse(req.url).pathname);
     });

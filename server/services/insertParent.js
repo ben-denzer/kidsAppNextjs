@@ -7,10 +7,10 @@ function insertParent(body, hash, connection) {
       return reject({ status: 500, error: 'Server Error' });
     }
 
-    const { childCount, email, emailList } = body;
+    const { childCount, children, email, emailList } = body;
     const month = 60 * 60 * 24 * 30 * 1000;
 
-    if (!childCount || !email) {
+    if (!childCount || !email || Number(childCount) !== children.length) {
       logError(body, 'Bad args in insertParent - should have been caught before this');
       return reject({ status: 500, error: 'Server Error' });
     }
@@ -21,7 +21,7 @@ function insertParent(body, hash, connection) {
       [email, emailList, hash, childCount, Date.now(), Date.now() + month ],
       (err, success) => {
         if (err) {
-          logError(err, 'db error in insertParent');
+          logError(err, 'db error in insertParent #1');
           return reject({ status: 500, error: 'Server Error' });
         }
 
@@ -30,7 +30,27 @@ function insertParent(body, hash, connection) {
           return reject({ status: 500, error: 'Server Error' });
         }
 
-        resolve(success.insertId);
+        const insertId = success.insertId;
+
+        for (let i of children) {
+          connection.query(
+            'INSERT INTO children (parent_fk, username) VALUES (?,?)',
+            [ insertId, i ],
+            (err, success) => {
+              if (err) {
+                logError(err, 'db error in insertParent #2');
+                return reject({ status: 500, error: 'Server Error' });
+              }
+
+              if (!success) {
+                logError(success, 'no success || insertId from insertParent');
+                return reject({ status: 500, error: 'Server Error' });
+              }
+            }
+          )
+        }
+
+        resolve(insertId);
       }
     )
   });

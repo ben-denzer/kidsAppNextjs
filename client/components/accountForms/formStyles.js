@@ -13,10 +13,6 @@ export const AccountForm = styled.form`
   flex-direction: column;
   color: ${textColor};
   padding: 0 10px;
-  box-sizing: border-box;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
 
   @media (max-width: 1000px) {
     width: 100%;
@@ -25,6 +21,10 @@ export const AccountForm = styled.form`
   h1 {
     text-align: center;
   }
+`;
+
+export const Form2Cols = styled.div`
+  display: flex;
 `;
 
 export const FormButton = styled.button`
@@ -51,6 +51,14 @@ export const FormErrorBox = styled.div`
 export const FormLabel = styled.label`
   font-size: 18px;
   margin-bottom: 4px;
+`;
+
+export const FormHalf = styled.div`
+  box-sizing: border-box;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
 `;
 
 export const FormRadioButton = styled.input``;

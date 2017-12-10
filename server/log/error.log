@@ -3,3 +3,133 @@ Time: Tue Dec 05 2017 23:21:43 GMT-0800 (PST)
 Description: none
 Error: "should be logging"
 
+
+Time: Thu Dec 07 2017 23:28:23 GMT-0800 (PST)
+Description: post user/signup
+Error: {}
+
+
+Time: Sun Dec 10 2017 01:55:20 GMT-0800 (PST)
+Description: db error in insertParent #2
+Error: {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'name' in 'field list'","sqlState":"42S22","index":0,"sql":"INSERT INTO children (parent_fk, name, coins) VALUES (157,'bill',0)"}
+
+
+Time: Sun Dec 10 2017 01:58:28 GMT-0800 (PST)
+Description: db error in insertParent #2
+Error: {"code":"ER_WRONG_VALUE_COUNT_ON_ROW","errno":1136,"sqlMessage":"Column count doesn't match value count at row 1","sqlState":"21S01","index":0,"sql":"INSERT INTO children (parent_fk, name, coins) VALUES (158,'fake')"}
+
+
+Time: Sun Dec 10 2017 01:59:32 GMT-0800 (PST)
+Description: db error in insertParent #2
+Error: {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'name' in 'field list'","sqlState":"42S22","index":0,"sql":"INSERT INTO children (parent_fk, name) VALUES (159,'fake3')"}
+
+
+Time: Sun Dec 10 2017 02:01:59 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":400,"error":"Bad Request"}
+
+
+Time: Sun Dec 10 2017 02:01:59 GMT-0800 (PST)
+Description: post user/signup
+Error: {"status":400,"error":"Bad Request"}
+
+
+Time: Sun Dec 10 2017 02:11:15 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":400,"error":"Bad Request"}
+
+
+Time: Sun Dec 10 2017 02:11:15 GMT-0800 (PST)
+Description: post user/signup
+Error: {"status":400,"error":"Bad Request"}
+
+
+Time: Sun Dec 10 2017 02:13:31 GMT-0800 (PST)
+Description: body in signup
+Error: {"childCount":"2","children":["diamond","dylan"],"email":"fake9@ksl.co","emailList":true,"error":"","password":"qweruio","p2":"qweruio"}
+
+
+Time: Sun Dec 10 2017 02:13:31 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":400,"error":"Bad Request"}
+
+
+Time: Sun Dec 10 2017 02:13:31 GMT-0800 (PST)
+Description: post user/signup
+Error: {"status":400,"error":"Bad Request"}
+
+
+Time: Sun Dec 10 2017 02:17:00 GMT-0800 (PST)
+Description: Bad args in insertParent - should have been caught before this
+Error: {"childCount":"2","children":["diamond","dylan"],"email":"fake10@ks.co","emailList":true,"error":"","password":"qweruio","p2":"qweruio"}
+
+
+Time: Sun Dec 10 2017 02:17:00 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":500,"error":"Server Error"}
+
+
+Time: Sun Dec 10 2017 02:17:00 GMT-0800 (PST)
+Description: post user/signup
+Error: {"status":500,"error":"Server Error"}
+
+
+Time: Sun Dec 10 2017 02:39:06 GMT-0800 (PST)
+Description: post user/signup
+Error: {}
+
+
+Time: Sun Dec 10 2017 03:25:57 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":200,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:29:20 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":200,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:32:04 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":200,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:33:33 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":200,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:35:02 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":200,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:38:30 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":401,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:38:30 GMT-0800 (PST)
+Description: post user/signup
+Error: {"status":401,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:39:46 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":401,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:39:46 GMT-0800 (PST)
+Description: post user/signup
+Error: {"status":401,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:42:07 GMT-0800 (PST)
+Description: in signup.js
+Error: {"status":401,"error":"Email Is Already In Use"}
+
+
+Time: Sun Dec 10 2017 03:42:07 GMT-0800 (PST)
+Description: post user/signup
+Error: {"status":401,"error":"Email Is Already In Use"}
+
