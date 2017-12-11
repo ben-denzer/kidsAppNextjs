@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
+import MainLayout from '../components/MainLayout';
 import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import checkBingoCard from '../utils/checkBingoCard';
@@ -228,4 +229,4 @@ class OnlineBingoContainer extends Component {
   }
 }
 
-export default OnlineGameWrapper(OnlineBingoContainer);
+export default MainLayout(OnlineGameWrapper(OnlineBingoContainer));

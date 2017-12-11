@@ -10,7 +10,7 @@ export default function speech(props) {
         <title>Sight Word Bingo | My Sight Words.com</title>
       </Head>
       <AnalyticsWrapper>
-        {MainLayout(OnlineBingoContainer, props)}
+        <OnlineBingoContainer {...props} />
       </AnalyticsWrapper>
     </div>
   );

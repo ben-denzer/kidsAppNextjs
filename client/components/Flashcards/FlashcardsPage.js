@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import MainLayout from '../MainLayout';
 import defaultWords from '../../config/defaultSightWords';
 import styled from 'styled-components';
 import { color1, color2, color3, color4 } from '../../config/globalStyles';
 import Link from 'next/link';
 
-export default class FlashcardsPage extends Component {
+class FlashcardsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,3 +143,5 @@ const WordToggle = styled.div`
     width: 50%;
   }
 `;
+
+export default MainLayout(FlashcardsPage);

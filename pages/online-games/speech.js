@@ -10,7 +10,7 @@ export default function speech(props) {
         <title>Read Sight Words</title>
       </Head>
       <AnalyticsWrapper>
-        {MainLayout(SpeechPageContainer, props)}
+        <SpeechPageContainer {...props} />
       </AnalyticsWrapper>
     </div>
   );

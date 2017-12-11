@@ -10,7 +10,7 @@ export default function speech(props) {
         <title>Memory Matching Game</title>
       </Head>
       <AnalyticsWrapper>
-        {MainLayout(MemoryContainer, props)}
+        <MemoryContainer {...props} />
       </AnalyticsWrapper>
     </div>
   );

@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import MainLayout from '../MainLayout';
 import GameThumbnail from '../GameThumbnail';
 import { textColor } from '../../config/globalStyles';
 
-export default function OnlineGamesContainer(props) {
+function OnlineGamesContainer(props) {
   return (
     <PageContainer className="whiteBox">
       <h1>Online Games</h1>
@@ -133,3 +134,5 @@ const Headline = styled.div`
   padding-left: 10px;
   padding-right: 10px;
 `;
+
+export default MainLayout(OnlineGamesContainer)

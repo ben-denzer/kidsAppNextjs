@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import shuffle from '../utils/shuffle';
 import FishingPage from '../components/Fishing/FishingPage';
@@ -36,7 +37,7 @@ class FishingContainer extends Component {
 
   handleUserChoice(e) {
     const { currentIndex, fishOnBoard, winCount } = this.state;
-    const target = e.target;    
+    const target = e.target;
     if (target.innerText === fishOnBoard[currentIndex]) {
       this.setState({ winCount: winCount + 1 });
       target.classList.add('caught');
@@ -74,4 +75,4 @@ class FishingContainer extends Component {
   }
 }
 
-export default OnlineGameWrapper(FishingContainer);
+export default MainLayout(OnlineGameWrapper(FishingContainer));

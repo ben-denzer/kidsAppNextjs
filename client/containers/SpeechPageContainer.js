@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import SpeechPage from '../components/Speech/SpeechPage';
 import defaultWordList from '../config/defaultSightWords';
@@ -147,4 +148,4 @@ class SpeachPageContainer extends Component {
   }
 }
 
-export default OnlineGameWrapper(SpeachPageContainer);
+export default MainLayout(OnlineGameWrapper(SpeachPageContainer));

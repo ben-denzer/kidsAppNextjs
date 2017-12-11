@@ -11,7 +11,7 @@ export default function onlineGames(props) {
         <meta name="description" content="Learn Sight Words And Spelling Words Online For Free - Speech recognition flashcards, bingo, memory, and more" />
       </Head>
       <AnalyticsWrapper>
-        {MainLayout(OnlineGamesPage, props)}
+        <OnlineGamesPage {...props} />
       </AnalyticsWrapper>
     </div>
   );

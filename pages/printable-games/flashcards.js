@@ -17,7 +17,7 @@ export default class Flashcards extends Component {
           <title>Print Your Flash Cards | My Sight Words.com</title>
         </Head>
         <AnalyticsWrapper>
-          {MainLayout(FlashcardsPage, this.props)}
+          <FlashcardsPage {...this.props} />
         </AnalyticsWrapper>
       </div>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import MainLayout from '../MainLayout';
 import ThumbContainer from './ThumbContainer';
 import {
   ArticleImg,
@@ -15,7 +16,7 @@ import {
   TopSectionOverlay
 } from './HomepageStyles';
 
-export default function HomepageContainer(props) {
+function HomepageContainer(props) {
   return (
     <HpContainer>
       <TopSection>
@@ -109,3 +110,5 @@ export default function HomepageContainer(props) {
     </HpContainer>
   );
 }
+
+export default MainLayout(HomepageContainer);

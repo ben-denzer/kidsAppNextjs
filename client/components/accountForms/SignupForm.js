@@ -71,7 +71,7 @@ export default class SignupForm extends Component {
         return;
       }
       let children = this.state.children;
-      // I don't want to erase any names already put in so I don't
+      // I don't want to erase any names that have already been typed in so I don't
       // set children.length when it'll do that
       if (children.length <= value) {
         children.length = value;
@@ -102,6 +102,7 @@ export default class SignupForm extends Component {
     verifySignupInfo(this.state)
       .then(result => signupUser(this.state))
       .then(data => console.log(data))
+      .then(() => window.location = '/')
       .catch(error => this.setState({ error }));
   }
 

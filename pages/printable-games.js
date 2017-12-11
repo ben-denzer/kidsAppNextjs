@@ -11,7 +11,7 @@ export default function printableGames(props) {
         <title>Printable Reading Games | My Sight Words.com</title>
       </Head>
       <AnalyticsWrapper>
-        {MainLayout(PrintableGamesPage, props)}
+        <PrintableGamesPage {...props} />
       </AnalyticsWrapper>
     </div>
   );

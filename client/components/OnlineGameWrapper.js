@@ -38,7 +38,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
       setInStorage('coins', newCoins);
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
-      setTimeout(() => this.setState({ 
+      setTimeout(() => this.setState({
         coins: newCoins,
         showPrize: false,
         spinnerClassName: 'hide'

@@ -10,7 +10,7 @@ export default function speech(props) {
         <title>Sight Word Fishing</title>
       </Head>
       <AnalyticsWrapper>
-        {MainLayout(FishingContainer, props)}
+        <FishingContainer {...props} />
       </AnalyticsWrapper>
     </div>
   );

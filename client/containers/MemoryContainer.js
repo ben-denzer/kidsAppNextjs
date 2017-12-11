@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
@@ -164,4 +165,4 @@ class MemoryContainer extends Component {
   }
 }
 
-export default OnlineGameWrapper(MemoryContainer);
+export default MainLayout(OnlineGameWrapper(MemoryContainer));

@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import MainLayout from '../MainLayout';
 import GameThumbnail from '../GameThumbnail';
 import { textColor } from '../../config/globalStyles';
 
-export default function PrintableGamesContainer(props) {
+function PrintableGamesContainer(props) {
   return (
     <PageContainer>
       <h1>Printable Games</h1>
@@ -85,3 +86,5 @@ const Headline = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
+export default MainLayout(PrintableGamesContainer);
