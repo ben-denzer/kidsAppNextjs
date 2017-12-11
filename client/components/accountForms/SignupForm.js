@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import MainLayout from '../MainLayout';
 import verifySignupInfo from '../../utils/verifySignupInfo';
+import { setInStorage } from '../../utils/mswLocalStorage';
 import signupUser from '../../api/signupUser';
 import {
   AccountForm,
@@ -12,7 +14,7 @@ import {
   FormTextInput
 } from './formStyles';
 
-export default class SignupForm extends Component {
+class SignupForm extends Component {
   constructor(props) {
     super(props);
 
@@ -101,8 +103,12 @@ export default class SignupForm extends Component {
     children.length = childCount;
     verifySignupInfo(this.state)
       .then(result => signupUser(this.state))
-      .then(data => console.log(data))
-      .then(() => window.location = '/')
+      .then(data => {
+        const { token, children } = data;
+        setInStorage('token', token);
+        setInStorage('children', children);
+        window.location = '/';
+      })
       .catch(error => this.setState({ error }));
   }
 
@@ -164,3 +170,5 @@ export default class SignupForm extends Component {
     );
   }
 }
+
+export default MainLayout(SignupForm);

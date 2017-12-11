@@ -11,7 +11,7 @@ export default function onlineGames(props) {
         <meta name="description" content="Create an account at MySightWords.com" />
       </Head>
       <AnalyticsWrapper>
-        {MainLayout(SignupForm, props)}
+        <SignupForm {...props} />
       </AnalyticsWrapper>
     </div>
   );
