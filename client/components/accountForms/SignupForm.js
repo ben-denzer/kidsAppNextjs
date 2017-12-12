@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MainLayout from '../MainLayout';
-import verifySignupInfo from '../../utils/verifySignupInfo';
-import { setInStorage } from '../../utils/mswLocalStorage';
 import signupUser from '../../api/signupUser';
+import setUserInStorage from '../../utils/setUserInStorage';
+import verifySignupInfo from '../../utils/verifySignupInfo';
 import {
   AccountForm,
   Form2Cols,
@@ -104,9 +104,7 @@ class SignupForm extends Component {
     verifySignupInfo(this.state)
       .then(result => signupUser(this.state))
       .then(data => {
-        const { token, children } = data;
-        setInStorage('token', token);
-        setInStorage('children', children);
+        setUserInStorage(data);
         window.location = '/';
       })
       .catch(error => this.setState({ error }));

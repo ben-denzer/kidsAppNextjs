@@ -133,3 +133,13 @@ Time: Sun Dec 10 2017 03:42:07 GMT-0800 (PST)
 Description: post user/signup
 Error: {"status":401,"error":"Email Is Already In Use"}
 
+
+Time: Tue Dec 12 2017 00:15:12 GMT-0800 (PST)
+Description: post user/login
+Error: undefined
+
+
+Time: Tue Dec 12 2017 00:16:30 GMT-0800 (PST)
+Description: post user/login
+Error: undefined
+

@@ -3,7 +3,7 @@ import MainLayout from '../../client/components/MainLayout';
 import SignupForm from '../../client/components/accountForms/SignupForm';
 import Head from 'next/head';
 
-export default function onlineGames(props) {
+export default function SignupPage(props) {
   return (
     <div>
       <Head>
