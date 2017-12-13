@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import login from './login';
 const expect = chai.expect;
 
-describe('Login Service', function() {
+describe.skip('Login Service', function() {
   let body;
   let connection = {};
   beforeEach('setting up loginService tests', function() {

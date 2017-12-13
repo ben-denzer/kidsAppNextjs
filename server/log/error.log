@@ -143,3 +143,28 @@ Time: Tue Dec 12 2017 00:16:30 GMT-0800 (PST)
 Description: post user/login
 Error: undefined
 
+
+Time: Tue Dec 12 2017 23:54:34 GMT-0800 (PST)
+Description: in login.js
+Error: {"status":401,"error":"Invalid Email Or Password"}
+
+
+Time: Tue Dec 12 2017 23:55:39 GMT-0800 (PST)
+Description: db error in findChildren
+Error: {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlMessage":"Unknown column 'name' in 'field list'","sqlState":"42S22","index":0,"sql":"SELECT name, coins FROM children WHERE parent_fk = 237"}
+
+
+Time: Tue Dec 12 2017 23:55:39 GMT-0800 (PST)
+Description: in login.js
+Error: {"status":500,"error":"Server Error"}
+
+
+Time: Tue Dec 12 2017 23:55:39 GMT-0800 (PST)
+Description: post user/login
+Error: {"status":500,"error":"Server Error"}
+
+
+Time: Tue Dec 12 2017 23:58:31 GMT-0800 (PST)
+Description: in login.js
+Error: {"status":401,"error":"Invalid Email Or Password"}
+

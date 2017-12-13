@@ -53,7 +53,7 @@ function signup(body, connection) {
         })
         .catch(err => {
           logError(err || 'mystery error', 'in signup.js');
-          return reject({ status: err.status || 500, error: err.error || 'Server Error' });
+          return reject(err);
         });
     }, 1000);
   });

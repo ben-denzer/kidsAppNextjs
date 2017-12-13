@@ -14,7 +14,7 @@
     "test-all": "npm run server-unit-tests && npm run server-integration-tests &",
     "test-dev": "mocha -r @std/esm './server/**/*.test.js' --watch",
     "server-unit-tests": "mocha -r @std/esm './server/**/*.test.js'",
-    "server-integration-tests": "mocha -r @std/esm './server/**/*.test.integration.js'"
+    "server-integration-tests": "mocha -r @std/esm './server/**/*.test.integration.js' --watch"
   },
   "author": "Ben Denzer",
   "license": "",

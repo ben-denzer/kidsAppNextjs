@@ -15,9 +15,7 @@ describe('User Controller', function() {
   let resSend;
 
   beforeEach('setting up req and res', function() {
-    req = {
-      login: sinon.stub()
-    },
+    req = {},
     res = {
       status() { return this },
       send() {}
@@ -32,6 +30,7 @@ describe('User Controller', function() {
       body = {
         apiUrl: undefined,
         childCount: 1,
+        children: [ 'fake1' ],
         email: 'XXfake@gmail.comXX',
         password: 'fakePassword',
         p2: 'fakePassword'
@@ -47,7 +46,12 @@ describe('User Controller', function() {
       }
       catch(e) { expect(e).to.be.null; }
 
+      connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"');
       expect(resSend.calledOnce).to.be.true;
+      const { token, children } = JSON.parse(resSend.firstCall.args[0]);
+      expect(typeof token).to.equal('string');
+      expect(Array.isArray(children)).to.be.true;
+      expect(children.length).to.equal(1);
       expect(resStatus.calledOnce).to.be.true;
       expect(resStatus.firstCall.args[0]).to.equal(200);
       expect(logError.called).to.be.false;
@@ -70,6 +74,71 @@ describe('User Controller', function() {
       sinon.stub(connection, 'query').callsArgAsync(2, { error: true });
       try {
         await userController.postToSignup(req, res);
+      }
+      catch(e) { expect(e).to.be.null; }
+
+      expect(resSend.calledOnce).to.be.true;
+      expect(resStatus.calledOnce).to.be.true;
+      expect(resStatus.firstCall.args[0]).to.equal(500);
+    });
+  });
+
+  describe('Login Blackbox', function() {
+    let body;
+    let req;
+    beforeEach('setting body and logError', function() {
+      body = {
+        email: 'XXfake@gmail.comXX',
+        password: 'fakePassword',
+      };
+
+      global.logError = sinon.stub();
+      req = { body };
+    });
+
+    it('should log a user in', async function() {
+      try {
+        await userController.postToLogin(req, res);
+      }
+      catch(e) { expect(e).to.be.null; }
+
+      expect(resSend.calledOnce).to.be.true;
+      const { token, children } = JSON.parse(resSend.firstCall.args[0]);
+      expect(typeof token).to.equal('string');
+      expect(Array.isArray(children)).to.be.true;
+      expect(children.length).to.equal(1);
+      expect(resStatus.calledOnce).to.be.true;
+      expect(resStatus.firstCall.args[0]).to.equal(200);
+      expect(logError.called).to.be.false;
+    });
+
+    it('should fail and send 400 for incorrect arguments', async function() {
+      req.body = Object.assign({}, req.body, { email: '' });
+      try {
+        await userController.postToLogin(req, res);
+      }
+      catch(e) { expect(e).to.be.null; }
+
+      expect(resSend.calledOnce).to.be.true;
+      expect(resStatus.calledOnce).to.be.true;
+      expect(resStatus.firstCall.args[0]).to.equal(400);
+    });
+
+    it('should fail and send 401 for invalid credentials', async function() {
+      req.body = Object.assign({}, req.body, { email: 'sdfkj@sldk.com' });
+      try {
+        await userController.postToLogin(req, res);
+      }
+      catch(e) { expect(e).to.be.null; }
+
+      expect(resSend.calledOnce).to.be.true;
+      expect(resStatus.calledOnce).to.be.true;
+      expect(resStatus.firstCall.args[0]).to.equal(400);
+    });
+
+    it.skip('should fail and send 500 on unknown error', async function() {
+      try {
+        await userController.postToLogin(req, res);
       }
       catch(e) { expect(e).to.be.null; }
 
