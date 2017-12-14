@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import verifyPassword from './verifyPassword';
+import verifyPasswordAndReturnId from './verifyPasswordAndReturnId';
 const expect = chai.expect;
 
 describe('Verify Password', function() {
@@ -18,7 +18,7 @@ describe('Verify Password', function() {
   it('should reject if no email || password', function() {
     sinon.stub(connection, 'query');
     body = Object.assign({}, body, { email: '' });
-    return verifyPassword(body, connection, bcrypt)
+    return verifyPasswordAndReturnId(body, connection, bcrypt)
       .then(id => expect(id).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -27,7 +27,7 @@ describe('Verify Password', function() {
   });
 
   it('should reject if no connection', function() {
-    return verifyPassword(body)
+    return verifyPasswordAndReturnId(body)
       .then(id => expect(id).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -36,7 +36,7 @@ describe('Verify Password', function() {
   });
 
   it('should reject if no bcrypt', function() {
-    return verifyPassword(body, {})
+    return verifyPasswordAndReturnId(body, {})
       .then(id => expect(id).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -46,7 +46,7 @@ describe('Verify Password', function() {
 
   it('should reject on db error', function() {
     sinon.stub(connection, 'query').callsArgWithAsync(2, { error: true });
-    return verifyPassword(body, connection)
+    return verifyPasswordAndReturnId(body, connection)
       .then(id => expect(id).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -57,7 +57,7 @@ describe('Verify Password', function() {
   it('should reject on bcrypt error', function() {
     sinon.stub(connection, 'query').callsArgWithAsync(2, null, [{ parent_id: 1, password: 'asdf' }]);
     sinon.stub(bcrypt, 'compare').rejects();
-    return verifyPassword(body, connection, bcrypt)
+    return verifyPasswordAndReturnId(body, connection, bcrypt)
       .then(id => expect(id).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -65,10 +65,19 @@ describe('Verify Password', function() {
       });
   });
 
+  it('should reject with 401 on no email found', function() {
+    sinon.stub(connection, 'query').callsArgWithAsync(2, null, []);
+    return verifyPasswordAndReturnId(body, connection, bcrypt)
+      .then(id => expect(id).to.be.false)
+      .catch(e => {
+        expect(e.status).to.equal(401);
+      });
+    });
+
   it('should reject with 401 on bad password', function() {
     sinon.stub(connection, 'query').callsArgWithAsync(2, null, [{ parent_id: 1, password: 'asdf' }]);
     sinon.stub(bcrypt, 'compare').resolves(null);
-    return verifyPassword(body, connection, bcrypt)
+    return verifyPasswordAndReturnId(body, connection, bcrypt)
       .then(id => expect(id).to.be.false)
       .catch(e => {
         expect(e.status).to.equal(401);
@@ -78,7 +87,7 @@ describe('Verify Password', function() {
   it('should return parentId on success', function() {
     sinon.stub(connection, 'query').callsArgWithAsync(2, null, [{ parent_id: 1, password: 'asdf' }]);
     sinon.stub(bcrypt, 'compare').resolves(true);
-    return verifyPassword(body, connection, bcrypt)
+    return verifyPasswordAndReturnId(body, connection, bcrypt)
       .then(id => expect(typeof id).to.equal('number'))
   });
 });
