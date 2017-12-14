@@ -8,6 +8,17 @@ import {
   textColor
 } from '../../config/globalStyles';
 
+const formStatusBox = bg => {
+  return `
+    background-color: ${bg};
+    color: ${light};
+    font-size: 18px;
+    font-weight: bold;
+    padding: 4px;
+    text-align: center;
+  `;
+}
+
 export const AccountForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -41,11 +52,13 @@ export const FormButton = styled.button`
 `;
 
 export const FormErrorBox = styled.div`
-  background-color: red;
-  color: ${light};
-  font-size: 18px;
-  font-weight: bold;
-  padding: 4px;
+  ${formStatusBox('red')}
+`;
+
+export const FormExtraOptions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 5px;
 `;
 
 export const FormLabel = styled.label`
@@ -62,6 +75,10 @@ export const FormHalf = styled.div`
 `;
 
 export const FormRadioButton = styled.input``;
+
+export const FormSuccessBox = styled.div`
+  ${formStatusBox('green')}
+`;
 
 export const FormTextInput = styled.input`
   margin-bottom: 15px;

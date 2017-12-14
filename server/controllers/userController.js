@@ -1,6 +1,7 @@
 import signup from '../services/signup';
 import login from '../services/login';
 import sendError from '../services/sendError';
+import sendForgotPwEmail from '../services/sendForgotPwEmail';
 
 function userRouter(connection) {
 
@@ -25,12 +26,27 @@ function userRouter(connection) {
     } catch(err) {
       if (err && err.status !== 200) {
         logError(err, 'post user/signup');
+      } else if (!err) {
+        logError('unknown error in post user/signup');
       }
       sendError(err, res);
     };
   };
 
+  const postToForgotPw = async function(req, res) {
+    try {
+      const success = await sendForgotPwEmail(req.body, connection);
+      res.status(200).send(JSON.stringify({ success: true }));
+    } catch(err) {
+      if (err && err.status === 401) {
+        return res.status(401).send(JSON.stringify({ error: 'Email Not On File' }));
+      }
+      sendError(err, res);
+    }
+  }
+
   return {
+    postToForgotPw,
     postToLogin,
     postToSignup
   };

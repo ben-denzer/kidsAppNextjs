@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import MainLayout from '../MainLayout';
-import setUserInStorage from '../../utils/setUserInStorage';
+import forgotPw from '../../api/forgotPw';
 
-import userLogin from '../../api/userLogin';
 import {
   AccountForm,
   FormButton,
   FormErrorBox,
   FormExtraOptions,
   FormLabel,
+  FormSuccessBox,
   FormTextInput
 } from './formStyles';
 
-class LoginForm extends Component {
+class ForgotPwForm extends Component {
   constructor(props) {
     super(props);
 
@@ -21,6 +21,7 @@ class LoginForm extends Component {
       email: '',
       error: '',
       password: '',
+      success: false
     }
 
     this.handleInput = this.handleInput.bind(this);
@@ -37,20 +38,20 @@ class LoginForm extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { email, password } = this.state;
-    userLogin({ email, password })
-      .then(data => {
-        setUserInStorage(data);
-        window.location = '/';
+    const { email } = this.state;
+    forgotPw({ email })
+      .then(() => {
+        this.setState({ success: true });
+        setTimeout(() => { window.location = '/account/login' }, 5000 );
       }).catch(error => this.setState({ error }));
   }
 
   render() {
-    const { email, error, password } = this.state;
+    const { email, error, success } = this.state;
     return (
       <div className="whiteBox">
         <AccountForm>
-          <h1>Log In</h1>
+          <h1>Forgot Password</h1>
           <FormLabel>Email</FormLabel>
           <FormTextInput
             onChange={this.handleInput}
@@ -58,22 +59,16 @@ class LoginForm extends Component {
             type="email"
             value={email}
           />
-          <FormLabel>Password</FormLabel>
-          <FormTextInput
-            onChange={this.handleInput}
-            data-input-id="password"
-            type="password"
-            value={password}
-          />
 
           { this.state.error && <FormErrorBox>{error}</FormErrorBox> }
+          { this.state.success && <FormSuccessBox>An Email Has Been Sent</FormSuccessBox> }
           <FormButton type="submit" onClick={this.submitForm}>Log In</FormButton>
           <FormExtraOptions>
+            <Link prefetch href={'/account/login'}>
+              <a title="Log In">Log In</a>
+            </Link>
             <Link prefetch href={'/account/signup'}>
               <a title="Sign Up">Sign Up</a>
-            </Link>
-            <Link prefetch href={'/account/forgotpassword'}>
-              <a title="Forgot Password">Forgot Password</a>
             </Link>
           </FormExtraOptions>
         </AccountForm>
@@ -82,4 +77,4 @@ class LoginForm extends Component {
   }
 }
 
-export default MainLayout(LoginForm);
+export default MainLayout(ForgotPwForm);
