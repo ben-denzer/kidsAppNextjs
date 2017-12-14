@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import createJwt from './createJwt';
 import findChildren from './findChildren';
-import verifyPassword from './verifyPassword';
+import verifyPasswordAndReturnId from './verifyPasswordAndReturnId';
 
 function login(body, connection) {
   return new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ function login(body, connection) {
       }
 
       let userData = {};
-      verifyPassword(body, connection, bcrypt)
+      verifyPasswordAndReturnId(body, connection, bcrypt)
         .then(userId => findChildren(userId, connection))
         .then(({ children, userId }) => {
           userData.children = children;
