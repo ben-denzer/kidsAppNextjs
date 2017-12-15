@@ -15,7 +15,7 @@ function findChildren(userId, connection) {
         }
         resolve({ userId, children });
       }
-    )
+    );
   });
 }
 

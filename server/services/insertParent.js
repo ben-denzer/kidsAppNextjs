@@ -18,7 +18,7 @@ function insertParent(body, hash, connection) {
     connection.query(
       `INSERT INTO parent (email, email_list, password, children_allowed, signup_utc, expiration_utc)
         VALUES(?,?,?,?,?,?)`,
-      [email, emailList, hash, childCount, Date.now(), Date.now() + month ],
+      [ email, emailList, hash, childCount, Date.now(), Date.now() + month ],
       (err, success) => {
         if (err) {
           logError(err, 'db error in insertParent #1');
@@ -32,7 +32,7 @@ function insertParent(body, hash, connection) {
 
         const insertId = success.insertId;
 
-        for (let i of children) {
+        for (const i of children) {
           connection.query(
             'INSERT INTO children (parent_fk, username) VALUES (?,?)',
             [ insertId, i ],
@@ -47,12 +47,12 @@ function insertParent(body, hash, connection) {
                 return reject({ status: 500, error: 'Server Error' });
               }
             }
-          )
+          );
         }
 
         resolve(insertId);
       }
-    )
+    );
   });
 }
 

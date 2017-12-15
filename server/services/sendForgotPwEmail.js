@@ -1,9 +1,13 @@
 import nodemailer from 'nodemailer';
 import mg from 'nodemailer-mailgun-transport';
-import { api_key, domain } from '../keys/.mailgun_conf.js';
+import { apiKey, domain } from '../keys/.mailgun_conf.js';
 import jwt from 'jsonwebtoken';
 import createTokenForEmail from './createTokenForEmail';
 import verifyUserExists from './verifyUserExists';
+const mgAuth = {
+  auth: { api_key: apiKey, domain } // eslint-disable-line camelcase
+};
+const nodemailerMailgun = nodemailer.createTransport(mg(mgAuth));
 
 const sendForgotPwEmail = (reqBody, connection) => {
   const { email } = reqBody;
@@ -18,16 +22,16 @@ const sendForgotPwEmail = (reqBody, connection) => {
     verifyUserExists(email, connection)
       .then(() => createTokenForEmail(email, jwt))
       .then(token => {
-        const mgAuth = {
-          auth: { api_key, domain }
-        };
-        const nodemailerMailgun = nodemailer.createTransport(mg(mgAuth));
         const mgOptions = {
           from: 'no-reply@MySightWords.com',
           to: email,
           subject: 'MySightWords.com Password Reset',
           'h:Reply-To': 'no-reply@mySightWords.com',
-          html: `Here is your password reset link: <a href="${apiUrl}/account/resetpassword/${token}">${apiUrl}/account/resetpassword/${token}</a>`,
+          html: `
+            Here is your password reset link:&nbsp;
+            <a href="${apiUrl}/account/resetpassword/${token}">
+              ${apiUrl}/account/resetpassword/${token}
+            </a>`
         };
 
         nodemailerMailgun.sendMail(mgOptions, (err, info) => {
@@ -39,6 +43,7 @@ const sendForgotPwEmail = (reqBody, connection) => {
         });
       })
       .catch(err => {
+        logError(err, 'in sendForgotPwEmail');
         reject(err);
       });
   });

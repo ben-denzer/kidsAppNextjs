@@ -5,45 +5,44 @@ import sendForgotPwEmail from '../services/sendForgotPwEmail';
 
 function userRouter(connection) {
 
-  const postToLogin = async function(req, res) {
+  const postToLogin = async function postToLoginAsync(req, res) {
     try {
       const userData = await login(req.body, connection);
-      console.log('success!!', userData)
-      res.status(200).send(JSON.stringify(userData));
-    } catch(err) {
+      return res.status(200).send(JSON.stringify(userData));
+    } catch (err) {
       if (err && err.status === 401) {
         return res.status(401).send(JSON.stringify({ error: 'Invalid Username Or Password ' }));
       }
       logError(err, 'post user/login');
-      sendError(err, res);
+      return sendError(err, res);
     }
   };
 
-  const postToSignup = async function(req, res) {
+  const postToSignup = async function postToSignupAsync(req, res) {
     try {
       const userData = await signup(req.body, connection);
-      res.status(200).send(JSON.stringify(userData));
-    } catch(err) {
+      return res.status(200).send(JSON.stringify(userData));
+    } catch (err) {
       if (err && err.status !== 200) {
         logError(err, 'post user/signup');
       } else if (!err) {
         logError('unknown error in post user/signup');
       }
-      sendError(err, res);
-    };
+      return sendError(err, res);
+    }
   };
 
-  const postToForgotPw = async function(req, res) {
+  const postToForgotPw = async function postToForgotPwAsync(req, res) {
     try {
-      const success = await sendForgotPwEmail(req.body, connection);
-      res.status(200).send(JSON.stringify({ success: true }));
-    } catch(err) {
+      await sendForgotPwEmail(req.body, connection);
+      return res.status(200).send(JSON.stringify({ success: true }));
+    } catch (err) {
       if (err && err.status === 401) {
         return res.status(401).send(JSON.stringify({ error: 'Email Not On File' }));
       }
-      sendError(err, res);
+      return sendError(err, res);
     }
-  }
+  };
 
   return {
     postToForgotPw,

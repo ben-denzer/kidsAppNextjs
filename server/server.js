@@ -1,9 +1,10 @@
+/* eslint no-console: 0 */
+
 import express from 'express';
 import apiRouter from './routes/apiRouter';
 import dbInfo from './keys/.dbKeys';
 import logError from './services/logError';
 import mysql from 'mysql';
-import path from 'path';
 import next from 'next';
 import url from 'url';
 
@@ -11,7 +12,8 @@ const server = express();
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
-const handle = nextApp.getRequestHandler();
+
+// const handle = nextApp.getRequestHandler();
 
 const connection = mysql.createConnection(dbInfo);
 

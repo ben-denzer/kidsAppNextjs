@@ -54,5 +54,5 @@ describe('VerifyUserExists', function() {
     sinon.stub(connection, 'query').callsArgWithAsync(2, null, [{ parent_id }]);
     return verifyUserExists('fake@gmail.com', connection)
       .then(userId => expect(userId).to.equal(parent_id));
-  })
+  });
 });

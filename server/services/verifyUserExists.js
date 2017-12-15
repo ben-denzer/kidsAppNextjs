@@ -18,7 +18,6 @@ function verifyUserExists(email, connection) {
           return reject({ status: 500, error: 'Server Error #VEUX1' });
         }
         if (!rows || !rows.length || !rows[0].parent_id) {
-          // don't log
           return reject({ status: 401, error: 'We don\'t have that email address on file' });
         }
 

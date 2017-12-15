@@ -1,0 +1,7 @@
+node_modules/*
+.next/*
+client/*
+pages/*
+*.test.js
+*.test.integration.js
+

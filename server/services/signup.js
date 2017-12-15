@@ -4,7 +4,6 @@ import checkForDuplicateEmail from './checkForDuplicateEmail';
 import createJwt from './createJwt';
 import hashPassword from './hashPassword';
 import insertParent from './insertParent';
-// import sendVerificationEmail from './sendVerificationEmail';
 
 function verifyArgs(body) {
   return new Promise((resolve, reject) => {
@@ -23,11 +22,11 @@ function verifyArgs(body) {
       || password.length < 7
       || password !== p2
 
-      || Number.isNaN(parseInt(childCount))
-      || parseInt(childCount) <= 0
+      || Number.isNaN(parseInt(childCount, 10))
+      || parseInt(childCount, 10) <= 0
       || children.length !== Number(childCount)
     ) {
-      logError(body, 'body in signup')
+      logError(body, 'body in signup');
       return reject({ status: 400, error: 'Bad Request' });
     }
     resolve('valid');
@@ -35,8 +34,6 @@ function verifyArgs(body) {
 }
 
 function signup(body, connection) {
-  const apiUrl = body.apiUrl || 'https://mysightwords.com';
-
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       verifyArgs(body)
@@ -47,8 +44,6 @@ function signup(body, connection) {
         .then(token => {
           const children = body.children.map(name => ({ name, coins: 0 }));
           const userData = { token, children };
-          console.log('sending email... commented out at the moment');
-          // sendVerificationEmail({ body.email, apiUrl }, connection);
           resolve(userData);
         })
         .catch(err => {

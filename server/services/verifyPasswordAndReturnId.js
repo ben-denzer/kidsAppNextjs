@@ -21,7 +21,7 @@ function verifyPasswordAndReturnId(body, connection, bcrypt) {
           return reject({ status: 401, error: 'Invalid Email Or Password' });
         }
 
-        const { parent_id, password } = data[0];
+        const { parent_id, password } = data[0]; // eslint-disable-line camelcase
         bcrypt.compare(body.password, password)
           .then(success => {
             if (success) {
@@ -37,4 +37,4 @@ function verifyPasswordAndReturnId(body, connection, bcrypt) {
   });
 }
 
-export default verifyPasswordAndReturnId
+export default verifyPasswordAndReturnId;

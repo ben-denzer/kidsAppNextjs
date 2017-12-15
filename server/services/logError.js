@@ -1,12 +1,13 @@
-import path from 'path';
 import fs from 'fs';
+
 // in development, keep logs in same project. In production put logs outside
 // so it doesn't get overwritten/deleted
-const dev = process.env.NODE_ENV === 'development';
+
+// const dev = process.env.NODE_ENV === 'development';
 // const logPath = dev ? './server' : '../';
 
 function logError(err, description = 'none') {
-  console.log(err, description);
+  console.log(err, description); // eslint-disable-line no-console
   const message =
 `
 Time: ${new Date().toString()}
@@ -16,10 +17,9 @@ Error: ${JSON.stringify(err)}
 `;
 
   fs.appendFile(
-    error.log,
-    // path.join(logPath, 'log', 'error.log'),
+    'error.log',
     message,
-    (err) => { if (err) console.log('error logging', err) }
+    (err) => { if (err) console.log('error logging', err); } // eslint-disable-line no-console
   );
 }
 

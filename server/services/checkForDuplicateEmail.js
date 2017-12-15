@@ -12,18 +12,17 @@ function checkForDuplicateEmail(email, connection) {
 
     connection.query(
       'SELECT parent_id FROM parent WHERE email = ?',
-      [email],
+      [ email ],
       (err, result) => {
         if (err) {
           logError(err, 'db error in checkEmail #1');
           return reject({ status: 500, error: 'db error 433' });
         }
         if (result && result.length) {
-          // don't log this
           return reject({ status: 401, error: 'Email Is Already In Use' });
         }
 
-        resolve('ok');
+        return resolve('ok');
       }
     );
   });

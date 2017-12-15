@@ -10,6 +10,7 @@
     "start-production": "NODE_ENV=production node server/server.js",
     "build": "next build",
     "build-and-start": "next build && next start-production",
+    "lint": "eslint .",
     "test": "npm run test-all",
     "test-all": "npm run server-unit-tests && npm run server-integration-tests &",
     "test-dev": "mocha -r @std/esm './server/**/*.test.js' --watch",
@@ -38,6 +39,8 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "eslint": "^4.13.1",
+    "eslint-plugin-react": "^7.5.1",
     "mocha": "^4.0.1",
     "nodemon": "^1.11.0",
     "sinon": "^4.1.2"

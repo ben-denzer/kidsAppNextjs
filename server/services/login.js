@@ -16,7 +16,7 @@ function login(body, connection) {
         reject({ status: 500, error: 'Server Error' });
       }
 
-      let userData = {};
+      const userData = {};
       verifyPasswordAndReturnId(body, connection, bcrypt)
         .then(userId => findChildren(userId, connection))
         .then(({ children, userId }) => {
