@@ -1,6 +1,7 @@
-const expect = require('chai').expect;
-const sinon = require('sinon');
-const hashPassword = require('./hashPassword');
+import chai from 'chai';
+import sinon from 'sinon';
+import hashPassword from './hashPassword';
+const expect = chai.expect;
 
 describe('Hash Password', function() {
   beforeEach('set up logError mock', function() {
@@ -26,6 +27,20 @@ describe('Hash Password', function() {
       .catch(err => {
         expect(logError.calledOnce).to.be.true;
         expect(logError.firstCall.args[0]).to.equal('no password sent to hashPassword');
+        expect(err.status).to.equal(500);
+      });
+  });
+
+  it('should reject if password is too short', function() {
+    const bcrypt = {
+      hash: sinon.stub().callsArgWithAsync(2, null, 'fakeHash-fakeHash')
+    };
+
+    return hashPassword('asdf', bcrypt)
+      .then(hash => { throw new Error() })
+      .catch(err => {
+        expect(logError.calledOnce).to.be.true;
+        expect(logError.firstCall.args[0]).to.equal('invalid password sent to hashPassword');
         expect(err.status).to.equal(500);
       });
   });

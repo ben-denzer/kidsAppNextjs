@@ -1,6 +1,7 @@
-const expect = require('chai').expect;
-const sinon = require('sinon');
-const insertParent = require('./insertParent');
+import chai from 'chai';
+import sinon from 'sinon';
+import insertParent from './insertParent';
+const expect = chai.expect;
 
 describe('Insert Parent', function() {
   let body;

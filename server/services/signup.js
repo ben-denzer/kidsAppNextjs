@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
 import checkForDuplicateEmail from './checkForDuplicateEmail';
 import createJwt from './createJwt';
 import hashPassword from './hashPassword';
@@ -19,7 +20,7 @@ function verifyArgs(body) {
       || email.indexOf('@') !== email.lastIndexOf('@')
       || email.lastIndexOf('.') > email.length - 3
 
-      || password.length < 7
+      || password.length < MIN_PASSWORD_LENGTH
       || password !== p2
 
       || Number.isNaN(parseInt(childCount, 10))

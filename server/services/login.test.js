@@ -42,4 +42,6 @@ describe.skip('Login Service', function() {
         expect(err.status).to.equal(500);
       });
   });
+
+  it('should resolve if correct');
 });

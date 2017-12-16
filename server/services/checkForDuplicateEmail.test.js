@@ -1,6 +1,7 @@
-const expect = require('chai').expect;
-const sinon = require('sinon');
-const checkForDuplicateEmail = require('./checkForDuplicateEmail');
+import chai from 'chai';
+import sinon from 'sinon';
+import checkForDuplicateEmail from './checkForDuplicateEmail';
+const expect = chai.expect;
 
 describe('Check For Duplicate Email', function() {
   beforeEach('mock connection and logError', function() {

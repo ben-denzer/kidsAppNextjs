@@ -1,5 +1,6 @@
 import signup from '../services/signup';
 import login from '../services/login';
+import resetPasswordService from '../services/resetPasswordService';
 import sendError from '../services/sendError';
 import sendForgotPwEmail from '../services/sendForgotPwEmail';
 
@@ -14,6 +15,16 @@ function userRouter(connection) {
         return res.status(401).send(JSON.stringify({ error: 'Invalid Username Or Password ' }));
       }
       logError(err, 'post user/login');
+      return sendError(err, res);
+    }
+  };
+
+  const postToResetPw = async function postToResetPwAsync(req, res) {
+    try {
+      await resetPasswordService(req.body, connection);
+      return res.send(JSON.stringify({ success: true }));
+    } catch (err) {
+      logError(err, 'post to resetPw');
       return sendError(err, res);
     }
   };
@@ -47,6 +58,7 @@ function userRouter(connection) {
   return {
     postToForgotPw,
     postToLogin,
+    postToResetPw,
     postToSignup
   };
 }

@@ -56,4 +56,4 @@ function insertParent(body, hash, connection) {
   });
 }
 
-module.exports = insertParent;
+export default insertParent;

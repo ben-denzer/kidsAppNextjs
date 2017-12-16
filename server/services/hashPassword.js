@@ -1,7 +1,13 @@
+import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
+
 function hashPassword(password, bcrypt) {
   return new Promise((resolve, reject) => {
     if (!password) {
       logError('no password sent to hashPassword');
+      return reject({ status: 500, error: 'Server Error' });
+    }
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      logError('invalid password sent to hashPassword');
       return reject({ status: 500, error: 'Server Error' });
     }
     if (!bcrypt) {
@@ -19,4 +25,4 @@ function hashPassword(password, bcrypt) {
   });
 }
 
-module.exports = hashPassword;
+export default hashPassword;

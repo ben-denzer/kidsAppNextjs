@@ -10,7 +10,7 @@ describe('Find Children', function() {
     global.logError = sinon.stub();
   });
 
-  it('should reject for null arguments', function() {
+  it('should reject for !id || !connection', function() {
     return findChildren(23)
       .then(data => expect(data).to.be.false)
       .catch(err => {

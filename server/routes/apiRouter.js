@@ -9,11 +9,13 @@ function router(connection) {
   const {
     postToForgotPw,
     postToLogin,
+    postToResetPw,
     postToSignup
   } = userController(connection);
 
   apiRouter.post('/account/forgotPw', postToForgotPw);
   apiRouter.post('/account/login', postToLogin);
+  apiRouter.post('/account/resetpassword', postToResetPw);
   apiRouter.post('/account/signup', postToSignup);
 
   return apiRouter;
