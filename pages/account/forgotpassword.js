@@ -3,7 +3,7 @@ import MainLayout from '../../client/components/MainLayout';
 import ForgotPwForm from '../../client/components/accountForms/ForgotPwForm';
 import Head from 'next/head';
 
-export default function LoginPage(props) {
+export default function ForgotPwPage(props) {
   return (
     <div>
       <Head>

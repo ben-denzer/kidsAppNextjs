@@ -29,8 +29,8 @@ const sendForgotPwEmail = (reqBody, connection) => {
           'h:Reply-To': 'no-reply@mySightWords.com',
           html: `
             Here is your password reset link:&nbsp;
-            <a href="${apiUrl}/account/resetpassword/${token}">
-              ${apiUrl}/account/resetpassword/${token}
+            <a href="${apiUrl}/account/resetpassword?${token}">
+              ${apiUrl}/account/resetpassword?${token}
             </a>`
         };
 

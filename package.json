@@ -5,7 +5,7 @@
   "main": "index.js",
   "@std/esm": "js",
   "scripts": {
-    "dev:serve": "NODE_ENV=development nodemon -r @std/esm -w server/ server/server.js",
+    "dev:serve": "NODE_ENV=development nodemon -r @std/esm -w server/ -w client/ server/server.js",
     "dev:watch": "NODE_ENV=development nodemon -r @std/esm -x 'npm run server-unit-tests && npm run lint' -w server/ server/server.js",
     "start": "npm run server-unit-tests && npm run lint && npm run dev:serve",
     "start-production": "NODE_ENV=production node server/server.js",

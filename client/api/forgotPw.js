@@ -1,6 +1,8 @@
 import { baseUserUrl } from './apiConfig';
 
 function forgotPw(body) {
+  body.apiUrl = window.location.origin || null;
+
   const myHeaders = new Headers({
     'Content-Type': 'application/json'
   });

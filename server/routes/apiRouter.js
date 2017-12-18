@@ -15,7 +15,7 @@ function router(connection) {
 
   apiRouter.post('/account/forgotPw', postToForgotPw);
   apiRouter.post('/account/login', postToLogin);
-  apiRouter.post('/account/resetpassword', postToResetPw);
+  apiRouter.post('/account/resetPw', postToResetPw);
   apiRouter.post('/account/signup', postToSignup);
 
   return apiRouter;

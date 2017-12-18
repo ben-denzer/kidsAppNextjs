@@ -20,6 +20,7 @@ function userRouter(connection) {
   };
 
   const postToResetPw = async function postToResetPwAsync(req, res) {
+    console.log('body -- ', req.body);
     try {
       await resetPasswordService(req.body, connection);
       return res.send(JSON.stringify({ success: true }));

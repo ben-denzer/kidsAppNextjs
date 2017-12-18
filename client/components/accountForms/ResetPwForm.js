@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
 import MainLayout from '../MainLayout';
-import forgotPw from '../../api/forgotPw';
-
+import resetPw from '../../api/resetPw';
 import {
   AccountForm,
   FormButton,
   FormErrorBox,
-  FormExtraOptions,
   FormLabel,
   FormSuccessBox,
   FormTextInput
 } from './formStyles';
 
-class ForgotPwForm extends Component {
+class ResetPwForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: '',
       error: '',
       password: '',
+      p2: '',
       success: false
-    }
+    };
 
     this.handleInput = this.handleInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -38,43 +35,41 @@ class ForgotPwForm extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { email } = this.state;
-    forgotPw({ email })
+    const { password, p2 } = this.state;
+    resetPw({ password, p2 })
       .then(() => {
         this.setState({ success: true });
-        setTimeout(() => { window.location = '/account/login' }, 5000 );
+        setTimeout(() => window.location = '/account/login', 2000);
       }).catch(error => this.setState({ error }));
   }
 
   render() {
-    const { email, error, success } = this.state;
+    const { password, p2 } = this.state;
     return (
       <div className="whiteBox">
         <AccountForm>
-          <h1>Forgot Password</h1>
-          <FormLabel>Email</FormLabel>
+          <h1>Reset Password</h1>
+          <FormLabel>New Password</FormLabel>
           <FormTextInput
             onChange={this.handleInput}
-            data-input-id="email"
-            type="email"
-            value={email}
+            data-input-id="password"
+            type="password"
+            value={password}
           />
-
-          { this.state.error && <FormErrorBox>{error}</FormErrorBox> }
-          { this.state.success && <FormSuccessBox>An Email Has Been Sent</FormSuccessBox> }
+          <FormLabel>Re-Enter Password</FormLabel>
+          <FormTextInput
+            onChange={this.handleInput}
+            data-input-id="p2"
+            type="password"
+            value={p2}
+          />
+          { this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox> }
+          { this.state.success && <FormSuccessBox>Your Password Has Been Reset</FormSuccessBox> }
           <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
-          <FormExtraOptions>
-            <Link prefetch href={'/account/login'}>
-              <a title="Log In">Log In</a>
-            </Link>
-            <Link prefetch href={'/account/signup'}>
-              <a title="Sign Up">Sign Up</a>
-            </Link>
-          </FormExtraOptions>
         </AccountForm>
       </div>
     );
   }
 }
 
-export default MainLayout(ForgotPwForm);
+export default MainLayout(ResetPwForm);
