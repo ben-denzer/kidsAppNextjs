@@ -1,15 +1,15 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import createJwt from './createJwt';
+import createUserToken from './createUserToken';
 const expect = chai.expect;
 
-describe('createJwt', function() {
+describe('createUserToken', function() {
   beforeEach('setting up logError', function() {
     global.logError = sinon.stub();
   });
 
   it('should reject if no userId', function() {
-    return createJwt(undefined)
+    return createUserToken(undefined)
       .then(token => expect(token).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -18,7 +18,7 @@ describe('createJwt', function() {
   });
 
   it('should reject if no JWT', function() {
-    return createJwt(12, undefined)
+    return createUserToken(12, undefined)
       .then(token => expect(token).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -31,7 +31,7 @@ describe('createJwt', function() {
       sign: sinon.stub().callsArgWithAsync(3, { error: true })
     };
 
-    return createJwt(12, jwt)
+    return createUserToken(12, jwt)
       .then(token => expect(token).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -44,7 +44,7 @@ describe('createJwt', function() {
       sign: sinon.stub().callsArgWithAsync(3, null, null)
     };
 
-    return createJwt(12, jwt)
+    return createUserToken(12, jwt)
       .then(token => expect(token).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -57,7 +57,7 @@ describe('createJwt', function() {
     const jwt = {
       sign: sinon.stub().callsArgWithAsync(3, null, demoToken)
     };
-    return createJwt(12, jwt)
+    return createUserToken(12, jwt)
       .then(token => { expect(token).to.equal(demoToken) });
   });
 });

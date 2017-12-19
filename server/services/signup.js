@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
 import checkForDuplicateEmail from './checkForDuplicateEmail';
-import createJwt from './createJwt';
+import createUserToken from './createUserToken';
 import hashPassword from './hashPassword';
 import insertParent from './insertParent';
 
@@ -41,7 +41,7 @@ function signup(body, connection) {
         .then(() => checkForDuplicateEmail(body.email, connection))
         .then(() => hashPassword(body.password, bcrypt))
         .then(hash => insertParent(body, hash, connection))
-        .then(insertId => createJwt(insertId, jwt))
+        .then(insertId => createUserToken(insertId, jwt))
         .then(token => {
           const children = body.children.map(name => ({ name, coins: 0 }));
           const userData = { token, children };

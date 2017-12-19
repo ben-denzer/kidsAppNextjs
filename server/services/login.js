@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import createJwt from './createJwt';
+import createUserToken from './createUserToken';
 import findChildren from './findChildren';
 import verifyPasswordAndReturnId from './verifyPasswordAndReturnId';
 
@@ -21,7 +21,7 @@ function login(body, connection) {
         .then(userId => findChildren(userId, connection))
         .then(({ children, userId }) => {
           userData.children = children;
-          return createJwt(userId, jwt);
+          return createUserToken(userId, jwt);
         })
         .then(token => {
           userData.token = token;
