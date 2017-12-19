@@ -1,23 +1,21 @@
-import nodemailer from 'nodemailer';
-import mg from 'nodemailer-mailgun-transport';
-import { apiKey, domain } from '../keys/.mailgun_conf.js';
 import jwt from 'jsonwebtoken';
 import createTokenForEmail from './createTokenForEmail';
 import verifyUserExists from './verifyUserExists';
-const mgAuth = {
-  auth: { api_key: apiKey, domain } // eslint-disable-line camelcase
-};
-const nodemailerMailgun = nodemailer.createTransport(mg(mgAuth));
 
-const sendForgotPwEmail = (reqBody, connection) => {
-  const { email } = reqBody;
-  const apiUrl = reqBody.apiUrl || 'https://MySightWords.com';
+const sendForgotPwEmail = (reqBody, nodemailerMailgun, connection) => {
 
   return new Promise((resolve, reject) => {
-    if (!email) {
+    if (!reqBody || !reqBody.email) {
       logError('no email provided to sendPwReset');
       return reject({ status: 400, error: 'Bad Request' });
     }
+    if (!nodemailerMailgun || !connection) {
+      logError('no nodemailerMailgun || connection provided to sendPwReset');
+      return reject({ status: 500, error: 'Bad Request' });
+    }
+
+    const { email } = reqBody;
+    const apiUrl = reqBody.apiUrl || 'https://MySightWords.com';
 
     verifyUserExists(email, connection)
       .then(() => createTokenForEmail(email, jwt))
@@ -34,12 +32,12 @@ const sendForgotPwEmail = (reqBody, connection) => {
             </a>`
         };
 
-        nodemailerMailgun.sendMail(mgOptions, (err, info) => {
-          if (err || !info) {
+        nodemailerMailgun.sendMail(mgOptions, (err) => {
+          if (err) {
             logError(err, 'nodemailer error in sendPwReset');
             return reject({ status: 500, error: 'Error Sending Email' });
           }
-          resolve();
+          resolve('ok');
         });
       })
       .catch(err => {

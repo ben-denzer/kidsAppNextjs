@@ -7,7 +7,7 @@ import fs from 'fs';
 // const logPath = dev ? './server' : '../';
 
 function logError(err, description = 'none') {
-  console.log(err, description); // eslint-disable-line no-console
+  console.log(err, description);
   const message =
 `
 Time: ${new Date().toString()}

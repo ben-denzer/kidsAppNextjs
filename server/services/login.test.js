@@ -3,33 +3,35 @@ import sinon from 'sinon';
 import login from './login';
 const expect = chai.expect;
 
-describe.skip('Login Service', function() {
+describe('Login', function() {
   let body;
-  let connection = {};
+  let connection;
+
   beforeEach('setting up loginService tests', function() {
     body = { email: 'fakeUser1@gmail.com', password: 'password' };
     global.logError = sinon.stub();
+    connection = { query() {} };
   });
 
   it('should reject if no email given', function() {
-    connection = { query: sinon.stub() };
+    sinon.stub(connection, 'query');
     body = Object.assign({}, body, { email: '' });
     return login(body, connection)
       .then(userData => expect(userData).to.be.false)
       .catch(err => {
         expect(logError.calledOnce).to.be.true;
-        expect(err.status).to.equal(500);
+        expect(err.status).to.equal(400);
       });
   });
 
   it('should reject if no password given', function() {
-    connection = { query: sinon.stub() };
+    sinon.stub(connection, 'query');
     body = Object.assign({}, body, { password: '' });
     return login(body, connection)
       .then(userData => expect(userData).to.be.false)
       .catch(err => {
         expect(logError.calledOnce).to.be.true;
-        expect(err.status).to.equal(500);
+        expect(err.status).to.equal(400);
       });
   });
 
@@ -43,5 +45,15 @@ describe.skip('Login Service', function() {
       });
   });
 
-  it('should resolve if correct');
+  it('should reject with 500 on db error', function() {
+    sinon.stub(connection, 'query').callsArgWithAsync(2, { error: true });
+    return login(body, connection)
+      .then(userData => expect(userData).to.be.false)
+      .catch(err => {
+        expect(logError.called).to.be.true;
+        expect(err.status).to.equal(500);
+      });
+  });
+
+  it('I have a black box test of this, not sure if a "success" test would help much here');
 });

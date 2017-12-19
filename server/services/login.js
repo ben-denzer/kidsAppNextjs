@@ -9,11 +9,11 @@ function login(body, connection) {
     setTimeout(() => {
       if (!body || !body.email || !body.password) {
         logError(body, 'Invalid body in login.js');
-        reject({ status: 400, error: 'Bad Request' });
+        return reject({ status: 400, error: 'Bad Request' });
       }
       if (!connection) {
         logError('No connection passed to login.js');
-        reject({ status: 500, error: 'Server Error' });
+        return reject({ status: 500, error: 'Server Error' });
       }
 
       const userData = {};

@@ -3,8 +3,21 @@ import login from '../services/login';
 import resetPasswordService from '../services/resetPasswordService';
 import sendError from '../services/sendError';
 import sendForgotPwEmail from '../services/sendForgotPwEmail';
+import nodemailerMailgun from '../services/createNodemailerMailgun';
 
 function userRouter(connection) {
+
+  const postToForgotPw = async function postToForgotPwAsync(req, res) {
+    try {
+      await sendForgotPwEmail(req.body, nodemailerMailgun, connection);
+      return res.status(200).send(JSON.stringify({ success: true }));
+    } catch (err) {
+      if (err && err.status === 401) {
+        return res.status(401).send(JSON.stringify({ error: 'Email Not On File' }));
+      }
+      return sendError(err, res);
+    }
+  };
 
   const postToLogin = async function postToLoginAsync(req, res) {
     try {
@@ -20,7 +33,6 @@ function userRouter(connection) {
   };
 
   const postToResetPw = async function postToResetPwAsync(req, res) {
-    console.log('body -- ', req.body);
     try {
       await resetPasswordService(req.body, connection);
       return res.send(JSON.stringify({ success: true }));
@@ -39,18 +51,6 @@ function userRouter(connection) {
         logError(err, 'post user/signup');
       } else if (!err) {
         logError('unknown error in post user/signup');
-      }
-      return sendError(err, res);
-    }
-  };
-
-  const postToForgotPw = async function postToForgotPwAsync(req, res) {
-    try {
-      await sendForgotPwEmail(req.body, connection);
-      return res.status(200).send(JSON.stringify({ success: true }));
-    } catch (err) {
-      if (err && err.status === 401) {
-        return res.status(401).send(JSON.stringify({ error: 'Email Not On File' }));
       }
       return sendError(err, res);
     }

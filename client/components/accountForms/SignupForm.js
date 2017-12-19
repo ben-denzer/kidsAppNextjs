@@ -67,7 +67,6 @@ class SignupForm extends Component {
     }
     const { dataset, value } = e.target;
     if (dataset.inputId === 'childCount') {
-      console.log('childCount is');
       if (value < 0) {
         this.setState({ childCount: 1 });
         return;
