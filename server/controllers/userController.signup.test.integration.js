@@ -37,7 +37,7 @@ describe('Signup BlackBox', function() {
   });
 
   it('should sign up a user', async function() {
-    connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"');
+    connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"', () => {});
 
     try {
       await userController.postToSignup(req, res);
@@ -52,7 +52,7 @@ describe('Signup BlackBox', function() {
     expect(resStatus.calledOnce).to.be.true;
     expect(resStatus.firstCall.args[0]).to.equal(200);
     expect(logError.called).to.be.false;
-    connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"');
+    connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"', () => {});
   });
 
   it('should fail and send 400 for incorrect arguments', async function() {
@@ -77,5 +77,9 @@ describe('Signup BlackBox', function() {
     expect(resSend.calledOnce).to.be.true;
     expect(resStatus.calledOnce).to.be.true;
     expect(resStatus.firstCall.args[0]).to.equal(500);
+  });
+
+  after('cleanup', function() {
+    connection.end();
   });
 });

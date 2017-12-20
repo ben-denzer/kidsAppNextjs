@@ -41,7 +41,8 @@
 
   "globals": {
     "console": true,
-    "logError": true
+    "logError": true,
+    "MSW_DEV": true
   },
 
   "plugins": [

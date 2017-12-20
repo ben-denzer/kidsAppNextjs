@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
 import resetPasswordInDb from './resetPasswordInDb';
 import validateJwt from './validateJwt';
+const waitTime = global.MSW_DEV ? 0 : 1500;
 
 function resetPasswordService(body, connection) {
   return new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ function resetPasswordService(body, connection) {
           logError(err, 'in resetPasswordService');
           reject(err);
         });
-    }, 1500);
+    }, waitTime);
   });
 }
 

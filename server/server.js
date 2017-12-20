@@ -10,8 +10,8 @@ import url from 'url';
 
 const server = express();
 const port = process.env.PORT || 3000;
-const dev = process.env.NODE_ENV !== 'production';
-const nextApp = next({ dev });
+global.MSW_DEV = process.env.NODE_ENV !== 'production';
+const nextApp = next({ MSW_DEV });
 
 // const handle = nextApp.getRequestHandler();
 
@@ -29,10 +29,10 @@ nextApp
     });
 
     server.listen(port, err => {
-      if (dev && err) return console.error(err);
-      if (dev) console.log(`listening on ${port}`);
+      if (MSW_DEV && err) return console.error(err);
+      if (MSW_DEV) console.log(`listening on ${port}`);
     });
   })
   .catch(err => {
-    if (dev) console.error(err);
+    if (MSW_DEV) console.error(err);
   });

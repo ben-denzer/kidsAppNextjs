@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import createUserToken from './createUserToken';
 import findChildren from './findChildren';
 import verifyPasswordAndReturnId from './verifyPasswordAndReturnId';
+const waitTime = global.MSW_DEV ? 0 : 1000;
 
 function login(body, connection) {
   return new Promise((resolve, reject) => {
@@ -31,7 +32,7 @@ function login(body, connection) {
           logError(err, 'in login.js');
           reject(err);
         });
-    }, 1000);
+    }, waitTime);
   });
 }
 

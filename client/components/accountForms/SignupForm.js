@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Link from 'next/link';
 import MainLayout from '../MainLayout';
 import signupUser from '../../api/signupUser';
 import setUserInStorage from '../../utils/setUserInStorage';
@@ -8,6 +9,7 @@ import {
   Form2Cols,
   FormButton,
   FormErrorBox,
+  FormExtraOptions,
   FormHalf,
   FormLabel,
   FormRadioButton,
@@ -162,6 +164,11 @@ class SignupForm extends Component {
           </FormLabel>
           { this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox> }
           <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
+          <FormExtraOptions>
+            <Link prefetch href={'/account/login'}>
+              <a title="Log In">Log In</a>
+            </Link>
+          </FormExtraOptions>
         </AccountForm>
       </div>
     );

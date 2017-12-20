@@ -79,7 +79,7 @@ describe('Login BlackBox', function() {
 
       req = Object.assign({}, req, { body });
 
-      connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"');
+      connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"', () => {});
 
       try {
         await userController.postToSignup(req, res);
@@ -95,7 +95,11 @@ describe('Login BlackBox', function() {
       expect(resStatus.calledTwice).to.be.true;
       expect(resStatus.secondCall.args[0]).to.equal(200);
       expect(logError.called).to.be.false;
-      connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"');
+      connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"', () => {});
     });
+  });
+
+  after('cleanup', function() {
+    connection.end();
   });
 });

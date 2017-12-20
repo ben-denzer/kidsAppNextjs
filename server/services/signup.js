@@ -5,6 +5,7 @@ import checkForDuplicateEmail from './checkForDuplicateEmail';
 import createUserToken from './createUserToken';
 import hashPassword from './hashPassword';
 import insertParent from './insertParent';
+const waitTime = global.MSW_DEV ? 0 : 1000;
 
 function verifyArgs(body) {
   return new Promise((resolve, reject) => {
@@ -51,7 +52,7 @@ function signup(body, connection) {
           logError(err || 'mystery error', 'in signup.js');
           return reject(err);
         });
-    }, 1000);
+    }, waitTime);
   });
 }
 
