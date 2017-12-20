@@ -3,5 +3,5 @@ node_modules/*
 client/*
 pages/*
 *.test.js
-*.test.integration.js
+*.integration.js
 

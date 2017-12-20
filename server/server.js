@@ -11,7 +11,7 @@ import url from 'url';
 const server = express();
 const port = process.env.PORT || 3000;
 global.MSW_DEV = process.env.NODE_ENV !== 'production';
-const nextApp = next({ MSW_DEV });
+const nextApp = next({ dev: MSW_DEV });
 
 // const handle = nextApp.getRequestHandler();
 
