@@ -1,5 +1,5 @@
 {
-  "watch": [ "client/", "server/", "pages/" ],
+  "watch": [ "server/" ],
   "events": {
     "restart": "bash ./restart.sh"
   }

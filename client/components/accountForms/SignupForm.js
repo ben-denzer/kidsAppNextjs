@@ -106,7 +106,7 @@ class SignupForm extends Component {
       .then(result => signupUser(this.state))
       .then(data => {
         setUserInStorage(data);
-        window.location = '/';
+        window.location = '/account/childmenu';
       })
       .catch(error => this.setState({ error }));
   }

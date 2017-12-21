@@ -41,7 +41,7 @@ class LoginForm extends Component {
     userLogin({ email, password })
       .then(data => {
         setUserInStorage(data);
-        window.location = '/';
+        window.location = '/account/childmenu';
       }).catch(error => this.setState({ error }));
   }
 

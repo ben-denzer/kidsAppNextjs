@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 function insertParent(body, hash, connection) {
   return new Promise((resolve, reject) => {
     if (!body || !hash || !connection) {
@@ -30,12 +32,14 @@ function insertParent(body, hash, connection) {
           return reject({ status: 500, error: 'Server Error' });
         }
 
-        const insertId = success.insertId;
+        const parentId = success.insertId;
+        let childrenLeftToInsert = childCount;
+        let childArray = [];
 
-        for (const i of children) {
+        for (let i in children) {
           connection.query(
             'INSERT INTO children (parent_fk, username) VALUES (?,?)',
-            [ insertId, i ],
+            [ parentId, children[i] ],
             (err, success) => {
               if (err) {
                 logError(err, 'db error in insertParent #2');
@@ -46,11 +50,14 @@ function insertParent(body, hash, connection) {
                 logError(success, 'no success || insertId from insertParent');
                 return reject({ status: 500, error: 'Server Error' });
               }
+              childArray.push({ id: success.insertId, username: children[i], coins: 0 });
+              childrenLeftToInsert--;
+              if (childrenLeftToInsert === 0) {
+                resolve({ parentId, childArray });
+              }
             }
           );
         }
-
-        resolve(insertId);
       }
     );
   });

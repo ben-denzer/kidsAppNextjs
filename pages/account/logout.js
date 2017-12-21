@@ -5,9 +5,13 @@ import { setInStorage } from '../../client/utils/mswLocalStorage';
 
 export default class LogoutPage extends Component {
   componentDidMount() {
+    this.removeData();
+    setTimeout(() => window.location = '/', 5000);
+  }
+  removeData() {
     setInStorage('token', null);
     setInStorage('children', null);
-    setTimeout(() => window.location = '/', 5000);
+    setInStorage('activeChild', null);
   }
   render() {
     return (

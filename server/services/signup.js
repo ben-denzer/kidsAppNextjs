@@ -36,15 +36,18 @@ function verifyArgs(body) {
 }
 
 function signup(body, connection) {
+  let children = [];
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       verifyArgs(body)
         .then(() => checkForDuplicateEmail(body.email, connection))
         .then(() => hashPassword(body.password, bcrypt))
         .then(hash => insertParent(body, hash, connection))
-        .then(insertId => createUserToken(insertId, jwt))
+        .then(({ parentId, childArray }) => {
+          children = childArray;
+          return createUserToken(parentId, jwt);
+        })
         .then(token => {
-          const children = body.children.map(name => ({ name, coins: 0 }));
           const userData = { token, children };
           resolve(userData);
         })

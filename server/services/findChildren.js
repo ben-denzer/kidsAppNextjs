@@ -6,7 +6,7 @@ function findChildren(userId, connection) {
     }
 
     connection.query(
-      'SELECT username, coins FROM children WHERE parent_fk = ?',
+      'SELECT child_id, username, coins FROM children WHERE parent_fk = ?',
       [ userId ],
       (err, children) => {
         if (err) {

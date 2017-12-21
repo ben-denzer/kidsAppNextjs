@@ -91,7 +91,6 @@ describe('Login BlackBox', function() {
       const { token, children } = JSON.parse(resSend.secondCall.args[0]);
       expect(typeof token).to.equal('string');
       expect(Array.isArray(children)).to.be.true;
-      expect(children.length).to.equal(1);
       expect(resStatus.calledTwice).to.be.true;
       expect(resStatus.secondCall.args[0]).to.equal(200);
       expect(logError.called).to.be.false;

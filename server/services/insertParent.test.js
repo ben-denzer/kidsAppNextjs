@@ -106,17 +106,19 @@ describe('Insert Parent', function() {
       });
   });
 
-  it('should resolve with insertId', function() {
+  it('should resolve with insertId and childArray', function() {
     const mockId = 10;
     const connection = { query: () => {}};
     const query = sinon.stub(connection, 'query');
     query.onCall(0).callsArgWithAsync(2, null, { insertId: mockId });
-    query.onCall(1).callsArgWithAsync(2, null, { success: true });
+    query.onCall(1).callsArgWithAsync(2, null, { insertId: 1 });
 
     return insertParent(body, 'slfjaoiwj', connection)
-      .then(insertId => {
+      .then(({ parentId, childArray }) => {
         expect(query.calledTwice).to.be.true;
-        expect(insertId).to.equal(10)
+        expect(parentId).to.equal(10);
+        expect(Array.isArray(childArray)).to.be.true;
+        expect(childArray.length).to.equal(1);
       });
   });
 
@@ -125,9 +127,13 @@ describe('Insert Parent', function() {
     const connection = { query: () => {}};
     const query = sinon.stub(connection, 'query');
     query.onCall(0).callsArgWithAsync(2, null, { insertId: 1 });
+    query.onCall(1).callsArgWithAsync(2, null, { insertId: 1 });
+    query.onCall(2).callsArgWithAsync(2, null, { insertId: 1 });
+    query.onCall(3).callsArgWithAsync(2, null, { insertId: 1 });
+    query.onCall(4).callsArgWithAsync(2, null, { insertId: 1 });
 
     return insertParent(body, 'slfjaoiwj', connection)
-      .then(insertId => {
+      .then(({ parentId, childArray }) => {
         expect(query.callCount).to.equal(4);
       });
   });
