@@ -25,8 +25,8 @@ describe('Signup BlackBox', function() {
 
     body = {
       apiUrl: undefined,
-      childCount: 1,
-      children: [ 'fake1' ],
+      childCount: 2,
+      children: [ 'fake1', 'fake2' ],
       email: 'XXfake@gmail.comXX',
       password: 'fakePassword',
       p2: 'fakePassword'
@@ -48,8 +48,8 @@ describe('Signup BlackBox', function() {
     const { token, children } = JSON.parse(resSend.firstCall.args[0]);
     expect(typeof token).to.equal('string');
     expect(Array.isArray(children)).to.be.true;
-    expect(children.length).to.equal(1);
-    expect(typeof children[0].id).to.equal('number');
+    expect(children.length).to.equal(2);
+    expect(typeof children[1].id).to.equal('number');
     expect(typeof children[0].username).to.equal('string');
     expect(typeof children[0].coins).to.equal('number');
     expect(resStatus.calledOnce).to.be.true;

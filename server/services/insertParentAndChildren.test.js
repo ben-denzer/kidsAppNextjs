@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import insertParent from './insertParent';
+import insertParentAndChildren from './insertParentAndChildren';
 const expect = chai.expect;
 
 describe('Insert Parent', function() {
@@ -16,7 +16,7 @@ describe('Insert Parent', function() {
   });
 
   it('should reject if any arg is undefined', function() {
-    return insertParent(body, '#rewoirjeo33434')
+    return insertParentAndChildren(body, '#rewoirjeo33434')
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.called).to.be.true;
@@ -25,7 +25,7 @@ describe('Insert Parent', function() {
   });
 
   it('should log each missing arg', function() {
-    return insertParent()
+    return insertParentAndChildren()
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.calledThrice).to.be.true;
@@ -41,7 +41,7 @@ describe('Insert Parent', function() {
       query: sinon.stub()
     };
 
-    return insertParent(body, 'seroijeroij', connection)
+    return insertParentAndChildren(body, 'seroijeroij', connection)
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -55,7 +55,7 @@ describe('Insert Parent', function() {
       query: sinon.stub()
     };
 
-    return insertParent(body, 'seroijeroij', connection)
+    return insertParentAndChildren(body, 'seroijeroij', connection)
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -69,7 +69,7 @@ describe('Insert Parent', function() {
       query: sinon.stub()
     };
 
-    return insertParent(body, 'sdlfasdlkfjdso', connection)
+    return insertParentAndChildren(body, 'sdlfasdlkfjdso', connection)
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -82,7 +82,7 @@ describe('Insert Parent', function() {
       query: sinon.stub().callsArgWithAsync(2, { error: true })
     };
 
-    return insertParent(body, 'slfjaoiwj', connection)
+    return insertParentAndChildren(body, 'slfjaoiwj', connection)
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -96,7 +96,7 @@ describe('Insert Parent', function() {
       query: sinon.stub().callsArgWithAsync(2, null, {})
     };
 
-    return insertParent(body, 'slfjaoiwj', connection)
+    return insertParentAndChildren(body, 'slfjaoiwj', connection)
       .then(success => expect(success).to.be.false)
       .catch(e => {
         expect(logError.calledOnce).to.be.true;
@@ -113,7 +113,7 @@ describe('Insert Parent', function() {
     query.onCall(0).callsArgWithAsync(2, null, { insertId: mockId });
     query.onCall(1).callsArgWithAsync(2, null, { insertId: 1 });
 
-    return insertParent(body, 'slfjaoiwj', connection)
+    return insertParentAndChildren(body, 'slfjaoiwj', connection)
       .then(({ parentId, childArray }) => {
         expect(query.calledTwice).to.be.true;
         expect(parentId).to.equal(10);
@@ -132,7 +132,7 @@ describe('Insert Parent', function() {
     query.onCall(3).callsArgWithAsync(2, null, { insertId: 1 });
     query.onCall(4).callsArgWithAsync(2, null, { insertId: 1 });
 
-    return insertParent(body, 'slfjaoiwj', connection)
+    return insertParentAndChildren(body, 'slfjaoiwj', connection)
       .then(({ parentId, childArray }) => {
         expect(query.callCount).to.equal(4);
       });

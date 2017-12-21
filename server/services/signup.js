@@ -4,7 +4,7 @@ import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
 import checkForDuplicateEmail from './checkForDuplicateEmail';
 import createUserToken from './createUserToken';
 import hashPassword from './hashPassword';
-import insertParent from './insertParent';
+import insertParentAndChildren from './insertParentAndChildren';
 const waitTime = global.MSW_DEV ? 0 : 1000;
 
 function verifyArgs(body) {
@@ -42,7 +42,7 @@ function signup(body, connection) {
       verifyArgs(body)
         .then(() => checkForDuplicateEmail(body.email, connection))
         .then(() => hashPassword(body.password, bcrypt))
-        .then(hash => insertParent(body, hash, connection))
+        .then(hash => insertParentAndChildren(body, hash, connection))
         .then(({ parentId, childArray }) => {
           children = childArray;
           return createUserToken(parentId, jwt);
