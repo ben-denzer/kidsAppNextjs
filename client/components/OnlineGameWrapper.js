@@ -3,7 +3,7 @@ import MainLayout from './MainLayout';
 import defaultWordList from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
-import fetchAddCoin from '../api/fetchAddCoin';
+import makeAddCoinRequest from '../api/makeAddCoinRequest';
 
 const OnlineGameWrapper = (WrappedComponent) => {
   return class extends Component {
@@ -46,9 +46,9 @@ const OnlineGameWrapper = (WrappedComponent) => {
         }
         return a;
       });
-      console.log('updatedChildren is', updatedChildren);
       setInStorage('children', updatedChildren);
-      // fetchAddCoin(newCoins).catch(() => this.setState({ apiError: 'Connection Error' }));
+      makeAddCoinRequest({ childId, coins: newCoins })
+        .catch(() => this.setState({ apiError: 'Connection Error' }));
     }
 
     addCoinUi(newCoins) {

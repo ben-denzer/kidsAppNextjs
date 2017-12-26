@@ -49,7 +49,7 @@ describe('Signup BlackBox', function() {
     expect(typeof token).to.equal('string');
     expect(Array.isArray(children)).to.be.true;
     expect(children.length).to.equal(2);
-    expect(typeof children[1].id).to.equal('number');
+    expect(typeof children[1].child_id).to.equal('number');
     expect(typeof children[0].username).to.equal('string');
     expect(typeof children[0].coins).to.equal('number');
     expect(resStatus.calledOnce).to.be.true;

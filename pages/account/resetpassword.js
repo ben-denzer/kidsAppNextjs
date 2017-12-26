@@ -4,7 +4,6 @@ import ResetPwForm from '../../client/components/accountForms/ResetPwForm';
 import Head from 'next/head';
 
 export default function ResetPwPage(props) {
-  console.log(props);
   return (
     <div>
       <Head>

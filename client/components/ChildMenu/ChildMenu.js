@@ -29,18 +29,15 @@ class ChildMenu extends Component {
 
   makeThumbs(children) {
     if (!children.length) return null;
-    return children.map(a => {
-      console.log(a);
-      return (
-        <ChildThumb
-          key={a.child_id}
-          id={a.child_id}
-          name={a.username}
-          coins={a.coins}
-          selectChild={this.selectChild}
-        />
-      );
-    });
+    return children.map(a => (
+      <ChildThumb
+        key={a.child_id}
+        id={a.child_id}
+        name={a.username}
+        coins={a.coins}
+        selectChild={this.selectChild}
+      />
+    ));
   }
 
   selectChild(e) {

@@ -1,6 +1,6 @@
 import { baseUserUrl } from './apiConfig';
 
-function addCoinToDB(body) {
+function makeAddCoinRequest(body) {
   const myHeaders = new Headers({
     'Content-Type': 'application/json'
   });
@@ -19,4 +19,4 @@ function addCoinToDB(body) {
   });
 }
 
-export default addCoinToDB;
+export default makeAddCoinRequest;

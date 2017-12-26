@@ -18,7 +18,7 @@ Error: ${JSON.stringify(err)}
 `;
 
   fs.appendFile(
-    path.join(__dirname, 'server', 'log', 'error.log'),
+    path.join(__dirname, '../', 'server', 'log', 'error.log'),
     message,
     (err) => { if (err) console.log('error logging', err); } // eslint-disable-line no-console
   );

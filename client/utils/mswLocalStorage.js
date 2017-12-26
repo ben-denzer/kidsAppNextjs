@@ -5,7 +5,6 @@ export function getFromStorage(name) {
 }
 
 export function setInStorage(name, val) {
-  console.log(`setting ${name} to ${val}`)
   if (!name) throw new Error('bad request to setInStorage');
   const settings = JSON.parse(window.localStorage.getItem('mswSettings')) || {};
 
