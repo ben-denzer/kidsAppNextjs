@@ -7,12 +7,14 @@ const jsonParser = bodyParser.json();
 function router(connection) {
   apiRouter.use(jsonParser);
   const {
+    postToAddCoin,
     postToForgotPw,
     postToLogin,
     postToResetPw,
     postToSignup
   } = userController(connection);
 
+  apiRouter.post('/account/addCoin', postToAddCoin);
   apiRouter.post('/account/forgotPw', postToForgotPw);
   apiRouter.post('/account/login', postToLogin);
   apiRouter.post('/account/resetPw', postToResetPw);

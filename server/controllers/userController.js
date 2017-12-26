@@ -1,3 +1,4 @@
+import addCoinToDB from '../services/addCoinToDB';
 import signup from '../services/signup';
 import login from '../services/login';
 import resetPasswordService from '../services/resetPasswordService';
@@ -7,6 +8,15 @@ import nodemailerMailgun from '../services/createNodemailerMailgun';
 
 function userRouter(connection) {
 
+  const postToAddCoin = async function postToAddCoinAsync(req, res) {
+    try {
+      await addCoinToDB(req.body, connection);
+      return res.status(200).send({ success: true });
+    } catch (err) {
+      logError(err, 'post Add Coin');
+    }
+  };
+
   const postToForgotPw = async function postToForgotPwAsync(req, res) {
     try {
       await sendForgotPwEmail(req.body, nodemailerMailgun, connection);
@@ -15,6 +25,7 @@ function userRouter(connection) {
       if (err && err.status === 401) {
         return res.status(401).send(JSON.stringify({ error: 'Email Not On File' }));
       }
+      logError(err, 'post Forgot PW');
       return sendError(err, res);
     }
   };
@@ -57,6 +68,7 @@ function userRouter(connection) {
   };
 
   return {
+    postToAddCoin,
     postToForgotPw,
     postToLogin,
     postToResetPw,

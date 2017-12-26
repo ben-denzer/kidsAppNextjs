@@ -12,6 +12,7 @@ export default class LogoutPage extends Component {
     setInStorage('token', null);
     setInStorage('children', null);
     setInStorage('activeChild', null);
+    setInStorage('coins', null);
   }
   render() {
     return (

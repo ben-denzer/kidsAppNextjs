@@ -50,7 +50,7 @@ function insertParent(body, hash, connection) {
                 logError(success, 'no success || insertId from insertParent');
                 return reject({ status: 500, error: 'Server Error' });
               }
-              childArray.push({ id: success.insertId, username: children[i], coins: 0 });
+              childArray.push({ child_id: success.insertId, username: children[i], coins: 0 });
               childrenLeftToInsert--;
               if (childrenLeftToInsert === 0) {
                 resolve({ parentId, childArray });

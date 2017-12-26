@@ -3,6 +3,7 @@ import MainLayout from './MainLayout';
 import defaultWordList from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
+import fetchAddCoin from '../api/fetchAddCoin';
 
 const OnlineGameWrapper = (WrappedComponent) => {
   return class extends Component {
@@ -10,6 +11,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
       super();
 
       this.state = {
+        apiError: false,
         coins: 0,
         helpOpen: false,
         mute: true,
@@ -26,16 +28,31 @@ const OnlineGameWrapper = (WrappedComponent) => {
     }
 
     componentDidMount() {
-      const coins = getFromStorage('coins') || 0;
+      this.setInitialCoins();
       const mute = getFromStorage('mute');
-      this.setState({ coins, mute, wordList: defaultWordList });
+      this.setState({ mute, wordList: defaultWordList });
     }
 
     addCoin() {
-      this.playCoinSound();
       const { coins } = this.state;
       const newCoins = coins + 1;
-      setInStorage('coins', newCoins);
+      this.addCoinUi(newCoins);
+      const childId = getFromStorage('activeChild');
+      const children = getFromStorage('children');
+
+      const updatedChildren = children.map(a => {
+        if (Number(a.child_id) === Number(childId)) {
+          return Object.assign({}, a, { coins: newCoins });
+        }
+        return a;
+      });
+      console.log('updatedChildren is', updatedChildren);
+      setInStorage('children', updatedChildren);
+      // fetchAddCoin(newCoins).catch(() => this.setState({ apiError: 'Connection Error' }));
+    }
+
+    addCoinUi(newCoins) {
+      this.playCoinSound();
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
       setTimeout(() => this.setState({
@@ -53,6 +70,22 @@ const OnlineGameWrapper = (WrappedComponent) => {
     playSuccessSound() {
       if (this.state.mute) return;
       this.successSound.play();
+    }
+
+    setInitialCoins() {
+      const childId = getFromStorage('activeChild');
+      const children = getFromStorage('children');
+      if (!childId || !children || !children.length) {
+        return this.setState({ coins: 0 });
+      }
+      for (let i in children) {
+        if (children.hasOwnProperty(i)) {
+          if (Number(children[i].child_id) === Number(childId)) {
+            return this.setState({ coins: children[i].coins });
+          }
+        }
+      }
+      this.setState({ coins: 0 });
     }
 
     toggleHelp() {
