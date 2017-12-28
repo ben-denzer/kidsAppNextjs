@@ -8,6 +8,7 @@ function router(connection) {
   apiRouter.use(jsonParser);
   const {
     postToAddCoin,
+    postToChangePw,
     postToForgotPw,
     postToLogin,
     postToResetPw,
@@ -15,6 +16,7 @@ function router(connection) {
   } = userController(connection);
 
   apiRouter.post('/account/addCoin', postToAddCoin);
+  apiRouter.post('/account/changePw', postToChangePw);
   apiRouter.post('/account/forgotPw', postToForgotPw);
   apiRouter.post('/account/login', postToLogin);
   apiRouter.post('/account/resetPw', postToResetPw);

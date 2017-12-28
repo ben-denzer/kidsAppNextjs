@@ -17,6 +17,11 @@ function userRouter(connection) {
     }
   };
 
+  const postToChangePw = function postToChangePwAsync(req, res) {
+    console.log('body is', req.body);
+    res.status(200).send('success');
+  };
+
   const postToForgotPw = async function postToForgotPwAsync(req, res) {
     try {
       await sendForgotPwEmail(req.body, nodemailerMailgun, connection);
@@ -69,6 +74,7 @@ function userRouter(connection) {
 
   return {
     postToAddCoin,
+    postToChangePw,
     postToForgotPw,
     postToLogin,
     postToResetPw,
