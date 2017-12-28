@@ -25,6 +25,10 @@ export const AccountForm = styled.form`
   color: ${textColor};
   padding: 0 10px;
 
+  &.smallForm {
+    max-width: 300px;
+  }
+
   @media (max-width: 1000px) {
     width: 100%;
   }
