@@ -5,24 +5,6 @@ import AccountHome from '../components/AccountHome/AccountHome';
 import { getFromStorage } from '../utils/mswLocalStorage';
 
 class AccountContainer extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      token: null
-    };
-  }
-
-  componentDidMount() {
-    const token = getFromStorage('token');
-    if (!token) {
-      Router.replace('/account/login');
-    } else {
-      this.setState({ token });
-    }
-  }
-
   render() {
     return (
       <AccountHome {...this.props} {...this.state} />
