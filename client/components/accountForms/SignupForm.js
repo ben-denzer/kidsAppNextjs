@@ -8,12 +8,14 @@ import {
   AccountForm,
   Form2Cols,
   FormButton,
+  FormCheckbox,
   FormErrorBox,
   FormExtraOptions,
   FormHalf,
   FormLabel,
   FormRadioButton,
-  FormTextInput
+  FormTextInput,
+  RememberMeContainer
 } from './formStyles';
 
 class SignupForm extends Component {
@@ -27,7 +29,8 @@ class SignupForm extends Component {
       emailList: true,
       error: '',
       password: '',
-      p2: ''
+      p2: '',
+      rememberMe: false
     }
 
     this.createChildInputs = this.createChildInputs.bind(this);
@@ -99,20 +102,21 @@ class SignupForm extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { childCount, email, password, p2 } = this.state;
+    const { childCount, email, password, p2, rememberMe } = this.state;
     let { children } = this.state;
     children.length = childCount;
     verifySignupInfo(this.state)
       .then(result => signupUser(this.state))
       .then(data => {
-        setUserInStorage(data);
+        if (rememberMe) data = Object.assign(data, { email, password });
+        setUserInStorage(data, rememberMe);
         window.location = '/account/childmenu';
       })
       .catch(error => this.setState({ error }));
   }
 
   render() {
-    const { childCount, email, emailList, password, p2 } = this.state;
+    const { childCount, email, emailList, password, p2, rememberMe } = this.state;
     const childInputs = this.createChildInputs(childCount);
     return (
       <div className="whiteBox">
@@ -153,6 +157,15 @@ class SignupForm extends Component {
               {childInputs}
             </FormHalf>
           </Form2Cols>
+          <RememberMeContainer>
+            <FormCheckbox
+              onChange={this.handleCheck}
+              data-input-id="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+            />
+            <FormLabel>Remember Me</FormLabel>
+          </RememberMeContainer>
           <FormLabel>
             <FormRadioButton
               onChange={this.handleCheck}

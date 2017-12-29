@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import MainLayout from '../MainLayout';
+import { getFromStorage } from '../../utils/mswLocalStorage';
 import setUserInStorage from '../../utils/setUserInStorage';
 
 import userLogin from '../../api/userLogin';
 import {
   AccountForm,
   FormButton,
+  FormCheckbox,
   FormErrorBox,
   FormExtraOptions,
   FormLabel,
-  FormTextInput
+  FormTextInput,
+  RememberMeContainer
 } from './formStyles';
 
 class LoginForm extends Component {
@@ -21,10 +24,25 @@ class LoginForm extends Component {
       email: '',
       error: '',
       password: '',
+      rememberMe: false
     }
 
+    this.handleCheck = this.handleCheck.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
+  }
+
+  componentDidMount() {
+    const email = getFromStorage('email');
+    if (email) {
+      const password = getFromStorage('password');
+      this.setState({ email, password, rememberMe: true });
+    }
+  }
+
+  handleCheck(e) {
+    const { dataset, checked } = e.target;
+    this.setState({ [dataset.inputId]: checked });
   }
 
   handleInput(e) {
@@ -37,16 +55,17 @@ class LoginForm extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { email, password } = this.state;
+    const { email, password, rememberMe } = this.state;
     userLogin({ email, password })
       .then(data => {
-        setUserInStorage(data);
+        if (rememberMe) data = Object.assign(data, { email, password });
+        setUserInStorage(data, rememberMe);
         window.location = '/account/childmenu';
       }).catch(error => this.setState({ error }));
   }
 
   render() {
-    const { email, error, password } = this.state;
+    const { email, error, password, rememberMe } = this.state;
     return (
       <div className="whiteBox">
         <AccountForm>
@@ -65,6 +84,16 @@ class LoginForm extends Component {
             type="password"
             value={password}
           />
+
+          <RememberMeContainer>
+            <FormCheckbox
+              onChange={this.handleCheck}
+              data-input-id="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+            />
+            <FormLabel>Remember Me</FormLabel>
+          </RememberMeContainer>
 
           { this.state.error && <FormErrorBox>{error}</FormErrorBox> }
           <FormButton type="submit" onClick={this.submitForm}>Log In</FormButton>

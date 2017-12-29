@@ -55,6 +55,8 @@ export const FormButton = styled.button`
   }
 `;
 
+export const FormCheckbox = styled.input``;
+
 export const FormErrorBox = styled.div`
   ${formStatusBox('red')}
 `;
@@ -86,4 +88,9 @@ export const FormSuccessBox = styled.div`
 
 export const FormTextInput = styled.input`
   margin-bottom: 15px;
+`;
+
+export const RememberMeContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
