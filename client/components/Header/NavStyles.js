@@ -28,6 +28,39 @@ export const Hamburger = styled.div`
   }
 `;
 
+export const LogoutButtonRow = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  button {
+    border: 2px solid black;
+    padding: 2px 10px;
+    font-size: 22px;
+    margin: 0 5px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: .9;
+    }
+
+    &#exit {
+      background-color: red;
+      color: white;
+    }
+  }
+`;
+
+export const LogoutModalBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    font-size: 28px;
+  }
+`;
+
 export const NavBar = styled.div`
   display: flex;
   align-items: center;
