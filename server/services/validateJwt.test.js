@@ -21,7 +21,7 @@ describe('Validate Jwt', function() {
   });
 
   it('should reject 401 without logging on tokenExpired', function() {
-    sinon.stub(jwt, 'verify').callsArgWithAsync(2, { name: 'TokenExpiredError' });
+    sinon.stub(jwt, 'verify').callsArgWithAsync(3, { name: 'TokenExpiredError' });
     return validateJwt(token, jwt)
       .then(tokenBody => expect(tokenBody).to.be.false)
       .catch(err => {
@@ -31,7 +31,7 @@ describe('Validate Jwt', function() {
   });
 
   it('should reject 500 on other jwt errors', function() {
-    sinon.stub(jwt, 'verify').callsArgWithAsync(2, { name: 'otherError' });
+    sinon.stub(jwt, 'verify').callsArgWithAsync(3, { name: 'otherError' });
     return validateJwt(token, jwt)
       .then(tokenBody => expect(tokenBody).to.be.false)
       .catch(err => {
@@ -42,7 +42,7 @@ describe('Validate Jwt', function() {
 
   it('should resolve with token body', function() {
     const tBody = { email: 'fake@gmail.com' };
-    sinon.stub(jwt, 'verify').callsArgWithAsync(2, null, tBody);
+    sinon.stub(jwt, 'verify').callsArgWithAsync(3, null, tBody);
     return validateJwt(token, jwt)
       .then(tokenBody => expect(tokenBody).to.deep.equal(tBody))
   });

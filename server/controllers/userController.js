@@ -1,10 +1,11 @@
 import addCoinToDB from '../services/addCoinToDB';
-import signup from '../services/signup';
+import changePasswordService from '../services/changePasswordService';
 import login from '../services/login';
+import nodemailerMailgun from '../services/createNodemailerMailgun';
 import resetPasswordService from '../services/resetPasswordService';
 import sendError from '../services/sendError';
 import sendForgotPwEmail from '../services/sendForgotPwEmail';
-import nodemailerMailgun from '../services/createNodemailerMailgun';
+import signup from '../services/signup';
 
 function userRouter(connection) {
 
@@ -14,12 +15,18 @@ function userRouter(connection) {
       return res.status(200).send({ success: true });
     } catch (err) {
       logError(err, 'post Add Coin');
+      return res.status(200).send({ success: false });
     }
   };
 
-  const postToChangePw = function postToChangePwAsync(req, res) {
-    console.log('body is', req.body);
-    res.status(200).send('success');
+  const postToChangePw = async function postToChangePwAsync(req, res) {
+    try {
+      await changePasswordService(req.body, connection);
+      res.status(200).send('success');
+    } catch (err) {
+      logError(err, 'post to changePassword');
+      return sendError(err, res);
+    }
   };
 
   const postToForgotPw = async function postToForgotPwAsync(req, res) {

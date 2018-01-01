@@ -1,10 +1,14 @@
 import { baseUserUrl } from './apiConfig';
+import { getFromStorage } from '../utils/mswLocalStorage';
 
 function changePw(body) {
   return new Promise((resolve, reject) => {
     const myHeaders = new Headers({
       'Content-Type': 'application/json'
     });
+
+    const token = getFromStorage('token');
+    body = Object.assign(body, { token });
 
     const options = {
       method: 'POST',
