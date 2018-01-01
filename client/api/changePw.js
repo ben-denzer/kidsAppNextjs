@@ -18,7 +18,7 @@ function changePw(body) {
 
     fetch(`${baseUserUrl}/changePw`, options)
       .then(res => {
-        if (res.ok) return resolve()
+        if (res.ok) return resolve('Success');
         if (res.status === 401) return reject('Your Current Password Is Incorrect');
         return reject('There Was An Error, Please Try Again');
       })

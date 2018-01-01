@@ -45,6 +45,9 @@ function changePasswordService(body, connection) {
         return resolve('ok');
       })
       .catch(err => {
+        if (err && err.status === 401) {
+          return reject(err);
+        }
         logError(err, 'error in changePasswordService');
         reject(err);
       });

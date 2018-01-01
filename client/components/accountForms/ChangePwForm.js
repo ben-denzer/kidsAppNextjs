@@ -24,8 +24,20 @@ class ChangePwForm extends Component {
       success: null
     }
 
+    this.changePwSuccess = this.changePwSuccess.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
+  }
+
+  changePwSuccess() {
+    this.setState({
+      currentPassword: '',
+      newPassword: '',
+      newPw2: '',
+      error: null,
+      success: true
+    });
+    setTimeout(() => this.setState({ success: null }), 3000);
   }
 
   handleInput(e) {
@@ -47,11 +59,13 @@ class ChangePwForm extends Component {
       this.setState({ error: 'Passwords Do Not Match' });
       return;
     }
-    changePw({ currentPassword, newPassword, newPw2, token });
+    changePw({ currentPassword, newPassword, newPw2, token })
+      .then(success => this.changePwSuccess())
+      .catch(err => this.setState({ error: err }));
   }
 
   render() {
-    const { currentPassword, newPassword, newPw2 } = this.state;
+    const { currentPassword, error, newPassword, newPw2, success } = this.state;
     return (
       <AccountForm className="smallForm">
         <FormLabel>Current Password</FormLabel>
@@ -75,6 +89,8 @@ class ChangePwForm extends Component {
           type="password"
           value={newPw2}
         />
+        { error && <FormErrorBox>{error}</FormErrorBox> }
+        { success && <FormSuccessBox>Password Changed</FormSuccessBox> }
         <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
       </AccountForm>
     );

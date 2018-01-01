@@ -24,6 +24,9 @@ function userRouter(connection) {
       await changePasswordService(req.body, connection);
       res.status(200).send('success');
     } catch (err) {
+      if (err && err.status === 401) {
+        return res.status(401).send(JSON.stringify({ error: 'Invalid Password' }));
+      }
       logError(err, 'post to changePassword');
       return sendError(err, res);
     }
