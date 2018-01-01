@@ -24,6 +24,7 @@ class ChildMenu extends Component {
     const token = getFromStorage('token');
     const children = getFromStorage('children');
     if (!token) return window.location = '/account/login';
+    if (children.length === 1) return this.selectChild(null, children[0].child_id);
     this.setState({ children });
   }
 
@@ -40,9 +41,14 @@ class ChildMenu extends Component {
     ));
   }
 
-  selectChild(e) {
-    const childId = e.currentTarget.dataset.childId;
-    if (!childId) return;
+  selectChild(e, id) {
+    let childId;
+    if (id) {
+      childId = id;
+    } else {
+      childId = e.currentTarget.dataset.childId;
+      if (!childId) return;
+    }
     setInStorage('activeChild', childId);
     window.location = '/online-games';
   };
@@ -52,7 +58,6 @@ class ChildMenu extends Component {
     const childThumbs = this.makeThumbs(children);
     return (
       <PageContainer className="whiteBox">
-        <h1>Menu</h1>
         <Children>
           {childThumbs}
         </Children>

@@ -6,31 +6,39 @@ function ChildThumb(props) {
 
   return (
     <ChildThumbContainer data-child-id={id} onClick={selectChild}>
-      <ChildIcon />
-      <ChildName>{name}</ChildName>
+      {name}
+      <IconContainer>
+        <ChildIcon src="/static/img/goldCoin.png" />{coins}
+      </IconContainer>
     </ChildThumbContainer>
   )
 }
 
 const ChildThumbContainer = styled.div`
-  width: 200px;
-  height: 220px;
+  min-width: 200px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-flow: row wrap;
   align-items: center;
-  border: 6px solid #999;
-  margin: 0 2px;
+  justify-content: space-around;
+  border: 3px solid #999;
+  margin: 0 4px;
+  font-size: 24px;
+  font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+    background: white;
+  }
 `;
 
-const ChildIcon = styled.div`
-  width: 150px;
-  height: 150px;
-  background-color: red;
+const ChildIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;
 
-const ChildName = styled.p`
-  font-size: 18px;
+const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default ChildThumb;
