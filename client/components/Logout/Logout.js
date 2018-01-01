@@ -1,0 +1,27 @@
+import React, { Component } from 'react';
+import MainLayout from '../MainLayout';
+import { setInStorage } from '../../utils/mswLocalStorage';
+
+class Logout extends Component {
+  componentDidMount() {
+    this.removeData();
+    setTimeout(() => window.location = '/', 5000);
+  }
+
+  removeData() {
+    setInStorage('token', null);
+    setInStorage('children', null);
+    setInStorage('activeChild', null);
+    setInStorage('coins', null);
+  }
+
+  render() {
+    return (
+      <div className="whiteBox">
+        <h3 style={{ textAlign: 'center' }}>You Have Been Logged Out</h3>
+      </div>
+    );
+  }
+}
+
+export default MainLayout(Logout);

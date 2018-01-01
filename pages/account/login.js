@@ -1,5 +1,4 @@
 import AnalyticsWrapper from '../../client/containers/AnalyticsWrapper';
-import MainLayout from '../../client/components/MainLayout';
 import LoginForm from '../../client/components/accountForms/LoginForm';
 import RedirectIfLoggedIn from '../../client/components/auth/RedirectIfLoggedIn';
 import Head from 'next/head';
