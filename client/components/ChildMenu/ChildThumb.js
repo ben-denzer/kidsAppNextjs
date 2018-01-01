@@ -19,11 +19,13 @@ const ChildThumbContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border: 3px solid #999;
-  margin: 0 4px;
-  font-size: 24px;
+  margin: 8px;
+  font-size: 34px;
   font-weight: bold;
+  box-sizing: border-box;
+  padding: 2px 5px;
 
   &:hover {
     cursor: pointer;

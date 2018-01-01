@@ -33,6 +33,10 @@ export const AccountForm = styled.form`
     width: 100%;
   }
 
+  @media (max-width: 767px) {
+    padding: 0;
+  }
+
   h1 {
     text-align: center;
   }
@@ -40,6 +44,10 @@ export const AccountForm = styled.form`
 
 export const Form2Cols = styled.div`
   display: flex;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
 export const FormButton = styled.button`
@@ -78,6 +86,10 @@ export const FormHalf = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 10px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 export const FormRadioButton = styled.input``;
