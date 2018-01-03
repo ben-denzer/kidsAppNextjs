@@ -134,7 +134,7 @@ export const ThumbsInner = styled.div`
 
   @media (max-width: 900px) {
     flex-direction: column;
-    height: 800px;
+    min-height: 540px;
   }
 `;
 
@@ -145,7 +145,7 @@ export const ThumbsSection = styled.div`
   background-color: ${color2};
 
   @media (max-width: 900px) {
-    height: 800px;
+    min-height: 540px;
   }
 `;
 

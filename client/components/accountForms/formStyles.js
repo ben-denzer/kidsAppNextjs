@@ -31,9 +31,6 @@ export const AccountForm = styled.form`
 
   @media (max-width: 1000px) {
     width: 100%;
-  }
-
-  @media (max-width: 767px) {
     padding: 0;
   }
 

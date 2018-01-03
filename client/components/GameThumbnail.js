@@ -27,6 +27,10 @@ const ThumbOuter = styled.div`
   &:hover {
     opacity: .8;
   }
+
+  @media (max-width: 340px) {
+    width: 300px;
+  }
 `;
 
 const ThumbInner = styled.div`

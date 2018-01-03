@@ -43,7 +43,7 @@ class FishingContainer extends Component {
       target.classList.add('caught');
       this.props.playSuccessSound();
       setTimeout(() => target.classList.add('reeling'), 700);
-      if ((winCount + 1) % 2 === 0) {
+      if ((winCount + 1) % 5 === 0) {
         setTimeout(this.props.addCoin, 2500);
         setTimeout(this.setupBoard, 5500);
       } else {
