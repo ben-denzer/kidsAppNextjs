@@ -7,7 +7,8 @@ import {
   LogoutModalBody,
   NavBar,
   NavItem,
-  NavItemsContainer
+  NavItemsContainer,
+  SmallTextLink
 } from './NavStyles';
 
 export default class Nav extends Component {
@@ -53,7 +54,6 @@ export default class Nav extends Component {
   }
 
   showLogoutModal() {
-    console.log('called');
     this.setState({ showLogoutModal: true });
   }
 
@@ -63,6 +63,7 @@ export default class Nav extends Component {
 
   render() {
     const { allLinks, navOpen, showLogoutModal } = this.state;
+    const { activeChildName, childCount, loggedIn } = this.props;
     let navItems = [];
 
     if (allLinks.length) {
@@ -71,6 +72,22 @@ export default class Nav extends Component {
           <Link prefetch href={a.href}><a onClick={a.callback} title={a.name}>{a.name}</a></Link>
         </NavItem>
       ));
+    }
+
+    if (activeChildName && !/childmenu/.test(window.location.pathname)) {
+      const helloChild = (
+        <NavItem key="helloChild">
+          <strong>{activeChildName}</strong>&nbsp;
+          {
+            childCount > 1 && (
+              <Link prefetch href="/account/childmenu">
+                <SmallTextLink>change</SmallTextLink>
+              </Link>
+            )
+          }
+        </NavItem>
+      );
+      navItems = [helloChild, ...navItems];
     }
 
     return [

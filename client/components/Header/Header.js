@@ -7,7 +7,7 @@ export default function Header(props) {
   return (
     <HeaderContainer>
       <Link href="/"><a><HeaderLogo src="/static/img/logo2.png" /></a></Link>
-      <Nav key={props.loggedIn} loggedIn={props.loggedIn} />
+      <Nav key={props.loggedIn} {...props} />
     </HeaderContainer>
   );
 }

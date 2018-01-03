@@ -10,15 +10,24 @@ function MainLayout(Child) {
       super();
 
       this.state = {
+        activeChildName: null,
+        childCount: null,
         loggedIn: false,
-        children: [],
       }
     }
 
     componentDidMount() {
       const token = getFromStorage('token');
       if (token) {
-        this.setState({ loggedIn: true });
+        const activeChild = getFromStorage('activeChild');
+        const children = getFromStorage('children');
+        const childCount = children.length;
+        const filteredChildren = children.filter(a => {
+          return Number(a.child_id) === Number(activeChild)
+        });
+        const activeChildName = filteredChildren.length ? filteredChildren[0].username : null;
+
+        this.setState({ activeChildName, childCount, loggedIn: true });
       }
     }
 
@@ -26,7 +35,7 @@ function MainLayout(Child) {
       const pathname = this.props.url.pathname;
       return (
         <LayoutContainer className={pathname.slice(pathname.lastIndexOf('/') + 1)}>
-          <Header loggedIn={this.state.loggedIn} />
+          <Header {...this.state} />
           <Child {...this.props} {...this.state} />
           <Footer />
         </LayoutContainer>

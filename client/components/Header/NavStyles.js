@@ -70,7 +70,7 @@ export const NavBar = styled.div`
 
 export const NavItem = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   padding: 0 10px;
   border-right: 1px solid #999;
 
@@ -119,5 +119,14 @@ export const NavItemsContainer = styled.div`
     &:hover {
       text-decoration: underline;
     }
+  }
+`;
+
+export const SmallTextLink = styled.a`
+  font-size: .8em;
+  color: blue !important;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
