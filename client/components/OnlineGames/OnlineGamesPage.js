@@ -19,7 +19,7 @@ function OnlineGamesContainer(props) {
                 img="/static/img/memoryThumb.jpg"
               />
               <Headline>
-                Remember the position of each card was while trying to match two cards with the same word.
+                Remember the position of each card while trying to match two cards with the same word.
                 {' '}
               </Headline>
             </a>
@@ -49,7 +49,7 @@ function OnlineGamesContainer(props) {
               <Headline>
                 Read the flash cards out loud to earn gold coins
                 <strong>
-                  *This game is using features that are not available in all browsers, and it also requires a microphone.
+                  *Google Chrome is required to play this game, and it also requires a microphone.
                 </strong>
               </Headline>
             </a>
