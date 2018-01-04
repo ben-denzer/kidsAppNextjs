@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
+import ChildNameComponent from './ChildNameComponent';
 import Modal from '../Modal/Modal';
 import {
   Hamburger,
@@ -74,26 +75,11 @@ export default class Nav extends Component {
       ));
     }
 
-    if (activeChildName && !/childmenu/.test(window.location.pathname)) {
-      const helloChild = (
-        <NavItem key="helloChild">
-          <strong>{activeChildName}</strong>&nbsp;
-          {
-            childCount > 1 && (
-              <Link prefetch href="/account/childmenu">
-                <SmallTextLink>change</SmallTextLink>
-              </Link>
-            )
-          }
-        </NavItem>
-      );
-      navItems = [helloChild, ...navItems];
-    }
-
     return [
       <NavBar key="a" onClick={this.toggleNav}>
         <Hamburger><div /><div /><div /></Hamburger>
         <NavItemsContainer className={navOpen ? 'open' : ''}>
+          <ChildNameComponent activeChildName={activeChildName} childCount={childCount} />
           {navItems}
         </NavItemsContainer>
       </NavBar>,
