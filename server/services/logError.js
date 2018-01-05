@@ -8,7 +8,7 @@ const path = require('path');
 // const logPath = dev ? './server' : '../';
 
 function logError(err, description = 'none') {
-  console.log(err, description);
+  console.log(err, description); // eslint-disable-line no-console
   const message =
 `
 Time: ${new Date().toString()}

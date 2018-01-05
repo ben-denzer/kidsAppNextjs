@@ -5,6 +5,9 @@ import AccountHome from '../components/AccountHome/AccountHome';
 import { getFromStorage } from '../utils/mswLocalStorage';
 
 class AccountContainer extends Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
   render() {
     return (
       <AccountHome {...this.props} {...this.state} />

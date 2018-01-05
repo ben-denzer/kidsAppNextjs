@@ -1,4 +1,5 @@
 import addCoinToDB from '../services/addCoinToDB';
+import addWordToDbService from '../services/wordServices/addWordToDbService';
 import changePasswordService from '../services/changePasswordService';
 import login from '../services/login';
 import nodemailerMailgun from '../services/createNodemailerMailgun';
@@ -12,17 +13,27 @@ function userRouter(connection) {
   const postToAddCoin = async function postToAddCoinAsync(req, res) {
     try {
       await addCoinToDB(req.body, connection);
-      return res.status(200).send({ success: true });
+      return res.status(200).send(JSON.stringify({ success: true }));
     } catch (err) {
       logError(err, 'post Add Coin');
-      return res.status(200).send({ success: false });
+      return res.status(200).send(JSON.stringify({ success: true }));
+    }
+  };
+
+  const postToAddWord = async function postToAddWordAsync(req, res) {
+    try {
+      await addWordToDbService(req.body, connection);
+      return res.status(200).send(JSON.stringify({ success: true }));
+    } catch (err) {
+      logError(err, 'post to Add Word');
+      return sendError(err, res);
     }
   };
 
   const postToChangePw = async function postToChangePwAsync(req, res) {
     try {
       await changePasswordService(req.body, connection);
-      res.status(200).send('success');
+      res.status(200).send(JSON.stringify({ success: true }));
     } catch (err) {
       if (err && err.status === 401) {
         return res.status(401).send(JSON.stringify({ error: 'Invalid Password' }));
@@ -84,6 +95,7 @@ function userRouter(connection) {
 
   return {
     postToAddCoin,
+    postToAddWord,
     postToChangePw,
     postToForgotPw,
     postToLogin,
