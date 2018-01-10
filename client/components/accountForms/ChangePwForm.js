@@ -37,7 +37,10 @@ class ChangePwForm extends Component {
       error: null,
       success: true
     });
-    setTimeout(() => this.setState({ success: null }), 3000);
+    setTimeout(() => {
+      this.props.toggleChangePwForm();
+      this.setState({ success: null })
+    }, 3000);
   }
 
   handleInput(e) {
@@ -66,8 +69,9 @@ class ChangePwForm extends Component {
 
   render() {
     const { currentPassword, error, newPassword, newPw2, success } = this.state;
+    const { changePwFormOpen } = this.props;
     return (
-      <AccountForm className="smallForm">
+      <AccountForm className="smallForm centered">
         <FormLabel>Current Password</FormLabel>
         <FormTextInput
           onChange={this.handleInput}

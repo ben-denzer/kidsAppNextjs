@@ -16,7 +16,7 @@ export const CloseButton = styled.img`
 `;
 
 export const FullScreen = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;

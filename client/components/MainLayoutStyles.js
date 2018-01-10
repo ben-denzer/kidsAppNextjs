@@ -59,6 +59,11 @@ export const LayoutContainer = styled.div`
     border: 3px solid #999;
     border-radius: 20px;
 
+    h1,
+    h2 {
+      text-align: center;
+    }
+
     &.fishing {
       background-image: url('/static/img/fishingBg.svg');
       background-size: cover;
@@ -75,6 +80,16 @@ export const LayoutContainer = styled.div`
     @media (max-width: 700px) {
       background: white;
       width: 97%;
+    }
+
+    .twoCols {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+
+      div {
+        width: 45%;
+      }
     }
   }
 `;

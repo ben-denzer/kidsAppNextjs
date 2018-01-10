@@ -5,12 +5,33 @@ import AccountHome from '../components/AccountHome/AccountHome';
 import { getFromStorage } from '../utils/mswLocalStorage';
 
 class AccountContainer extends Component {
-  componentDidMount() {
-    console.log(this.props);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      changePwFormOpen: false,
+      children: []
+    }
+
+    this.toggleChangePwForm = this.toggleChangePwForm.bind(this);
   }
+
+  componentDidMount() {
+    const children = getFromStorage('children');
+    this.setState({ children });
+  }
+
+  toggleChangePwForm() {
+    this.setState({ changePwFormOpen: !this.state.changePwFormOpen });
+  }
+
   render() {
     return (
-      <AccountHome {...this.props} {...this.state} />
+      <AccountHome
+        {...this.props}
+        {...this.state}
+        toggleChangePwForm={this.toggleChangePwForm}
+      />
     );
   }
 }

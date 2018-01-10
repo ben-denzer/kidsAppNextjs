@@ -29,6 +29,10 @@ export const AccountForm = styled.form`
     max-width: 300px;
   }
 
+  &.centered {
+    margin: 0 auto;
+  }
+
   @media (max-width: 1000px) {
     width: 100%;
     padding: 0;
