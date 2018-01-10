@@ -1,6 +1,7 @@
 import addCoinToDB from '../services/addCoinToDB';
 import addWordToDbService from '../services/wordServices/addWordToDbService';
 import changePasswordService from '../services/changePasswordService';
+import getAllWordsForChild from '../services/wordServices/getAllWordsForChild';
 import login from '../services/login';
 import nodemailerMailgun from '../services/createNodemailerMailgun';
 import resetPasswordService from '../services/resetPasswordService';
@@ -56,6 +57,16 @@ function userRouter(connection) {
     }
   };
 
+  const postToGetWordsForChild = async function postToGetWordsForChildAsync(req, res) {
+    try {
+      const allWords = await getAllWordsForChild(req.body.childId, connection);
+      return res.status(200).send(JSON.stringify(allWords));
+    } catch (err) {
+      logError(err, 'in postToGetWordsForChild');
+      return sendError(err, res);
+    }
+  };
+
   const postToLogin = async function postToLoginAsync(req, res) {
     try {
       const userData = await login(req.body, connection);
@@ -98,6 +109,7 @@ function userRouter(connection) {
     postToAddWord,
     postToChangePw,
     postToForgotPw,
+    postToGetWordsForChild,
     postToLogin,
     postToResetPw,
     postToSignup
