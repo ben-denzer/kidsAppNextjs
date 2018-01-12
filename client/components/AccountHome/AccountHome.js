@@ -6,7 +6,15 @@ import Modal from '../Modal/Modal';
 
 function AccountHome(props) {
   const { changePwFormOpen, toggleChangePwForm } = props;
-  const children = props.children.map(a => <EditChild key={a.child_id} {...props} />);
+  const children = props.children.map(a => {
+    return (
+      <EditChild
+        key={a.child_id}
+        child={a}
+        {...props}
+      />
+    );
+  });
   return (
     <div className="whiteBox">
       <h1>My Account</h1>

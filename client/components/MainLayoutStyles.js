@@ -87,7 +87,7 @@ export const LayoutContainer = styled.div`
       flex-flow: row wrap;
       justify-content: space-between;
 
-      div {
+      >div {
         width: 45%;
       }
     }

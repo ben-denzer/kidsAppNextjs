@@ -11,18 +11,58 @@ class AccountContainer extends Component {
 
     this.state = {
       changePwFormOpen: false,
-      children: []
+      children: [],
+      childNameText: '',
+      childOpen: null,
+      editingChildName: false,
+      error: '',
+      wordList: [],
+      wordText: ''
     }
 
+    this.handleInput = this.handleInput.bind(this);
+    this.removeWord = this.removeWord.bind(this);
+    this.saveInput = this.saveInput.bind(this);
+    this.selectChild = this.selectChild.bind(this);
     this.toggleChangePwForm = this.toggleChangePwForm.bind(this);
   }
 
   componentDidMount() {
     const children = getFromStorage('children');
     this.setState({ children });
-    getWordsForChild({ childId: 551 })
-      .then(words => console.log('found words', words))
-      .catch(e => console.log(e));
+  }
+
+  handleInput(e) {
+    const { dataset, value } = e.target;
+    this.setState({ [dataset.inputId]: value });
+  }
+
+  removeWord(wordId) {
+    console.log(`removing ${wordId} from ${this.state.childOpen}`);
+  }
+
+  saveInput(inputId) {
+    if (inputId === 'childNameText') {
+      console.log(`saving ${this.state.childNameText}`);
+    } else {
+      console.log(`adding ${this.state.wordText}`);
+    }
+  }
+
+  selectChild(e) {
+    const { childOpen } = this.state;
+    const id = e.target.dataset.childId;
+
+    if (childOpen === id) {
+      this.setState({ childOpen: null });
+    } else {
+      this.setState({ childOpen: id, loadingWords: true });
+      getWordsForChild({ childId: id })
+        .then(wordList => this.setState({ wordList, loadingWords: false }))
+        .catch(e => {
+          this.setState({ error: 'Error Loading Words', loadingWords: false })
+        });
+    }
   }
 
   toggleChangePwForm() {
@@ -34,6 +74,10 @@ class AccountContainer extends Component {
       <AccountHome
         {...this.props}
         {...this.state}
+        handleInput={this.handleInput}
+        removeWord={this.removeWord}
+        saveInput={this.saveInput}
+        selectChild={this.selectChild}
         toggleChangePwForm={this.toggleChangePwForm}
       />
     );
