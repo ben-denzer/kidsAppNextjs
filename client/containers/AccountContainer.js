@@ -3,7 +3,11 @@ import Router from 'next/router';
 import MainLayout from '../components/MainLayout';
 import AccountHome from '../components/AccountHome/AccountHome';
 import { getFromStorage } from '../utils/mswLocalStorage';
+import addNewWord from '../api/addNewWord';
 import getWordsForChild from '../api/getWordsForChild';
+
+// Words from the DB are sorted alphabetically, when they add a new word it
+// is not sorted so they don't loose their place when adding words
 
 class AccountContainer extends Component {
   constructor(props) {
@@ -16,14 +20,16 @@ class AccountContainer extends Component {
       childOpen: null,
       editingChildName: false,
       error: '',
+      newWordError: '',
+      newWordVal: '',
       wordList: [],
-      wordText: ''
     }
 
     this.handleInput = this.handleInput.bind(this);
     this.removeWord = this.removeWord.bind(this);
     this.saveInput = this.saveInput.bind(this);
     this.selectChild = this.selectChild.bind(this);
+    this.submitOnEnter = this.submitOnEnter.bind(this);
     this.toggleChangePwForm = this.toggleChangePwForm.bind(this);
   }
 
@@ -32,9 +38,29 @@ class AccountContainer extends Component {
     this.setState({ children });
   }
 
+  addWord() {
+    const { childOpen, newWordVal, wordList } = this.state;
+
+    if (!newWordVal) return;
+    for (let word of wordList) {
+      if (word.word_text === newWordVal) {
+        this.setState({ newWordError: 'You Already Have This Word' });
+        return;
+      }
+    }
+    if (wordList.length >= 100) {
+      this.setState({ newWordError: 'You Already Have The Maximum Allowed Words' });
+      return;
+    }
+    this.setState({ wordList: [...wordList, { word_id: Date.now(), word_text: newWordVal }] });
+    addNewWord({ childId: childOpen, word: newWordVal })
+      .then(() => this.setState({ newWordVal: '' }))
+      .catch(e => this.setState({ newWordError: 'Error Saving Word', wordList: wordList.slice(0, -1) }));
+  }
+
   handleInput(e) {
     const { dataset, value } = e.target;
-    this.setState({ [dataset.inputId]: value });
+    this.setState({ [dataset.inputId]: value, newWordError: '' });
   }
 
   removeWord(wordId) {
@@ -45,7 +71,7 @@ class AccountContainer extends Component {
     if (inputId === 'childNameText') {
       console.log(`saving ${this.state.childNameText}`);
     } else {
-      console.log(`adding ${this.state.wordText}`);
+      this.addWord();
     }
   }
 
@@ -58,11 +84,21 @@ class AccountContainer extends Component {
     } else {
       this.setState({ childOpen: id, loadingWords: true });
       getWordsForChild({ childId: id })
-        .then(wordList => this.setState({ wordList, loadingWords: false }))
+        .then(wordList => {
+          wordList = wordList.sort((a, b) => {
+            if (a.word_text === b.word_text) return 0;
+            return a.word_text < b.word_text ? -1 : 1;
+          });
+          this.setState({ wordList, loadingWords: false, newWordVal: '' })
+        })
         .catch(e => {
-          this.setState({ error: 'Error Loading Words', loadingWords: false })
+          this.setState({error: 'Error Loading Words', loadingWords: false, newWordVal: '' });
         });
     }
+  }
+
+  submitOnEnter(e) {
+    if (e.which === 13 || e.keycode === 13) this.saveInput();
   }
 
   toggleChangePwForm() {
@@ -78,6 +114,7 @@ class AccountContainer extends Component {
         removeWord={this.removeWord}
         saveInput={this.saveInput}
         selectChild={this.selectChild}
+        submitOnEnter={this.submitOnEnter}
         toggleChangePwForm={this.toggleChangePwForm}
       />
     );

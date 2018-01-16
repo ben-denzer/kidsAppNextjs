@@ -1,30 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
 import WordContainer from './WordContainer';
+import { FormErrorBox } from '../accountForms/formStyles';
 
 function EditChild(props) {
   const {
     child,
     childOpen,
     handleInput,
+    newWordError,
+    newWordVal,
     removeWord,
     saveInput,
     selectChild,
+    submitOnEnter,
     wordList
   } = props;
   const childId = child.child_id;
 
   let words;
   if (wordList.length) {
-    words = wordList.map(a => (
-      <WordContainer
-        key={a.id}
-        word={a}
-        removeWord={removeWord}
-      />
-    ));
+    words = wordList.map(a => {
+      return(
+        <WordContainer
+          key={a.word_id}
+          word={a}
+          removeWord={removeWord}
+        />
+      );
+    });
   } else {
-    words = <p>Loading...</p>
+    words = <p key="loading">Loading...</p>
   }
 
   return (
@@ -37,9 +43,18 @@ function EditChild(props) {
         onClick={selectChild}
       >
         {child.username}
-        <h4>Words</h4>
-        {words}
       </div>
+      <h4>Words</h4>
+      {words}
+      <h4>Add Word</h4>
+      { newWordError && <FormErrorBox>{newWordError}</FormErrorBox> }
+      <input
+        data-input-id="newWordVal"
+        value={newWordVal}
+        onChange={handleInput}
+        onKeyUp={submitOnEnter}
+      />
+      <button onClick={saveInput} data-input-id="newWord">Save</button>
     </EditChildContainer>
   );
 }
@@ -61,6 +76,7 @@ const EditChildContainer = styled.div`
 
     &:hover {
       background: #eee;
+      cursor: pointer;
     }
   }
 `;
