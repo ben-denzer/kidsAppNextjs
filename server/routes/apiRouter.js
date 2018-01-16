@@ -13,6 +13,7 @@ function router(connection) {
     postToForgotPw,
     postToGetWordsForChild,
     postToLogin,
+    postToRemoveWordFromChild,
     postToResetPw,
     postToSignup
   } = userController(connection);
@@ -23,6 +24,7 @@ function router(connection) {
   apiRouter.post('/account/forgotPw', postToForgotPw);
   apiRouter.post('/account/getWordsForChild', postToGetWordsForChild);
   apiRouter.post('/account/login', postToLogin);
+  apiRouter.post('/account/removeWord', postToRemoveWordFromChild);
   apiRouter.post('/account/resetPw', postToResetPw);
   apiRouter.post('/account/signup', postToSignup);
 

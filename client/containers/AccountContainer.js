@@ -5,6 +5,7 @@ import AccountHome from '../components/AccountHome/AccountHome';
 import { getFromStorage } from '../utils/mswLocalStorage';
 import addNewWord from '../api/addNewWord';
 import getWordsForChild from '../api/getWordsForChild';
+import removeWordFromDB from '../api/removeWordFromDB'
 
 // Words from the DB are sorted alphabetically, when they add a new word it
 // is not sorted so they don't loose their place when adding words
@@ -64,7 +65,15 @@ class AccountContainer extends Component {
   }
 
   removeWord(wordId) {
-    console.log(`removing ${wordId} from ${this.state.childOpen}`);
+    const { childOpen: childId } = this.state;
+    removeWordFromDB({ childId, wordId })
+      .then(() => {
+        const wordList = this.state.wordList.filter(a => {
+          return Number(a.word_id) !== Number(wordId) && a;
+        });
+        this.setState({ wordList });
+      })
+      .catch((e) => this.setState({ newWordError: 'Error Deleting Word' }));
   }
 
   saveInput(inputId) {

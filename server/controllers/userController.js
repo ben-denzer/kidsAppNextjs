@@ -4,6 +4,7 @@ import changePasswordService from '../services/changePasswordService';
 import getAllWordsForChild from '../services/wordServices/getAllWordsForChild';
 import login from '../services/login';
 import nodemailerMailgun from '../services/createNodemailerMailgun';
+import removeWordFromChild from '../services/wordServices/removeWordFromChild';
 import resetPasswordService from '../services/resetPasswordService';
 import sendError from '../services/sendError';
 import sendForgotPwEmail from '../services/sendForgotPwEmail';
@@ -80,6 +81,16 @@ function userRouter(connection) {
     }
   };
 
+  const postToRemoveWordFromChild = async function postToRemoveWordFromChildAsync(req, res) {
+    try {
+      await removeWordFromChild(req.body, connection);
+      return res.send(JSON.stringify({ success: true }));
+    } catch (err) {
+      logError(err, 'post to removeWordFromChild');
+      return sendError(err, res);
+    }
+  };
+
   const postToResetPw = async function postToResetPwAsync(req, res) {
     try {
       await resetPasswordService(req.body, connection);
@@ -111,6 +122,7 @@ function userRouter(connection) {
     postToForgotPw,
     postToGetWordsForChild,
     postToLogin,
+    postToRemoveWordFromChild,
     postToResetPw,
     postToSignup
   };
