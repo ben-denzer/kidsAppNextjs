@@ -24,8 +24,8 @@ function userRouter(connection) {
 
   const postToAddWord = async function postToAddWordAsync(req, res) {
     try {
-      await addWordToDbService(req.body, connection);
-      return res.status(200).send(JSON.stringify({ success: true }));
+      const wordId = await addWordToDbService(req.body, connection);
+      return res.status(200).send(JSON.stringify({ wordId }));
     } catch (err) {
       logError(err, 'post to Add Word');
       return sendError(err, res);

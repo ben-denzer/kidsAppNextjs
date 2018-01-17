@@ -7,9 +7,6 @@ import addNewWord from '../api/addNewWord';
 import getWordsForChild from '../api/getWordsForChild';
 import removeWordFromDB from '../api/removeWordFromDB'
 
-// Words from the DB are sorted alphabetically, when they add a new word it
-// is not sorted so they don't loose their place when adding words
-
 class AccountContainer extends Component {
   constructor(props) {
     super(props);
@@ -53,9 +50,21 @@ class AccountContainer extends Component {
       this.setState({ newWordError: 'You Already Have The Maximum Allowed Words' });
       return;
     }
-    this.setState({ wordList: [...wordList, { word_id: Date.now(), word_text: newWordVal }] });
+
+    // optimistic update with temporary word_id
+    const tempWordList = [...wordList, { word_id: Date.now(), word_text: newWordVal }];
+    console.log('setting temp word list...', tempWordList);
+    this.setState({ wordList: tempWordList });
+
     addNewWord({ childId: childOpen, word: newWordVal })
-      .then(() => this.setState({ newWordVal: '' }))
+      .then(newWordId => {
+        const updatedWordList = tempWordList.map(word => {
+          if (word.word_text !== newWordVal) return word;
+          return { word_id: newWordId, word_text: word.word_text };
+        });
+        console.log('success, setting updated word list', newWordId, updatedWordList);
+        this.setState({ newWordVal: '', wordList: updatedWordList });
+      })
       .catch(e => this.setState({ newWordError: 'Error Saving Word', wordList: wordList.slice(0, -1) }));
   }
 

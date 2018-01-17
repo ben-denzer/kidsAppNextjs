@@ -19,7 +19,7 @@ function addWordToDB(body, connection) {
     validateJwt(token, jwt)
       .then(() => getWordId(word, connection))
       .then(wordId => linkWordToChild(childId, wordId, connection))
-      .then(() => resolve())
+      .then(wordId => resolve(wordId))
       .catch(err => {
         logError(err, 'error in addWordToDB');
         return reject(err);

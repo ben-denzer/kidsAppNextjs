@@ -21,9 +21,13 @@ function addNewWord(body) {
 
     fetch(`${baseUserUrl}/addWord`, options)
       .then(res => {
-        if (res.ok) return resolve('Success');
+        if (res.ok) return res.json();
         if (res.status === 401) return reject('Your Session Has Expired, Please Log Out And Log Back In');
         return reject('There Was An Error, Please Try Again');
+      })
+      .then(json => {
+        if (json.wordId) return resolve(json.wordId);
+        reject('There Was An Error, Please Try Again');
       })
       .catch(() => reject('There Was An Error, Please Try Again'));
   });

@@ -14,7 +14,7 @@ function linkWordToChild(childId, wordId, connection) {
           return reject({ status: 500, error: 'Server Error' });
         }
 
-        resolve();
+        resolve(wordId);
       }
     );
   });
