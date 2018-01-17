@@ -53,7 +53,6 @@ class AccountContainer extends Component {
 
     // optimistic update with temporary word_id
     const tempWordList = [...wordList, { word_id: Date.now(), word_text: newWordVal }];
-    console.log('setting temp word list...', tempWordList);
     this.setState({ wordList: tempWordList });
 
     addNewWord({ childId: childOpen, word: newWordVal })
@@ -62,7 +61,6 @@ class AccountContainer extends Component {
           if (word.word_text !== newWordVal) return word;
           return { word_id: newWordId, word_text: word.word_text };
         });
-        console.log('success, setting updated word list', newWordId, updatedWordList);
         this.setState({ newWordVal: '', wordList: updatedWordList });
       })
       .catch(e => this.setState({ newWordError: 'Error Saving Word', wordList: wordList.slice(0, -1) }));
