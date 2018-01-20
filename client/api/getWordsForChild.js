@@ -1,6 +1,5 @@
 import { baseUserUrl } from './apiConfig';
 
-
 function getWordsForChild(childId) {
   const myHeaders = new Headers({
     'Content-Type': 'application/json'

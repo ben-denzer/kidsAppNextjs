@@ -4,8 +4,9 @@ import MainLayout from '../components/MainLayout';
 import AccountHome from '../components/AccountHome/AccountHome';
 import { getFromStorage } from '../utils/mswLocalStorage';
 import addNewWord from '../api/addNewWord';
+import getAllParentData from '../api/getAllParentData';
 import getWordsForChild from '../api/getWordsForChild';
-import removeWordFromDB from '../api/removeWordFromDB'
+import removeWordFromDB from '../api/removeWordFromDB';
 
 class AccountContainer extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class AccountContainer extends Component {
       error: '',
       newWordError: '',
       newWordVal: '',
+      parentData: {},
       wordList: [],
     }
 
@@ -34,6 +36,7 @@ class AccountContainer extends Component {
   componentDidMount() {
     const children = getFromStorage('children');
     this.setState({ children });
+    this.fetchParentData();
   }
 
   addWord() {
@@ -55,7 +58,7 @@ class AccountContainer extends Component {
     const tempWordList = [...wordList, { word_id: Date.now(), word_text: newWordVal }];
     this.setState({ wordList: tempWordList });
 
-    addNewWord({ childId: childOpen, word: newWordVal })
+    addNewWord({ childId: childOpen, word: newWordVal.trim() })
       .then(newWordId => {
         const updatedWordList = tempWordList.map(word => {
           if (word.word_text !== newWordVal) return word;
@@ -64,6 +67,18 @@ class AccountContainer extends Component {
         this.setState({ newWordVal: '', wordList: updatedWordList });
       })
       .catch(e => this.setState({ newWordError: 'Error Saving Word', wordList: wordList.slice(0, -1) }));
+  }
+
+  fetchParentData() {
+    getAllParentData()
+    .then(parentData => this.setState({ parentData: parentData[0] }))
+    .catch(error => {
+      if (typeof error === 'string') {
+        this.setState({ error });
+      } else {
+        this.setState({ error: 'There Was An Error Getting Your Data, Please Try Again' });
+      }
+    });
   }
 
   handleInput(e) {
@@ -94,6 +109,7 @@ class AccountContainer extends Component {
   selectChild(e) {
     const { childOpen } = this.state;
     const id = e.target.dataset.childId;
+    this.setState({ wordList: [] });
 
     if (childOpen === id) {
       this.setState({ childOpen: null });

@@ -1,6 +1,7 @@
 import addCoinToDB from '../services/addCoinToDB';
 import addWordToDbService from '../services/wordServices/addWordToDbService';
 import changePasswordService from '../services/changePasswordService';
+import getAllParentDataService from '../services/getAllParentDataService';
 import getAllWordsForChild from '../services/wordServices/getAllWordsForChild';
 import login from '../services/login';
 import nodemailerMailgun from '../services/createNodemailerMailgun';
@@ -54,6 +55,17 @@ function userRouter(connection) {
         return res.status(401).send(JSON.stringify({ error: 'Email Not On File' }));
       }
       logError(err, 'post Forgot PW');
+      return sendError(err, res);
+    }
+  };
+
+  const postToGetAllParentData = async function postToGetAllParentDataAsync(req, res) {
+    try {
+      console.log(req.body);
+      const parentData = await getAllParentDataService(req.body, connection);
+      return res.status(200).send(JSON.stringify(parentData));
+    } catch (err) {
+      logError(err, 'in postToGetAllParentData');
       return sendError(err, res);
     }
   };
@@ -120,6 +132,7 @@ function userRouter(connection) {
     postToAddWord,
     postToChangePw,
     postToForgotPw,
+    postToGetAllParentData,
     postToGetWordsForChild,
     postToLogin,
     postToRemoveWordFromChild,
