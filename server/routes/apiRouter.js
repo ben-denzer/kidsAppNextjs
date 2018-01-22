@@ -16,7 +16,8 @@ function router(connection) {
     postToLogin,
     postToRemoveWordFromChild,
     postToResetPw,
-    postToSignup
+    postToSignup,
+    postToValidateAccount
   } = userController(connection);
 
   apiRouter.post('/account/addCoin', postToAddCoin);
@@ -29,6 +30,7 @@ function router(connection) {
   apiRouter.post('/account/removeWord', postToRemoveWordFromChild);
   apiRouter.post('/account/resetPw', postToResetPw);
   apiRouter.post('/account/signup', postToSignup);
+  apiRouter.post('/account/validateAccount', postToValidateAccount);
 
   return apiRouter;
 }

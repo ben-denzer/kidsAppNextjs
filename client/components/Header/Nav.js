@@ -79,7 +79,11 @@ export default class Nav extends Component {
       <NavBar key="a" onClick={this.toggleNav}>
         <Hamburger><div /><div /><div /></Hamburger>
         <NavItemsContainer className={navOpen ? 'open' : ''}>
-          <ChildNameComponent activeChildName={activeChildName} childCount={childCount} />
+          <ChildNameComponent
+            activeChildName={activeChildName}
+            childCount={childCount}
+            loggedIn={loggedIn}
+          />
           {navItems}
         </NavItemsContainer>
       </NavBar>,

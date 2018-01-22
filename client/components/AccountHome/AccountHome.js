@@ -6,7 +6,7 @@ import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 
 function AccountHome(props) {
-  const { changePwFormOpen, error, parentData, toggleChangePwForm } = props;
+  const { accountExpired, changePwFormOpen, error, parentData, toggleChangePwForm } = props;
   const children = props.children.map(a => {
     return (
       <EditChild
@@ -48,7 +48,7 @@ function AccountHome(props) {
           </FormButton>
         </div>
         <div>
-          <h2>Edit Children</h2>
+          {accountExpired ? <h2>Account Expired</h2> : <h2>Edit Children</h2>}
           {children}
         </div>
       </div>

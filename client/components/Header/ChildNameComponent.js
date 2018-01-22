@@ -3,10 +3,18 @@ import { NavItem, SmallTextLink } from './NavStyles';
 import Link from 'next/link';
 
 function ChildNameComponent(props) {
-  const { activeChildName, childCount } = props;
+  const { activeChildName, childCount, loggedIn } = props;
 
-  if (!activeChildName || /childmenu/.test(window.location.pathname)) {
+  if (!loggedIn) {
     return null;
+  }
+
+  if (!activeChildName) {
+    return (
+      <Link prefetch href="/account/childmenu">
+        <SmallTextLink>Select Child</SmallTextLink>
+      </Link>
+    );
   }
 
   return (

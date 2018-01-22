@@ -60,7 +60,7 @@ class LoginForm extends Component {
       .then(data => {
         if (rememberMe) data = Object.assign(data, { email, password });
         setUserInStorage(data, rememberMe);
-        window.location = '/account/home';
+        window.location = '/account/childmenu';
       }).catch(error => this.setState({ error }));
   }
 

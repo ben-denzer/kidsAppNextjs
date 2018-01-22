@@ -13,6 +13,7 @@ class AccountContainer extends Component {
     super(props);
 
     this.state = {
+      accountExpired: true,
       changePwFormOpen: false,
       children: [],
       childNameText: '',
@@ -34,8 +35,6 @@ class AccountContainer extends Component {
   }
 
   componentDidMount() {
-    const children = getFromStorage('children');
-    this.setState({ children });
     this.fetchParentData();
   }
 
@@ -71,7 +70,13 @@ class AccountContainer extends Component {
 
   fetchParentData() {
     getAllParentData()
-    .then(parentData => this.setState({ parentData: parentData[0] }))
+    .then(parentData => {
+      const expirationDate = parentData[0].expiration_utc;
+      const currentDate = new Date();
+      const accountExpired = expirationDate < currentDate;
+      const children = accountExpired ? [] : getFromStorage('children');
+      this.setState({ accountExpired, children, parentData: parentData[0] })
+    })
     .catch(error => {
       if (typeof error === 'string') {
         this.setState({ error });

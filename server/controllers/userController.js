@@ -10,6 +10,7 @@ import resetPasswordService from '../services/resetPasswordService';
 import sendError from '../services/sendError';
 import sendForgotPwEmail from '../services/sendForgotPwEmail';
 import signup from '../services/signup';
+import validateAccountStatus from '../services/validateAccountStatus';
 
 function userRouter(connection) {
 
@@ -61,7 +62,6 @@ function userRouter(connection) {
 
   const postToGetAllParentData = async function postToGetAllParentDataAsync(req, res) {
     try {
-      console.log(req.body);
       const parentData = await getAllParentDataService(req.body, connection);
       return res.status(200).send(JSON.stringify(parentData));
     } catch (err) {
@@ -127,6 +127,17 @@ function userRouter(connection) {
     }
   };
 
+  const postToValidateAccount = async function postToValidateAccountAsync(req, res) {
+    try {
+      const status = await validateAccountStatus(req.body, connection);
+      console.log('status is', status);
+      return res.status(200).send(JSON.stringify(status));
+    } catch (err) {
+      logError(err, 'error in postToValidateAccount');
+      return sendError(err, res);
+    }
+  };
+
   return {
     postToAddCoin,
     postToAddWord,
@@ -137,7 +148,8 @@ function userRouter(connection) {
     postToLogin,
     postToRemoveWordFromChild,
     postToResetPw,
-    postToSignup
+    postToSignup,
+    postToValidateAccount
   };
 }
 
