@@ -65,9 +65,12 @@ const OnlineGameWrapper = (WrappedComponent) => {
 
     fillWordArray(words, totalNeeded) {
       if (words.length < totalNeeded) {
-        let extraWords = defaultWordList;
+        let extraWords = defaultWordList.slice(0);
         while(words.length < totalNeeded) {
-          words = [...words, defaultWordList.pop()];
+          let nextWord = extraWords.pop();
+          if (words.indexOf(nextWord) === -1) {
+            words = [...words, nextWord];
+          }
         }
       }
       return words;

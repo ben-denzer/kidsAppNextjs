@@ -102,10 +102,11 @@ class OnlineBingoContainer extends Component {
       .catch(err => console.log('error in checkBingoCard', err));
   }
 
-  makeBoard(allWords = this.props.wordList) {
+  makeBoard(wordList = this.props.wordList) {
     const { size } = this.state;
+    const wordCount = (size * size) + Math.floor(size / 2);
+    const allWords = this.props.fillWordArray(wordList, wordCount);
     const shuffledWords = shuffle([...allWords]);
-    const wordCount = (size * size) + size; // size + 1 words won't match the board (free space is the +1)
     const gameWords = shuffledWords.slice(0, wordCount);
     const tempWords = shuffle([...gameWords]);
     const middle = Math.floor(size / 2);
