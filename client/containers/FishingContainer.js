@@ -23,13 +23,21 @@ class FishingContainer extends Component {
     this.setupBoard();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.wordList !== this.props.wordList) {
+      this.setState({ wordList: nextProps.wordList });
+      this.setupBoard();
+    }
+  }
+
   addFish() {
     const { fishOnBoard } = this.state;
-    const { wordList } = this.props;
+    const { fillWordArray, wordList } = this.props;
+    const allWords = wordList.length > 3 ? wordList : fillWordArray(wordList, 3);
     if (fishOnBoard.length >= 3) return;
-    const wordIndex = Math.floor(Math.random() * wordList.length);
-    if (fishOnBoard.indexOf(wordList[wordIndex]) === -1) {
-      this.setState({ fishOnBoard: [ ...fishOnBoard, wordList[wordIndex] ] }, () => this.addFish());
+    const wordIndex = Math.floor(Math.random() * allWords.length);
+    if (fishOnBoard.indexOf(allWords[wordIndex]) === -1) {
+      this.setState({ fishOnBoard: [ ...fishOnBoard, allWords[wordIndex] ] }, () => this.addFish());
     } else {
       this.addFish();
     }
