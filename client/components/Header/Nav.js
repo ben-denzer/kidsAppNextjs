@@ -64,7 +64,7 @@ export default class Nav extends Component {
 
   render() {
     const { allLinks, navOpen, showLogoutModal } = this.state;
-    const { activeChildName, childCount, loggedIn } = this.props;
+    const { activeChildName, childCount, loggedIn, pathname } = this.props;
     let navItems = [];
 
     if (allLinks.length) {
@@ -83,6 +83,7 @@ export default class Nav extends Component {
             activeChildName={activeChildName}
             childCount={childCount}
             loggedIn={loggedIn}
+            pathname={pathname}
           />
           {navItems}
         </NavItemsContainer>

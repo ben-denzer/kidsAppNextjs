@@ -19,7 +19,7 @@ function MainLayout(Child) {
 
     componentDidMount() {
       const token = getFromStorage('token');
-      if (!/login/i.test(window.location.pathname) && !/signup/.test(window.location.pathname)) {
+      if (token && !/login/i.test(window.location.pathname) && !/signup/.test(window.location.pathname)) {
         validateAccount({ token })
           .then(status => this.setUserData(status))
           .catch(e => {
@@ -47,7 +47,7 @@ function MainLayout(Child) {
       const pathname = this.props.url.pathname;
       return (
         <LayoutContainer className={pathname.slice(pathname.lastIndexOf('/') + 1)}>
-          <Header {...this.state} />
+          <Header {...this.state} pathname={pathname} />
           <Child {...this.props} {...this.state} />
           <Footer />
         </LayoutContainer>

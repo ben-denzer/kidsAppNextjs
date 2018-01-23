@@ -3,9 +3,10 @@ import { NavItem, SmallTextLink } from './NavStyles';
 import Link from 'next/link';
 
 function ChildNameComponent(props) {
-  const { activeChildName, childCount, loggedIn } = props;
+  const { activeChildName, childCount, loggedIn, pathname } = props;
+  console.log('pathname', pathname)
 
-  if (!loggedIn) {
+  if (!loggedIn || /childmenu/i.test(pathname)) {
     return null;
   }
 
