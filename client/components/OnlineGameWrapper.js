@@ -3,6 +3,7 @@ import MainLayout from './MainLayout';
 import defaultWordList from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
+import getWordsForChild from '../api/getWordsForChild';
 import makeAddCoinRequest from '../api/makeAddCoinRequest';
 
 const OnlineGameWrapper = (WrappedComponent) => {
@@ -11,7 +12,9 @@ const OnlineGameWrapper = (WrappedComponent) => {
       super();
 
       this.state = {
+        activeChild: null,
         apiError: false,
+        children: [],
         coins: 0,
         helpOpen: false,
         mute: true,
@@ -23,31 +26,29 @@ const OnlineGameWrapper = (WrappedComponent) => {
       this.addCoin = this.addCoin.bind(this);
       this.playCoinSound = this.playCoinSound.bind(this);
       this.playSuccessSound = this.playSuccessSound.bind(this);
+      this.fillWordArray = this.fillWordArray.bind(this);
       this.toggleHelp = this.toggleHelp.bind(this);
       this.toggleSound = this.toggleSound.bind(this);
     }
 
     componentDidMount() {
-      this.setInitialCoins();
-      const mute = getFromStorage('mute');
-      this.setState({ mute, wordList: defaultWordList });
+      this.init();
     }
 
     addCoin() {
-      const { coins } = this.state;
+      const { activeChild, children, coins } = this.state;
       const newCoins = coins + 1;
       this.addCoinUi(newCoins);
-      const childId = getFromStorage('activeChild');
-      const children = getFromStorage('children');
 
       const updatedChildren = children.map(a => {
-        if (Number(a.child_id) === Number(childId)) {
+        if (Number(a.child_id) === Number(activeChild)) {
           return Object.assign({}, a, { coins: newCoins });
         }
         return a;
       });
+      this.setState({ children: updatedChildren });
       setInStorage('children', updatedChildren);
-      makeAddCoinRequest({ childId, coins: newCoins })
+      makeAddCoinRequest({ childId: activeChild, coins: newCoins })
         .catch(() => this.setState({ apiError: 'Connection Error' }));
     }
 
@@ -62,6 +63,51 @@ const OnlineGameWrapper = (WrappedComponent) => {
       }), 3500);
     }
 
+    fillWordArray(words, totalNeeded) {
+      if (words.length < totalNeeded) {
+        let extraWords = defaultWordList;
+        while(words.length < totalNeeded) {
+          words = [...words, defaultWordList.pop()];
+        }
+      }
+      return words;
+    }
+
+    getInitialCoins(activeChild, children) {
+      if (!activeChild || !children || !children.length) {
+        return 0;
+      }
+      for (let i in children) {
+        if (children.hasOwnProperty(i)) {
+          if (Number(children[i].child_id) === Number(activeChild)) {
+            return children[i].coins;
+          }
+        }
+      }
+      return 0;
+    }
+
+    async setWordList(childId) {
+      try {
+        const words = await getWordsForChild({ childId });
+        const wordList = words.map(a => a.word_text);
+        this.setState({ wordList });
+      } catch(e) {
+        console.log(e);
+      }
+    }
+
+    init() {
+      const activeChild = getFromStorage('activeChild');
+      const children = getFromStorage('children');
+      const coins = activeChild ? this.getInitialCoins(activeChild, children) : 0;
+      const mute = getFromStorage('mute');
+      if (activeChild) {
+        this.setWordList(activeChild);
+      }
+      this.setState({ activeChild, children, coins, mute, wordList: defaultWordList });
+    }
+
     playCoinSound() {
       if (this.state.mute) return;
       this.coinSound.play();
@@ -70,22 +116,6 @@ const OnlineGameWrapper = (WrappedComponent) => {
     playSuccessSound() {
       if (this.state.mute) return;
       this.successSound.play();
-    }
-
-    setInitialCoins() {
-      const childId = getFromStorage('activeChild');
-      const children = getFromStorage('children');
-      if (!childId || !children || !children.length) {
-        return this.setState({ coins: 0 });
-      }
-      for (let i in children) {
-        if (children.hasOwnProperty(i)) {
-          if (Number(children[i].child_id) === Number(childId)) {
-            return this.setState({ coins: children[i].coins });
-          }
-        }
-      }
-      this.setState({ coins: 0 });
     }
 
     toggleHelp() {
@@ -106,6 +136,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
           addCoin={this.addCoin}
           playCoinSound={this.playCoinSound}
           playSuccessSound={this.playSuccessSound}
+          fillWordArray={this.fillWordArray}
           toggleHelp={this.toggleHelp}
           toggleSound={this.toggleSound}
         />,

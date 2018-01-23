@@ -109,9 +109,10 @@ class MemoryContainer extends Component {
 
   setupCards() {
     const { gameSize } = this.state;
-    const { wordList } = this.props;
+    const { fillWordArray, wordList } = this.props;
     const numberOfWords = gameSize[0] * gameSize[1] / 2;
-    const words = shuffle(wordList).slice(0, numberOfWords);
+    const allWords = fillWordArray(wordList, numberOfWords);
+    const words = shuffle(allWords).slice(0, numberOfWords);
     const cardList = shuffle([...words, ...words]).map((a, i) => ({
       cardId: i,
       word: a,
