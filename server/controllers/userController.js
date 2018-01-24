@@ -130,7 +130,6 @@ function userRouter(connection) {
   const postToValidateAccount = async function postToValidateAccountAsync(req, res) {
     try {
       const status = await validateAccountStatus(req.body, connection);
-      console.log('status is', status);
       return res.status(200).send(JSON.stringify(status));
     } catch (err) {
       logError(err, 'error in postToValidateAccount');

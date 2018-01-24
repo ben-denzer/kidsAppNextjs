@@ -22,16 +22,16 @@ function SpeechPage(props) {
     mute,
     score,
     showPrize,
+    shuffledWords,
     skipWord,
     spinnerClassName,
     toggleHelp,
     toggleSound,
-    wordList
   } = props;
 
   const WordDisplay = showPrize
     ? <Spinner spinnerClassName={spinnerClassName} />
-    : wordList[currentWordIndex];
+    : shuffledWords[currentWordIndex];
 
   return (
     <div>

@@ -68,7 +68,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
         let extraWords = defaultWordList.slice(0);
         while(words.length < totalNeeded) {
           let nextWord = extraWords.pop();
-          if (words.indexOf(nextWord) === -1) {
+          if (words.map(a => a.toLowerCase()).indexOf(nextWord.toLowerCase()) === -1) {
             words = [...words, nextWord];
           }
         }
@@ -91,12 +91,17 @@ const OnlineGameWrapper = (WrappedComponent) => {
     }
 
     async setWordList(childId) {
+      if (!childId) {
+        this.setState({ wordList: defaultWordList });
+        return;
+      }
+
       try {
         const words = await getWordsForChild({ childId });
         const wordList = words.map(a => a.word_text);
         this.setState({ wordList });
       } catch(e) {
-        console.log(e);
+        this.setState({ wordList: defaultWordList });
       }
     }
 
@@ -105,10 +110,8 @@ const OnlineGameWrapper = (WrappedComponent) => {
       const children = getFromStorage('children');
       const coins = activeChild ? this.getInitialCoins(activeChild, children) : 0;
       const mute = getFromStorage('mute');
-      if (activeChild) {
-        this.setWordList(activeChild);
-      }
-      this.setState({ activeChild, children, coins, mute, wordList: defaultWordList });
+      this.setWordList(activeChild);
+      this.setState({ activeChild, children, coins, mute });
     }
 
     playCoinSound() {

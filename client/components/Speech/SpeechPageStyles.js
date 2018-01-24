@@ -5,6 +5,7 @@ export const ErrorBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   z-index: 10;
   top: 0;
   height: 200px;
@@ -12,6 +13,8 @@ export const ErrorBox = styled.div`
   background-color: rgba(255, 0, 0, .9);
   color: white;
   font-size: 22px;
+  padding: 10px;
+  box-sizing: border-box;
 `;
 
 export const SkipWordButton = styled.img`

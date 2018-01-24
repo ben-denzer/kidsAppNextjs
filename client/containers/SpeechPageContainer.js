@@ -3,6 +3,7 @@ import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import SpeechPage from '../components/Speech/SpeechPage';
 import defaultWordList from '../config/defaultSightWords';
+import shuffle from '../utils/shuffle';
 
 class SpeachPageContainer extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class SpeachPageContainer extends Component {
       error: '',
       score: 0,
       skippedInARow: 0,
+      shuffledWords: []
     };
 
     this.displayError = this.displayError.bind(this);
@@ -22,12 +24,14 @@ class SpeachPageContainer extends Component {
   componentDidMount() {
     if (this.props.wordList.length) {
       this.setupSpeachRecognition();
+      this.setState({ shuffledWords: shuffle([...this.props.wordList]) });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.wordList.length && nextProps.wordList.length) {
       this.setupSpeachRecognition(nextProps.wordList);
+      this.setState({ shuffledWords: shuffle([...nextProps.wordList]) });
     }
   }
 
@@ -38,8 +42,7 @@ class SpeachPageContainer extends Component {
   }
 
   checkResponse(res) {
-    const { currentWordIndex } = this.state;
-    const { wordList } = this.props;
+    const { currentWordIndex, shuffledWords } = this.state;
     if (res && res.results && res.results.length) {
       const responseList = res.results[0];
       if (responseList.length) {
@@ -47,7 +50,7 @@ class SpeachPageContainer extends Component {
           const words = responseList[i].transcript.split(' ');
           if (words.length) {
             for (let j = 0; j < words.length; j++) {
-              if (wordList[currentWordIndex] === words[j]) {
+              if (shuffledWords[currentWordIndex] === words[j]) {
                 this.correctAnswer();
                 return;
               }
@@ -83,8 +86,22 @@ class SpeachPageContainer extends Component {
   }
 
   getNextIndex() {
-    const newWordIndex = this.state.currentWordIndex + 1;
-    return newWordIndex < this.props.wordList.length ? newWordIndex : 0;
+    const { currentWordIndex, shuffledWords } = this.state;
+    const newWordIndex = currentWordIndex + 1;
+    if (newWordIndex < shuffledWords.length) {
+      return newWordIndex;
+    } else {
+      const currentWord = shuffledWords[currentWordIndex];
+      let newShuffle = [];
+
+      do {
+        // don't have the same word twice in a row
+        newShuffle = shuffle(shuffledWords);
+      } while (newShuffle[0] === currentWord);
+
+      this.setState({ shuffledWords: newShuffle });
+      return 0;
+    }
   }
 
   listen() {
@@ -129,7 +146,7 @@ class SpeachPageContainer extends Component {
   skipWord() {
     const { currentWordIndex, skippedInARow } = this.state;
     this.setState({
-      currentWordIndex: currentWordIndex + 1,
+      currentWordIndex: this.getNextIndex(),
       skippedInARow: skippedInARow + 1
     });
   }

@@ -43,7 +43,7 @@ class AccountContainer extends Component {
 
     if (!newWordVal) return;
     for (let word of wordList) {
-      if (word.word_text === newWordVal) {
+      if (word.word_text.toLowerCase() === newWordVal.toLowerCase()) {
         this.setState({ newWordError: 'You Already Have This Word' });
         return;
       }
