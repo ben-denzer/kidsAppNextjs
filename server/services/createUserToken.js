@@ -1,6 +1,6 @@
 import { jwtKey, jwtOptions } from '../keys/.jwtInfo';
 
-function createUserToken(userId, jwt) {
+function createUserToken(userId, jwt, extraOptions) {
   return new Promise((resolve, reject) => {
     if (!userId) {
       logError('No UserId sent to createUserToken');
@@ -12,7 +12,8 @@ function createUserToken(userId, jwt) {
       return reject({ status: 500, error: 'Server Error' });
     }
 
-    jwt.sign({ userId }, jwtKey, jwtOptions, (err, token) => {
+    const options = Object.assign({}, jwtOptions, extraOptions);
+    jwt.sign({ userId }, jwtKey, options, (err, token) => {
       if (err || !token) {
         logError(err || 'no token returned', 'jwt sign in createUserToken');
         return reject({ status: 500, error: 'Server Error' });
