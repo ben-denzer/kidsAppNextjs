@@ -26,8 +26,9 @@ function removeWordFromChild(body, connection) {
           }
         );
       })
-      .catch(() => {
-        return reject({ status: 401, error: 'unauthorized' });
+      .catch((err) => {
+        logError(err, 'removeWordFromChild - in catch');
+        return reject(err || { status: 500, error: 'Server Error' });
       });
   });
 }

@@ -30,4 +30,11 @@ describe('Link Word To Child', function() {
         expect(/db error/i.test(logError.firstCall.args[1])).to.be.true;
       });
   });
+
+  it('should resolve with wordId', function() {
+    const wordId = 222;
+    sinon.stub(connection, 'query').callsArgWithAsync(2, null, { wordId });
+    return linkWordToChild('test', wordId, connection)
+      .then(wordVal => expect(wordVal).to.equal(wordId));
+  });
 });
