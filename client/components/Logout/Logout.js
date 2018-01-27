@@ -5,7 +5,11 @@ import { setInStorage } from '../../utils/mswLocalStorage';
 class Logout extends Component {
   componentDidMount() {
     this.removeData();
-    setTimeout(() => window.location = '/', 5000);
+    this.redirectTimer = setTimeout(() => window.location = '/', 5000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.redirectTimer);
   }
 
   removeData() {
