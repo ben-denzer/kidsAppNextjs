@@ -11,9 +11,9 @@ export default class MyDocument extends Document {
       __html: `
         <!-- Start of StatCounter Code for Default Guide -->
         <script type="text/javascript">
-          var sc_project=11554301; 
-          var sc_invisible=1; 
-          var sc_security="cbe58c9c"; 
+          var sc_project=11554301;
+          var sc_invisible=1;
+          var sc_security="cbe58c9c";
           var scJsHost = (("https:" == document.location.protocol) ?
           "https://secure." : "http://www.");
           document.write("<sc"+"ript type='text/javascript' src='" +
@@ -43,7 +43,7 @@ export default class MyDocument extends Document {
           {styleTags}
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Lato:400,700"
+            href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Lato:400,700|Indie+Flower"
             rel="stylesheet"
           />
           <link
