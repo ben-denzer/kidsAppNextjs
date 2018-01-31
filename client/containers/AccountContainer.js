@@ -26,6 +26,7 @@ class AccountContainer extends Component {
       wordList: [],
     }
 
+    this.clearWordList = this.clearWordList.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.removeWord = this.removeWord.bind(this);
     this.saveInput = this.saveInput.bind(this);
@@ -66,6 +67,10 @@ class AccountContainer extends Component {
         this.setState({ newWordVal: '', wordList: updatedWordList });
       })
       .catch(e => this.setState({ newWordError: 'Error Saving Word', wordList: wordList.slice(0, -1) }));
+  }
+
+  clearWordList() {
+    this.setState({ wordList: [] });
   }
 
   fetchParentData() {
@@ -114,11 +119,12 @@ class AccountContainer extends Component {
   selectChild(e) {
     const { childOpen } = this.state;
     const id = e.target.dataset.childId;
-    this.setState({ wordList: [] });
 
     if (childOpen === id) {
       this.setState({ childOpen: null });
+      setTimeout(this.clearWordList, 1000);
     } else {
+      this.clearWordList();
       this.setState({ childOpen: id, loadingWords: true });
       getWordsForChild({ childId: id })
         .then(wordList => {

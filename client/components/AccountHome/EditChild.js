@@ -1,7 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import WordContainer from './WordContainer';
 import { FormErrorBox } from '../accountForms/formStyles';
+import {
+  EditChildContainer,
+  ExpandButton,
+  WordBox
+} from './EditChildStyles';
 
 function EditChild(props) {
   const {
@@ -18,6 +22,7 @@ function EditChild(props) {
   } = props;
   const childId = child.child_id;
 
+  const thisChildIsOpen = Number(childOpen) === Number(childId);
   let words;
   if (wordList.length) {
     words = wordList.map(a => {
@@ -29,56 +34,38 @@ function EditChild(props) {
         />
       );
     });
-  } else {
+  } else if (thisChildIsOpen) {
     words = <p key="loading">Loading...</p>
   }
 
   return (
     <EditChildContainer
-      className={Number(childOpen) === Number(childId) ? 'open' : ''}
+      className={thisChildIsOpen ? 'open' : ''}
     >
       <div
         className="nameContainer"
         data-child-id={childId}
         onClick={selectChild}
       >
+        <ExpandButton>
+          {thisChildIsOpen ? ' - ' : ' + '}
+        </ExpandButton>
         {child.username}
       </div>
-      <h4>Words</h4>
-      {words}
-      <h4>Add Word</h4>
-      { newWordError && <FormErrorBox>{newWordError}</FormErrorBox> }
-      <input
-        data-input-id="newWordVal"
-        value={newWordVal}
-        onChange={handleInput}
-        onKeyUp={submitOnEnter}
-      />
-      <button onClick={saveInput} data-input-id="newWord">Save</button>
+      <WordBox>
+        {words}
+        <h4>Add New Word</h4>
+        { newWordError && <FormErrorBox>{newWordError}</FormErrorBox> }
+        <input
+          data-input-id="newWordVal"
+          value={newWordVal}
+          onChange={handleInput}
+          onKeyUp={submitOnEnter}
+        />
+        <button onClick={saveInput} data-input-id="newWord">Save</button>
+      </WordBox>
     </EditChildContainer>
   );
 }
-
-const EditChildContainer = styled.div`
-  max-height: 30px;
-  background-color: #ccc;
-  border: 1px solid black;
-  transition: .9s ease-in-out;
-  overflow: hidden;
-
-  &.open {
-    max-height: none;
-  }
-
-  .nameContainer {
-    font-size: 22px;
-    width: 100%;
-
-    &:hover {
-      background: #eee;
-      cursor: pointer;
-    }
-  }
-`;
 
 export default EditChild;

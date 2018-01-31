@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import {
+  DeleteWordButton,
+  WordRow
+} from './WordContainerStyles';
 
 class WordContainer extends Component {
   constructor(props) {
@@ -45,13 +48,5 @@ class WordContainer extends Component {
     );
   }
 }
-
-const WordRow = styled.div`
-  display: flex;
-`;
-
-const DeleteWordButton = styled.button`
-  margin-right: 15px;
-`;
 
 export default WordContainer;

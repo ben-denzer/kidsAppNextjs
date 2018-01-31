@@ -3,7 +3,13 @@ import { ErrorBox, FormButton } from '../accountForms/formStyles';
 import ChangePwForm from '../accountForms/ChangePwForm';
 import EditChild from './EditChild';
 import Modal from '../Modal/Modal';
-import styled from 'styled-components';
+import {
+  ButtonContainer,
+  DetailLabel,
+  DetailRow,
+  DetailText,
+  DetailTitle
+} from './AccountHomeStyles';
 
 function AccountHome(props) {
   const { accountExpired, changePwFormOpen, error, parentData, toggleChangePwForm } = props;
@@ -23,7 +29,7 @@ function AccountHome(props) {
       { props.error && <ErrorBox>{props.error}</ErrorBox> }
       <div className="twoCols">
         <div>
-          <h2>Details</h2>
+          <DetailTitle>Details</DetailTitle>
           <DetailRow>
             <DetailLabel>Email: </DetailLabel>
             <DetailText>{parentData.email}</DetailText>
@@ -40,12 +46,14 @@ function AccountHome(props) {
             <DetailLabel>Child Accounts: </DetailLabel>
             <DetailText>{parentData.children_allowed}</DetailText>
           </DetailRow>
-          <FormButton
-            onClick={toggleChangePwForm}
-            hidden={changePwFormOpen}
-          >
-            Change Password
-          </FormButton>
+          <ButtonContainer>
+            <FormButton
+              onClick={toggleChangePwForm}
+              hidden={changePwFormOpen}
+            >
+              Change Password
+            </FormButton>
+          </ButtonContainer>
         </div>
         <div>
           {accountExpired ? <h2>Account Expired</h2> : <h2>Edit Children</h2>}
@@ -60,9 +68,5 @@ function AccountHome(props) {
     </div>
   );
 }
-
-const DetailRow = styled.div``;
-const DetailLabel = styled.span``;
-const DetailText = styled.span``;
 
 export default AccountHome;

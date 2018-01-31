@@ -4,7 +4,7 @@ export const color3 = '#D9853B';
 export const color4 = '#ECECEA';
 export const mainBg = 'lightskyblue';
 export const textColor = '#222';
-export const light = '#FEFFFF';
+export const light = '#F7F7F7';
 export const transparentLight = 'rgba(0, 0, 0, .5)';
 
 // Clean Gradients and Fresh Blues
