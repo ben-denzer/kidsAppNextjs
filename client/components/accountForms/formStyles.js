@@ -43,6 +43,15 @@ export const AccountForm = styled.form`
   }
 `;
 
+export const FakeLink = styled.a`
+  color: blue;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
 export const Form2Cols = styled.div`
   display: flex;
 

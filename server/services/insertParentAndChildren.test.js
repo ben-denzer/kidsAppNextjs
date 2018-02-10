@@ -49,34 +49,6 @@ describe('Insert Parent', function() {
       });
   });
 
-  it('should reject if body is missing childCount', function() {
-    body = Object.assign({}, body, { childCount: undefined });
-    const connection = {
-      query: sinon.stub()
-    };
-
-    return insertParentAndChildren(body, 'seroijeroij', connection)
-      .then(success => expect(success).to.be.false)
-      .catch(e => {
-        expect(logError.calledOnce).to.be.true;
-        expect(logError.firstCall.args[0]).to.deep.equal(body);
-      });
-  });
-
-  it('should reject if children array doesnt match childcount', function() {
-    body = Object.assign({}, body, { childCount: 2 });
-    const connection = {
-      query: sinon.stub()
-    };
-
-    return insertParentAndChildren(body, 'sdlfasdlkfjdso', connection)
-      .then(success => expect(success).to.be.false)
-      .catch(e => {
-        expect(logError.calledOnce).to.be.true;
-        expect(e.status).to.equal(500);
-      });
-  });
-
   it('should reject on db error', function() {
     const connection = {
       query: sinon.stub().callsArgWithAsync(2, { error: true })

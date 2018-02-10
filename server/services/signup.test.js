@@ -22,20 +22,6 @@ describe('Signup.js', function() {
         .catch(() => { throw new Error() });
     });
 
-    it('should reject if no childCount', function() {
-      body = Object.assign({}, body, { childCount: undefined });
-      return verifyArgs(body)
-        .then(success => expect(success).to.be.false)
-        .catch((e) => { expect(e.status).to.equal(400) });
-    });
-
-    it('should reject if children.length and childCount dont match', function() {
-      body = Object.assign({}, body, { children: ['child1', 'child2'] });
-      return verifyArgs(body)
-      .then(success => expect(success).to.be.false)
-      .catch((e) => { expect(e.status).to.equal(400) });
-    });
-
     it('should reject on no children', function() {
       body = Object.assign({}, body, { children: [] });
       return verifyArgs(body)
@@ -123,20 +109,6 @@ describe('Signup.js', function() {
 
     it('should reject if passwords don\'t match', function() {
       body = Object.assign({}, body, { password: 'abcdefghij' });
-      return verifyArgs(body)
-        .then(success => expect(success).to.be.false)
-        .catch((e) => { expect(e.status).to.equal(400) });
-    });
-
-    it('should reject strings in childCount', function() {
-      body = Object.assign({}, body, { childCount: 'abc' });
-      return verifyArgs(body)
-        .then(success => expect(success).to.be.false)
-        .catch((e) => { expect(e.status).to.equal(400) });
-    });
-
-    it('should reject if childCount < 1', function() {
-      body = Object.assign({}, body, { childCount: -1 });
       return verifyArgs(body)
         .then(success => expect(success).to.be.false)
         .catch((e) => { expect(e.status).to.equal(400) });

@@ -6,6 +6,7 @@ import setUserInStorage from '../../utils/setUserInStorage';
 import verifySignupInfo from '../../utils/verifySignupInfo';
 import {
   AccountForm,
+  FakeLink,
   Form2Cols,
   FormButton,
   FormCheckbox,
@@ -23,7 +24,6 @@ class SignupForm extends Component {
     super(props);
 
     this.state = {
-      childCount: 1,
       children: [''],
       email: '',
       emailList: true,
@@ -33,32 +33,34 @@ class SignupForm extends Component {
       rememberMe: false
     }
 
+    this.addChild = this.addChild.bind(this);
     this.createChildInputs = this.createChildInputs.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
-  createChildInputs(count) {
-    let childInputs = [];
-    for (let i = 0; i < count; i++) {
-      childInputs = [
-        ...childInputs,
-        [
-          <FormLabel key={`child${i}Label`}>
+  addChild() {
+    const children = [...this.state.children, ''];
+    this.setState({ children });
+  }
+
+  createChildInputs() {
+    return this.state.children.map((a, i) => {
+      return (
+        <React.Fragment key={i}>
+          <FormLabel>
             Child #{i+1} Name
-          </FormLabel>,
+          </FormLabel>
           <FormTextInput
-            key={`child${i}Input`}
             data-input-id="children"
             data-input-index={i}
             onChange={this.handleInput}
             value={this.state.children[i]}
           />
-        ]
-      ];
-    }
-    return childInputs;
+        </React.Fragment>
+      );
+    });
   }
 
   handleCheck(e) {
@@ -66,58 +68,38 @@ class SignupForm extends Component {
     this.setState({ [dataset.inputId]: checked });
   }
 
-  handleInput(e) {  // TODO - Refactor this mess
+  handleInput(e) {
+    const { dataset, value } = e.target;
     if (this.state.error) {
       this.setState({ error: '' });
     }
-    const { dataset, value } = e.target;
-    if (dataset.inputId === 'childCount') {
-      if (value < 0) {
-        this.setState({ childCount: 1 });
-        return;
-      }
+    if (dataset.inputId === 'children') {
       let children = this.state.children;
-      // I don't want to erase any names that have already been typed in so I don't
-      // set children.length when it'll do that
-      if (children.length <= value) {
-        children.length = value;
-      }
-      for (let i = 0; i < value; i++) {
-        if (!children[i]) children[i] = '';
-      }
-      this.setState({ childCount: value, children });
-      return;
-    } else if (dataset.inputId === 'children') {
-      const children = [
-        ...this.state.children.slice(0, dataset.inputIndex),
-        value,
-        ...this.state.children.slice(dataset.inputIndex + 1)
-      ];
+      children[dataset.inputIndex] = value;
       this.setState({ children });
       return;
     }
-
     this.setState({ [dataset.inputId]: value });
   }
 
   submitForm(e) {
     e.preventDefault();
-    const { childCount, email, password, p2, rememberMe } = this.state;
+    const { email, password, p2, rememberMe } = this.state;
     let { children } = this.state;
-    children.length = childCount;
+    children = children.filter(a => a).map(a => a.trim());
     verifySignupInfo(this.state)
       .then(result => signupUser(this.state))
       .then(data => {
         if (rememberMe) data = Object.assign(data, { email, password });
         setUserInStorage(data, rememberMe);
-        window.location = '/account/childmenu';
+        window.location = '/account/home';
       })
       .catch(error => this.setState({ error }));
   }
 
   render() {
-    const { childCount, email, emailList, password, p2, rememberMe } = this.state;
-    const childInputs = this.createChildInputs(childCount);
+    const { email, emailList, password, p2, rememberMe } = this.state;
+    const childInputs = this.createChildInputs();
     return (
       <div className="whiteBox">
         <AccountForm>
@@ -147,14 +129,8 @@ class SignupForm extends Component {
               />
             </FormHalf>
             <FormHalf>
-              <FormLabel>Number of Students</FormLabel>
-              <FormTextInput
-                onChange={this.handleInput}
-                data-input-id="childCount"
-                type="number"
-                value={childCount}
-              />
               {childInputs}
+              <FakeLink onClick={this.addChild}>Add Child</FakeLink>
             </FormHalf>
           </Form2Cols>
           <RememberMeContainer>

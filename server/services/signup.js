@@ -9,9 +9,9 @@ const waitTime = global.MSW_DEV ? 0 : 1000;
 
 function verifyArgs(body) {
   return new Promise((resolve, reject) => {
-    const { childCount, children, email, password, p2 } = body;
+    const { children, email, password, p2 } = body;
     if (
-      !childCount || !children.length || !email || !password || !p2
+      !children.length || !email || !password || !p2
 
       || email.length < 6
       || email.length > 255
@@ -23,10 +23,6 @@ function verifyArgs(body) {
 
       || password.length < MIN_PASSWORD_LENGTH
       || password !== p2
-
-      || Number.isNaN(parseInt(childCount, 10))
-      || parseInt(childCount, 10) <= 0
-      || children.length !== Number(childCount)
     ) {
       logError(body, 'body in signup');
       return reject({ status: 400, error: 'Bad Request' });

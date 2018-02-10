@@ -2,6 +2,7 @@ import { baseUserUrl } from './apiConfig';
 import { setInStorage } from '../utils/mswLocalStorage';
 
 function signupUser(body) {
+  console.log('signup body', body);
   const myHeaders = new Headers({
     'Content-Type': 'application/json'
   });

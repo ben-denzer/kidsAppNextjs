@@ -105,6 +105,8 @@ export const TextInner = styled.div`
   }
 
   &.hpFirstParagraph {
+    background: ${color2};
+
     h3 {
       text-align: center;
       font-weight: normal;

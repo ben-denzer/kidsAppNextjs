@@ -14,6 +14,7 @@ function MainLayout(Child) {
         activeChildName: null,
         childCount: null,
         loggedIn: false,
+        accountExpired: null
       }
     }
 
@@ -37,9 +38,9 @@ function MainLayout(Child) {
           return Number(a.child_id) === Number(activeChild)
         });
         const activeChildName = filteredChildren.length ? filteredChildren[0].username : null;
-        this.setState({ activeChildName, childCount, loggedIn: true });
+        this.setState({ activeChildName, childCount, loggedIn: true, accountExpired: false });
       } else {
-        this.setState({ activeChildName: 'Membership Expired', loggedIn: true });
+        this.setState({ activeChildName: 'Membership Expired', loggedIn: true, accountExpired: true });
       }
     }
 

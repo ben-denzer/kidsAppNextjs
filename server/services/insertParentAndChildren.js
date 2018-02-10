@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-loop-func */
 
 function insertParent(body, hash, connection) {
   return new Promise((resolve, reject) => {
@@ -9,10 +9,13 @@ function insertParent(body, hash, connection) {
       return reject({ status: 500, error: 'Server Error' });
     }
 
-    const { childCount, children, email, emailList } = body;
+    const { children, email, emailList } = body;
+    const childCount = children.length;
     const month = 60 * 60 * 24 * 30 * 1000;
+    const betaExpiration = month * 6;
+    const expirationTime = betaExpiration;
 
-    if (!childCount || !email || Number(childCount) !== children.length) {
+    if (!childCount || !email) {
       logError(body, 'Bad args in insertParent - should have been caught before this');
       return reject({ status: 500, error: 'Server Error' });
     }
@@ -20,7 +23,7 @@ function insertParent(body, hash, connection) {
     connection.query(
       `INSERT INTO parent (email, email_list, password, children_allowed, signup_utc, expiration_utc)
         VALUES(?,?,?,?,?,?)`,
-      [ email, emailList, hash, childCount, Date.now(), Date.now() + month ],
+      [ email, emailList, hash, childCount, Date.now(), Date.now() + expirationTime ],
       (err, success) => {
         if (err) {
           logError(err, 'db error in insertParent #1');
@@ -34,12 +37,12 @@ function insertParent(body, hash, connection) {
 
         const parentId = success.insertId;
         let childrenLeftToInsert = childCount;
-        let childArray = [];
+        const childArray = [];
 
-        for (let i in children) {
+        for (const child of children) {
           connection.query(
             'INSERT INTO children (parent_fk, username) VALUES (?,?)',
-            [ parentId, children[i] ],
+            [ parentId, child ],
             (err, success) => {
               if (err) {
                 logError(err, 'db error in insertParent #2');
@@ -50,7 +53,7 @@ function insertParent(body, hash, connection) {
                 logError(success, 'no success || insertId from insertParent');
                 return reject({ status: 500, error: 'Server Error' });
               }
-              childArray.push({ child_id: success.insertId, username: children[i], coins: 0 });
+              childArray.push({ child_id: success.insertId, username: child, coins: 0 });  // eslint-disable-line
               childrenLeftToInsert--;
               if (childrenLeftToInsert === 0) {
                 resolve({ parentId, childArray });

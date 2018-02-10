@@ -21,3 +21,7 @@ export const DetailTitle = styled.h2`
   text-align: left !important;
   margin-left: ${leftMargin}px;
 `;
+
+export const SmallText = styled.div`
+  font-size: 14px;
+`;

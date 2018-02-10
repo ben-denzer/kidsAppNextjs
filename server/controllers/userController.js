@@ -72,7 +72,7 @@ function userRouter(connection) {
 
   const postToGetWordsForChild = async function postToGetWordsForChildAsync(req, res) {
     try {
-      const allWords = await getAllWordsForChild(req.body.childId, connection);
+      const allWords = await getAllWordsForChild(req.body, connection);
       return res.status(200).send(JSON.stringify(allWords));
     } catch (err) {
       logError(err, 'in postToGetWordsForChild');

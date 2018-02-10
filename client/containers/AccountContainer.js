@@ -24,7 +24,7 @@ class AccountContainer extends Component {
       newWordVal: '',
       parentData: {},
       wordList: [],
-    }
+    };
 
     this.clearWordList = this.clearWordList.bind(this);
     this.handleInput = this.handleInput.bind(this);

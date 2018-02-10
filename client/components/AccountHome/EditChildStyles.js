@@ -1,8 +1,21 @@
 import styled from 'styled-components';
 import { color2 } from '../../config/globalStyles';
 
-const maxHeight = 500;
+let maxHeight = 500;
 const nameBoxHeight = 40;
+// wordHeight and inputHeight are kind-of magic numbers
+const wordHeight = 45;
+const inputHeight = 70;
+
+const setMaxHeight = count => {
+  if (count) {
+    const roomForWords = count * wordHeight;
+    const roomForInput = inputHeight;
+    return roomForWords + roomForInput + nameBoxHeight;
+  } else {
+    return 130;
+  }
+};
 
 export const EditChildContainer = styled.div`
   max-height: ${nameBoxHeight}px;
@@ -10,13 +23,13 @@ export const EditChildContainer = styled.div`
   border: 2px solid black;
   border-top-right-radius: 10px;
   padding: 0 10px;
-  transition: all .9s ease-in-out;
+  transition: all .4s ease-in-out;
   overflow: hidden;
   margin-bottom: 10px;
   position: relative;
 
   &.open {
-    max-height: ${maxHeight}px;
+    max-height: ${props => `${setMaxHeight(props.count)}px` };
   }
 
   .nameContainer {

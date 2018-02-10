@@ -8,11 +8,20 @@ import {
   DetailLabel,
   DetailRow,
   DetailText,
-  DetailTitle
+  DetailTitle,
+  SmallText
 } from './AccountHomeStyles';
 
 function AccountHome(props) {
-  const { accountExpired, changePwFormOpen, error, parentData, toggleChangePwForm } = props;
+  const {
+    accountExpired,
+    changePwFormOpen,
+    error,
+    loading,
+    parentData,
+    toggleChangePwForm
+  } = props;
+
   const children = props.children.map(a => {
     return (
       <EditChild
@@ -39,12 +48,13 @@ function AccountHome(props) {
             <DetailText>{new Date(parentData.signup_utc).toLocaleDateString()}</DetailText>
           </DetailRow>
           <DetailRow>
-            <DetailLabel>Membership Expiration: </DetailLabel>
-            <DetailText>{new Date(parentData.expiration_utc).toLocaleDateString()}</DetailText>
-          </DetailRow>
-          <DetailRow>
             <DetailLabel>Child Accounts: </DetailLabel>
             <DetailText>{parentData.children_allowed}</DetailText>
+          </DetailRow>
+          <DetailRow>
+            <DetailLabel>Membership Expiration: </DetailLabel>
+            <DetailText>{new Date(parentData.expiration_utc).toLocaleDateString()}</DetailText>
+            <SmallText>Beta: Contact <a href="mailto:ben@bdenzer.com">ben@bdenzer.com</a> to extend membership</SmallText>
           </DetailRow>
           <ButtonContainer>
             <FormButton
@@ -56,7 +66,7 @@ function AccountHome(props) {
           </ButtonContainer>
         </div>
         <div>
-          {accountExpired ? <h2>Account Expired</h2> : <h2>Edit Children</h2>}
+          {accountExpired && !loading ? <h2>Account Expired</h2> : <h2>Custom Word List</h2>}
           {children}
         </div>
       </div>

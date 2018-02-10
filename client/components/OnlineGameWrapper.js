@@ -8,8 +8,8 @@ import makeAddCoinRequest from '../api/makeAddCoinRequest';
 
 const OnlineGameWrapper = (WrappedComponent) => {
   return class extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
 
       this.state = {
         activeChild: null,

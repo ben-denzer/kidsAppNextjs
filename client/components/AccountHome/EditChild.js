@@ -12,6 +12,7 @@ function EditChild(props) {
     child,
     childOpen,
     handleInput,
+    loadingWords,
     newWordError,
     newWordVal,
     removeWord,
@@ -23,7 +24,7 @@ function EditChild(props) {
   const childId = child.child_id;
 
   const thisChildIsOpen = Number(childOpen) === Number(childId);
-  let words;
+  let words = null;
   if (wordList.length) {
     words = wordList.map(a => {
       return(
@@ -34,13 +35,14 @@ function EditChild(props) {
         />
       );
     });
-  } else if (thisChildIsOpen) {
+  } else if (thisChildIsOpen && loadingWords) {
     words = <p key="loading">Loading...</p>
   }
 
   return (
     <EditChildContainer
       className={thisChildIsOpen ? 'open' : ''}
+      count={words && words.length}
     >
       <div
         className="nameContainer"

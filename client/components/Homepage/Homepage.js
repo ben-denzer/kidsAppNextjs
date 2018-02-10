@@ -37,7 +37,7 @@ function HomepageContainer(props) {
           </h3>
         </TextInner>
       </TextSection>
-      {/*<TextSection>
+      <TextSection>
         <TextInner>
           <h1>Use Your Own Word List To Customize The Games</h1>
           <p className="center">
@@ -52,7 +52,7 @@ function HomepageContainer(props) {
             for an account.
           </p>
         </TextInner>
-      </TextSection>*/}
+      </TextSection>
       <ThumbsSection>
         <ThumbsInner>
           <ThumbContainer
@@ -90,13 +90,13 @@ function HomepageContainer(props) {
           </p>
           <h3>Dolch Word List</h3>
           <p>
-            Dr. Edward William Dolch studied the most commonly occurring words in the children's books of the 1930s-40s. He created a list of 315 words (220 'service words' and 95 'high frequency nouns'). The Dolch words are usually split into groups for each grade level from pre-kindergarten to third grade.
+            Dr. Edward William Dolch studied the most commonly occurring words in the children's books of the 1930s-40s. He created a list of 315 words (220 "service words" and 95 "high frequency nouns"). The Dolch words are usually split into groups for each grade level from pre-kindergarten to third grade.
           </p>
           <h3>Kids Learn By Playing</h3>
           <p>
             Playing games is important for a child's development. The only way to master a skill is with repeated practice, and turning this repetition into a game is one of the best ways for children (and adults!) to stay interested.
           </p>
-          {/*<h3>Personalize Your Experience</h3>
+          <h3>Personalize Your Experience</h3>
           <p>
             Each teacher will probably have a different list of words that they will test your child on. By creating an account it is easy to customize the games on this site. See our
             {' '}
@@ -104,7 +104,6 @@ function HomepageContainer(props) {
             {' '}
             for more details.
           </p>
-          */}
         </TextInner>
       </TextSection>
     </HpContainer>
