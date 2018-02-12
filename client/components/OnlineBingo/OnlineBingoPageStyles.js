@@ -13,6 +13,11 @@ export const Box = styled.div`
   border-right: ${boxBorder};
   border-bottom: ${boxBorder};
   text-align: center;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 
   &:nth-child(1) {
     border-left: ${boxBorder};
@@ -83,7 +88,7 @@ export const ListContainer = styled.div`
 
 export const OldWord = styled.div`
   font-size: 18px;
-  
+
   @media (max-width: 767px) {
     display: none;
   }

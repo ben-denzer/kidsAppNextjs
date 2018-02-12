@@ -3,9 +3,15 @@ import MainLayout from '../MainLayout';
 import defaultWordList from '../../config/defaultSightWords';
 import { getFromStorage } from '../../utils/mswLocalStorage';
 import getWordsForChild from '../../api/getWordsForChild';
-import styled from 'styled-components';
-import { color1, color2, color3, color4 } from '../../config/globalStyles';
 import Link from 'next/link';
+import {
+  GoButton,
+  Headline,
+  PageContainer,
+  Title,
+  WordToggle,
+  WordToggleContainer
+} from './FlashcardsPageStyles';
 
 class FlashcardsPage extends Component {
   constructor(props) {
@@ -20,6 +26,11 @@ class FlashcardsPage extends Component {
 
   componentDidMount() {
     this.setWordList(getFromStorage('activeChild'));
+  }
+
+  componentWillUnmount() {
+    const words = JSON.stringify(this.state.wordList);
+    window.localStorage.setItem('flashcardWords', words);
   }
 
   handleCheck(e) {
@@ -85,9 +96,6 @@ class FlashcardsPage extends Component {
       <PageContainer>
         <Title>Print Your Own Flashcards</Title>
         <Headline>What Words Would You Like To Print?</Headline>
-        <Link href="/printable-games/printFlashcards">
-          <GoButton>GO</GoButton>
-        </Link>
         <WordToggleContainer>
           {words}
         </WordToggleContainer>
@@ -98,71 +106,5 @@ class FlashcardsPage extends Component {
     );
   }
 }
-
-const PageContainer = styled.div`
-  padding-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  margin-bottom: 0;
-`;
-
-const GoButton = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  width: 200px;
-  background-color: ${color1};
-  color: white;
-  font-size: 22px;
-  text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
-    background-color: ${color2};
-  }
-`;
-
-const Headline = styled.h2`
-  text-align: center;
-  margin-top: 10px;
-`;
-
-const WordToggleContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  width: 80%;
-  margin: 20px auto;
-
-  @media (max-width: 1000px) {
-    width: 95%;
-  }
-
-  @media (max-width: 700px) {
-    width: 99%;
-  }
-`;
-
-const WordToggle = styled.div`
-  width: 25%;
-  margin: 10px 0 10px;
-
-  input {
-    margin-left: 45%;
-  }
-
-  @media (max-width: 1000px) {
-    width: 33%;
-  }
-
-  @media (max-width: 700px) {
-    width: 50%;
-  }
-`;
 
 export default MainLayout(FlashcardsPage);
