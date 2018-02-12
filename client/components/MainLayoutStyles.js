@@ -89,6 +89,11 @@ export const LayoutContainer = styled.div`
 
       >div {
         width: 45%;
+
+        @media (max-width: 767px) {
+          width: 95%;
+          margin: 2px auto;
+        }
       }
     }
   }

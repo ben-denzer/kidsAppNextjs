@@ -64,7 +64,7 @@ function MemoryStartScreen(props) {
     </Option>
   ));
 
-  const cardBackOptions = [1, 2, 3, 4, 5];
+  const cardBackOptions = [1, 2, 3, 4];
   const cardOptions = cardBackOptions.map(a => (
     <CardBack
       key={a}

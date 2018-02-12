@@ -5,6 +5,10 @@ function setUserInStorage(data, rememberMe) {
   setInStorage('token', token);
   setInStorage('children', children);
 
+  if (children.length === 1) {
+    setInStorage('activeChild', children[0].child_id);
+  }
+
   if (rememberMe) {
     setInStorage('email', email);
     setInStorage('password', password);

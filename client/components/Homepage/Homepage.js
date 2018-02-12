@@ -41,7 +41,7 @@ function HomepageContainer(props) {
         <TextInner>
           <h1>Use Your Own Word List To Customize The Games</h1>
           <p className="center">
-            This website is completely free to use, but if you want to use a custom word list and/or save your child's progress,
+            This website is completely free to use, but if you want to use a custom word list to focus on your child's current spelling words,
             {' '}
             <Link href="/login"><a>Log In</a></Link>
             {' '}

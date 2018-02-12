@@ -109,11 +109,7 @@ class AccountContainer extends Component {
   }
 
   saveInput(inputId) {
-    if (inputId === 'childNameText') {
-      console.log(`saving ${this.state.childNameText}`);
-    } else {
-      this.addWord();
-    }
+    this.addWord();
   }
 
   selectChild(e) {
@@ -129,8 +125,10 @@ class AccountContainer extends Component {
       getWordsForChild({ childId: id })
         .then(wordList => {
           wordList = wordList.sort((a, b) => {
-            if (a.word_text === b.word_text) return 0;
-            return a.word_text < b.word_text ? -1 : 1;
+            const wordOne = a.word_text.toLowerCase();
+            const wordTwo = b.word_text.toLowerCase();
+            if (wordOne === wordTwo) return 0;
+            return wordOne < wordTwo ? -1 : 1;
           });
           this.setState({ wordList, loadingWords: false, newWordVal: '' })
         })
