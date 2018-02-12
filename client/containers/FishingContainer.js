@@ -45,8 +45,8 @@ class FishingContainer extends Component {
 
   handleUserChoice(e) {
     const { currentIndex, fishOnBoard, winCount } = this.state;
-    const target = e.target;
-    if (target.innerText === fishOnBoard[currentIndex]) {
+    const target = e.currentTarget;
+    if (target.dataset.wordText === fishOnBoard[currentIndex]) {
       this.setState({ winCount: winCount + 1 });
       target.classList.add('caught');
       this.props.playSuccessSound();

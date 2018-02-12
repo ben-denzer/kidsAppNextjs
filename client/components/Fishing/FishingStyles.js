@@ -5,9 +5,11 @@ const fishWidth = 150;
 export const AboveWater = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  height: 250px;
 
   h1 {
-    margin-top: 20%;
     background-color: rgba(255, 255, 255, .8);
     padding: 15px 40px;
     border: 4px solid #999;
@@ -32,17 +34,17 @@ export const BelowWater = styled.div`
   }
 `;
 
-const tailBorder = '35px';
+const tailBorder = '35';
 
 const tail = (color) => `
   position: absolute;
   content: "";
-  width: ${tailBorder};
-  height: ${tailBorder * 2};
-  border-left: solid ${tailBorder} ${color};
-  border-bottom: solid ${tailBorder} transparent;
-  border-top: solid ${tailBorder} transparent;
-  margin-left: -55px;
+  width: ${tailBorder}px;
+  height: ${tailBorder / 2}px;
+  border-left: solid ${tailBorder}px ${color};
+  border-bottom: solid ${tailBorder}px transparent;
+  border-top: solid ${tailBorder}px transparent;
+  left: -10px;
 `;
 
 export const Fish = styled.div`
@@ -58,6 +60,11 @@ export const Fish = styled.div`
   position: relative;
   transition: transform .5s ease-in-out, margin 2s ease-in-out, bottom 2s ease-in-out;
 
+  >span {
+    position: absolute;
+    z-index: 1;
+  }
+
   &:hover {
     cursor: pointer;
     opacity: .9;
@@ -70,7 +77,7 @@ export const Fish = styled.div`
     right: 30px;
     height: 5px;
     width: 5px;
-    background: white;
+    background: black;
     border: 2px solid white;
     border-radius: 50%;
   }
@@ -82,6 +89,10 @@ export const Fish = styled.div`
 
   &.fish-0 {
     background: blue;
+
+    >span {
+      background: blue;
+    }
 
     &:before {
       ${tail('blue')}
@@ -95,6 +106,10 @@ export const Fish = styled.div`
   &.fish-1 {
     background: red;
 
+    >span {
+      background: red;
+    }
+
     &:before {
       ${tail('red')}
     }
@@ -106,6 +121,11 @@ export const Fish = styled.div`
 
   &.fish-2 {
     background: green;
+
+    >span {
+      display: block;
+      background: green;
+    }
 
     &:before {
       ${tail('green')}
@@ -153,6 +173,6 @@ export const FishingBox = styled.div`
   }
 
   @media (max-width: 900px) {
-    min-height: 450px; 
+    min-height: 450px;
   }
 `;

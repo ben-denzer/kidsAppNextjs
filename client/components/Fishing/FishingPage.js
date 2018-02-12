@@ -34,8 +34,9 @@ const FishingPage = (props) => {
       key={a}
       className={`fish-${i}`}
       onClick={handleUserChoice}
+      data-word-text={a}
     >
-      {a}
+      <span>{a}</span>
     </Fish>
   ));
 
