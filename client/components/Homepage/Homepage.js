@@ -32,9 +32,6 @@ function HomepageContainer(props) {
           <h3>
             Give your young reader a head start with My Sight Words.com - Using games to practice your sight words and spelling words is the best way to keep a child interested in learning. They'll earn gold coins as they complete the games, and gain confidence with their reading skills along the way.
           </h3>
-          <h3>
-            Click a link below to get started.
-          </h3>
         </TextInner>
       </TextSection>
       <TextSection>
