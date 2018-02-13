@@ -43,11 +43,11 @@ function HomepageContainer(props) {
           <p className="center">
             This website is completely free to use, but if you want to use a custom word list to focus on your child's current spelling words,
             {' '}
-            <Link href="/login"><a>Log In</a></Link>
+            <Link href="/account/login"><a>Log In</a></Link>
             {' '}
             or
             {' '}
-            <Link href="/signup"><a>Sign Up</a></Link>
+            <Link href="/account/signup"><a>Sign Up</a></Link>
             {' '}
             for an account.
           </p>
