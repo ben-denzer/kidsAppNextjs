@@ -1,22 +1,5 @@
 import styled from 'styled-components';
 
-export const ErrorBox = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 10;
-  top: 0;
-  height: 200px;
-  width: 100%;
-  background-color: rgba(255, 0, 0, .9);
-  color: white;
-  font-size: 22px;
-  padding: 10px;
-  box-sizing: border-box;
-`;
-
 export const SkipWordButton = styled.img`
   width: 50px;
   height: auto;

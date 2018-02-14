@@ -10,7 +10,8 @@ import {
   ScoreContainer
 } from '../GameStyles';
 
-import { ErrorBox, SkipWordButton, WordContainer } from './SpeechPageStyles';
+import { SkipWordButton, WordContainer } from './SpeechPageStyles';
+import { ErrorBox } from '../MainLayoutStyles';
 
 function SpeechPage(props) {
   const {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import { getFromStorage } from '../utils/mswLocalStorage';
-import { LayoutContainer } from './MainLayoutStyles';
+import { ErrorBox, LayoutContainer } from './MainLayoutStyles';
 import validateAccount from '../api/validateAccount';
 
 function MainLayout(Child) {
@@ -13,6 +13,7 @@ function MainLayout(Child) {
       this.state = {
         activeChildName: null,
         childCount: null,
+        error: '',
         loggedIn: false,
         accountExpired: null
       }
@@ -26,7 +27,10 @@ function MainLayout(Child) {
           .catch(e => {
             console.log(e);
           });
-        }
+      }
+      if (!window.fetch) {
+        this.setState({ error: this.unsupportedBrowserMessage() });
+      }
     }
 
     setUserData({ membershipValid }) {
@@ -44,10 +48,15 @@ function MainLayout(Child) {
       }
     }
 
+    unsupportedBrowserMessage() {
+      return 'Your Browser is not supported, consider using Google Chrome or Mozilla Firefox instead.';
+    }
+
     render() {
       const pathname = this.props.url.pathname;
       return (
         <LayoutContainer className={pathname.slice(pathname.lastIndexOf('/') + 1)}>
+          {this.state.error && <ErrorBox>{this.state.error}</ErrorBox>}
           <Header {...this.state} pathname={pathname} />
           <Child {...this.props} {...this.state} />
           <Footer />

@@ -97,7 +97,7 @@ function HomepageContainer(props) {
           <p>
             Each teacher will probably have a different list of words that they will test your child on. By creating an account it is easy to customize the games on this site. See our
             {' '}
-            <Link href="/signup"><a>sign up page</a></Link>
+            <Link href="/account/signup"><a>sign up page</a></Link>
             {' '}
             for more details.
           </p>
