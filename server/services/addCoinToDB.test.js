@@ -16,7 +16,7 @@ describe('Add Coin To DB', function() {
 
   it('shoud reject if is incomplete', function() {
     const query = sinon.stub(connection, 'query');
-    // body = Object.assign({}, body, { childId: undefined });
+    body = Object.assign({}, body, { childId: undefined });
     return addCoinToDB(body, connection)
       .then(ok => expect(ok).to.be.false)
       .catch(err => {
