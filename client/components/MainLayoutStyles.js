@@ -12,6 +12,7 @@ export const ErrorBox = styled.div`
   text-align: center;
   z-index: 10;
   top: 0;
+  left: 0;
   height: 200px;
   width: 100%;
   background-color: rgba(255, 0, 0, .9);
