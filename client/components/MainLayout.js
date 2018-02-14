@@ -49,7 +49,7 @@ function MainLayout(Child) {
     }
 
     unsupportedBrowserMessage() {
-      return 'Your Browser is not supported, consider using Google Chrome or Mozilla Firefox instead.';
+      return 'Your Browser is not supported, try again using Google Chrome or Mozilla Firefox.';
     }
 
     render() {
