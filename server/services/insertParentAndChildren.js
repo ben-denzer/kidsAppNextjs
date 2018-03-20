@@ -10,15 +10,16 @@ function insertParent(body, hash, connection) {
     }
 
     const { children, email, emailList } = body;
+
+    if (!children || !children.length || !email) {
+      logError(body, 'Bad args in insertParent - should have been caught before this');
+      return reject({ status: 500, error: 'Server Error' });
+    }
+
     const childCount = children.length;
     const month = 60 * 60 * 24 * 30 * 1000;
     const betaExpiration = month * 6;
     const expirationTime = betaExpiration;
-
-    if (!childCount || !email) {
-      logError(body, 'Bad args in insertParent - should have been caught before this');
-      return reject({ status: 500, error: 'Server Error' });
-    }
 
     connection.query(
       `INSERT INTO parent (email, email_list, password, children_allowed, signup_utc, expiration_utc)

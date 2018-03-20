@@ -41,6 +41,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           {styleTags}
+          <meta name="google-site-verification" content="ZLrps1hdNqlIWDroWhH99ngeW4VbNkvY4mZQUPB1Wjg" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link
             href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Lato:400,700|Indie+Flower"
