@@ -6,7 +6,7 @@ import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import getWordsForChild from '../api/getWordsForChild';
 import makeAddCoinRequest from '../api/makeAddCoinRequest';
 
-const OnlineGameWrapper = (WrappedComponent) => {
+const OnlineGameWrapper = WrappedComponent => {
   return class extends Component {
     constructor(props) {
       super(props);
@@ -21,7 +21,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
         showPrize: false,
         spinnerClassName: 'hide',
         wordList: []
-      }
+      };
 
       this.addCoin = this.addCoin.bind(this);
       this.playCoinSound = this.playCoinSound.bind(this);
@@ -48,27 +48,35 @@ const OnlineGameWrapper = (WrappedComponent) => {
       });
       this.setState({ children: updatedChildren });
       setInStorage('children', updatedChildren);
-      makeAddCoinRequest({ childId: activeChild, coins: newCoins })
-        .catch(() => this.setState({ apiError: 'Connection Error' }));
+      makeAddCoinRequest({ childId: activeChild, coins: newCoins }).catch(() =>
+        this.setState({ apiError: 'Connection Error' })
+      );
     }
 
     addCoinUi(newCoins) {
       this.playCoinSound();
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
-      setTimeout(() => this.setState({
-        coins: newCoins,
-        showPrize: false,
-        spinnerClassName: 'hide'
-      }), 3500);
+      setTimeout(
+        () =>
+          this.setState({
+            coins: newCoins,
+            showPrize: false,
+            spinnerClassName: 'hide'
+          }),
+        3500
+      );
     }
 
     fillWordArray(words, totalNeeded) {
       if (words.length < totalNeeded) {
         let extraWords = defaultWordList.slice(0);
-        while(words.length < totalNeeded) {
+        while (words.length < totalNeeded) {
           let nextWord = extraWords.pop();
-          if (words.map(a => a.toLowerCase()).indexOf(nextWord.toLowerCase()) === -1) {
+          if (
+            words.map(a => a.toLowerCase()).indexOf(nextWord.toLowerCase()) ===
+            -1
+          ) {
             words = [...words, nextWord];
           }
         }
@@ -98,9 +106,13 @@ const OnlineGameWrapper = (WrappedComponent) => {
 
       try {
         const words = await getWordsForChild({ childId });
+        if (!words.length) {
+          this.setState({ wordList: defaultWordList });
+          return;
+        }
         const wordList = words.map(a => a.word_text);
         this.setState({ wordList });
-      } catch(e) {
+      } catch (e) {
         this.setState({ wordList: defaultWordList });
       }
     }
@@ -108,7 +120,9 @@ const OnlineGameWrapper = (WrappedComponent) => {
     init() {
       const activeChild = getFromStorage('activeChild');
       const children = getFromStorage('children');
-      const coins = activeChild ? this.getInitialCoins(activeChild, children) : 0;
+      const coins = activeChild
+        ? this.getInitialCoins(activeChild, children)
+        : 0;
       const mute = getFromStorage('mute');
       this.setWordList(activeChild);
       this.setState({ activeChild, children, coins, mute });
@@ -164,7 +178,7 @@ const OnlineGameWrapper = (WrappedComponent) => {
         />
       ];
     }
-  }
-}
+  };
+};
 
 export default OnlineGameWrapper;
