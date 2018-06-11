@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const fishWidth = 150;
+const fontFamily = '\'Questrial\', \'Lato\', Arial, Helvetica, sans-serif';
+const letterSpacing = '.05em';
 
 export const AboveWater = styled.div`
   display: flex;
@@ -8,6 +10,8 @@ export const AboveWater = styled.div`
   align-items: center;
   margin-top: 10%;
   height: 250px;
+  font-family: ${fontFamily};
+  letter-spacing: ${letterSpacing};
 
   h1 {
     background-color: rgba(255, 255, 255, .8);
@@ -36,7 +40,8 @@ export const BelowWater = styled.div`
 
 const tailBorder = '35';
 
-const tail = (color) => `
+const tail = color =>
+  `
   position: absolute;
   content: "";
   width: ${tailBorder}px;
@@ -57,8 +62,11 @@ export const Fish = styled.div`
   justify-content: center;
   font-size: 24px;
   font-weight: bold;
+  font-family: ${fontFamily};
+  letter-spacing: ${letterSpacing};
   position: relative;
   transition: transform .5s ease-in-out, margin 2s ease-in-out, bottom 2s ease-in-out;
+  z-index: 2;
 
   >span {
     position: absolute;
@@ -99,7 +107,7 @@ export const Fish = styled.div`
     }
 
     @media (max-width: 600px) {
-      bottom: ${ fishWidth + 30 }px;
+      bottom: ${fishWidth + 30}px;
     }
   }
 
@@ -115,7 +123,7 @@ export const Fish = styled.div`
     }
 
     @media (max-width: 600px) {
-      bottom: ${ fishWidth / 2 + 20 }px;
+      bottom: ${fishWidth / 2 + 20}px;
     }
   }
 

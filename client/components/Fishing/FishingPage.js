@@ -3,21 +3,15 @@ import Spinner from '../Spinner';
 
 import {
   CoinImage,
-  HelpButton,
   MuteButton,
   PageContainer,
   ScoreContainer,
   SettingsButton
 } from '../GameStyles';
 
-import {
-  AboveWater,
-  BelowWater,
-  Fish,
-  FishingBox
-} from './FishingStyles';
+import { AboveWater, BelowWater, Fish, FishingBox } from './FishingStyles';
 
-const FishingPage = (props) => {
+const FishingPage = props => {
   const {
     coins,
     currentIndex,
@@ -29,7 +23,7 @@ const FishingPage = (props) => {
   } = props;
   const currentWord = fishOnBoard[currentIndex];
 
-  const choices = fishOnBoard.map((a, i) => (
+  const choices = fishOnBoard.map((a, i) =>
     <Fish
       key={a}
       className={`fish-${i}`}
@@ -38,7 +32,7 @@ const FishingPage = (props) => {
     >
       <span>{a}</span>
     </Fish>
-  ));
+  );
 
   return (
     <PageContainer>

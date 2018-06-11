@@ -11,7 +11,7 @@ class FishingContainer extends Component {
     this.state = {
       currentIndex: null,
       fishOnBoard: [],
-      winCount: 0,
+      winCount: 0
     };
 
     this.addFish = this.addFish.bind(this);
@@ -33,11 +33,16 @@ class FishingContainer extends Component {
   addFish() {
     const { fishOnBoard } = this.state;
     const { fillWordArray, wordList } = this.props;
-    const allWords = wordList.length > 3 ? wordList : fillWordArray(wordList, 3);
+    const allWords = wordList.length > 3
+      ? wordList
+      : fillWordArray(wordList, 3);
     if (fishOnBoard.length >= 3) return;
     const wordIndex = Math.floor(Math.random() * allWords.length);
     if (fishOnBoard.indexOf(allWords[wordIndex]) === -1) {
-      this.setState({ fishOnBoard: [ ...fishOnBoard, allWords[wordIndex] ] }, () => this.addFish());
+      this.setState(
+        { fishOnBoard: [ ...fishOnBoard, allWords[wordIndex] ] },
+        () => this.addFish()
+      );
     } else {
       this.addFish();
     }

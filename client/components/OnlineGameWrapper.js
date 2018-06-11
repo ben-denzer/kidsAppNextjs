@@ -79,6 +79,10 @@ const OnlineGameWrapper = WrappedComponent => {
           ) {
             words = [...words, nextWord];
           }
+
+          if (!extraWords.length) {
+            return words;
+          }
         }
       }
       return words;
@@ -106,12 +110,12 @@ const OnlineGameWrapper = WrappedComponent => {
 
       try {
         const words = await getWordsForChild({ childId });
-        if (!words.length) {
+        if (!words || !words.length) {
           this.setState({ wordList: defaultWordList });
           return;
         }
         const wordList = words.map(a => a.word_text);
-        this.setState({ wordList });
+        this.setState({ wordList: this.fillWordArray(wordList, 10) });
       } catch (e) {
         this.setState({ wordList: defaultWordList });
       }
