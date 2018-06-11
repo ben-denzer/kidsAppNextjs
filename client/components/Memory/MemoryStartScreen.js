@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import makeThumbnailGrid from '../../utils/makeThumbnailGrid';
 import { PageContainer } from '../GameStyles';
 import {
@@ -18,11 +18,9 @@ function MemoryStartScreen(props) {
   const {
     cardBack,
     cardChange,
-    gameOver,
     gameSize,
     optionsOpen,
     setupCards,
-    setupGame,
     sizeChange,
     openOptions
   } = props;
@@ -42,17 +40,17 @@ function MemoryStartScreen(props) {
   }
 
   const sizeOptions = [
-    [2, 4],
-    [4, 2],
-    [2, 5],
-    [5, 2],
-    [4, 3],
-    [3, 4],
-    [4, 4],
-    [5, 4],
-    [4, 5]
+    [ 2, 4 ],
+    [ 4, 2 ],
+    [ 2, 5 ],
+    [ 5, 2 ],
+    [ 4, 3 ],
+    [ 3, 4 ],
+    [ 4, 4 ],
+    [ 5, 4 ],
+    [ 4, 5 ]
   ];
-  const gameOptions = sizeOptions.map(a => (
+  const gameOptions = sizeOptions.map(a =>
     <Option
       key={a[0].toString() + a[1].toString()}
       onClick={() => sizeChange(a)}
@@ -62,10 +60,10 @@ function MemoryStartScreen(props) {
       <div>{makeThumbnailGrid(a, cardBack)}</div>
       <OptionHeadline>{`${a[0] * a[1] / 2} Words`}</OptionHeadline>
     </Option>
-  ));
+  );
 
-  const cardBackOptions = [1, 2, 3, 4];
-  const cardOptions = cardBackOptions.map(a => (
+  const cardBackOptions = [ 1, 2, 3, 4 ];
+  const cardOptions = cardBackOptions.map(a =>
     <CardBack
       key={a}
       className={Number(a) === Number(cardBack) ? 'active' : ''}
@@ -74,7 +72,7 @@ function MemoryStartScreen(props) {
         backgroundImage: `url('/static/img/cardBacks/cardBack-${a}.jpg')`
       }}
     />
-  ));
+  );
 
   return (
     <PageContainer>

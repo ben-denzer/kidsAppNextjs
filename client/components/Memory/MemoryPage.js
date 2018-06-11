@@ -23,12 +23,9 @@ export default function MemoryPage(props) {
     helpOpen,
     mute,
     openOptions,
-    score,
-    showPrize,
     spinnerClassName,
     toggleHelp,
-    toggleSound,
-    wordList
+    toggleSound
   } = props;
 
   const options = { cardBack, cardList, flipCard, gameSize };

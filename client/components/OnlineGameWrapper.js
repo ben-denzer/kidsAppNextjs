@@ -77,7 +77,7 @@ const OnlineGameWrapper = WrappedComponent => {
             words.map(a => a.toLowerCase()).indexOf(nextWord.toLowerCase()) ===
             -1
           ) {
-            words = [...words, nextWord];
+            words = [ ...words, nextWord ];
           }
 
           if (!extraWords.length) {
@@ -123,7 +123,7 @@ const OnlineGameWrapper = WrappedComponent => {
 
     init() {
       const activeChild = getFromStorage('activeChild');
-      const children = getFromStorage('children');
+      const children = getFromStorage('children') || [];
       const coins = activeChild
         ? this.getInitialCoins(activeChild, children)
         : 0;
