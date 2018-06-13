@@ -1,41 +1,17 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
-import checkForDuplicateEmail from './checkForDuplicateEmail';
-import createUserToken from './createUserToken';
-import hashPassword from './hashPassword';
-import insertParentAndChildren from './insertParentAndChildren';
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const checkForDuplicateEmail = require('./checkForDuplicateEmail');
+const createUserToken = require('./createUserToken');
+const hashPassword = require('./hashPassword');
+const insertParentAndChildren = require('./insertParentAndChildren');
+const verifySignupArgs = require('./verifySignupArgs');
 const waitTime = global.MSW_DEV ? 0 : 1000;
-
-function verifyArgs(body) {
-  return new Promise((resolve, reject) => {
-    const { children, email, password, p2 } = body;
-    if (
-      !children.length || !email || !password || !p2
-
-      || email.length < 6
-      || email.length > 255
-      || email.indexOf('@') === -1
-      || email.indexOf('.') === -1
-      || email.lastIndexOf('.') < email.indexOf('@') + 2
-      || email.indexOf('@') !== email.lastIndexOf('@')
-      || email.lastIndexOf('.') > email.length - 3
-
-      || password.length < MIN_PASSWORD_LENGTH
-      || password !== p2
-    ) {
-      logError(body, 'body in signup');
-      return reject({ status: 400, error: 'Bad Request' });
-    }
-    resolve('valid');
-  });
-}
 
 function signup(body, connection) {
   let children = [];
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      verifyArgs(body)
+      verifySignupArgs(body)
         .then(() => checkForDuplicateEmail(body.email, connection))
         .then(() => hashPassword(body.password, bcrypt))
         .then(hash => insertParentAndChildren(body, hash, connection))
@@ -55,5 +31,4 @@ function signup(body, connection) {
   });
 }
 
-export { verifyArgs };
-export default signup;
+module.exports = signup;

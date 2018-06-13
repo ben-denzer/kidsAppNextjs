@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
-import getWordId from './getWordId';
-import linkWordToChild from './linkWordToChild';
-import validateJwt from '../validateJwt';
+const jwt = require('jsonwebtoken');
+const getWordId = require('./getWordId');
+const linkWordToChild = require('./linkWordToChild');
+const validateJwt = require('../validateJwt');
 
 function addWordToDB(body, connection) {
   return new Promise((resolve, reject) => {
@@ -27,4 +27,4 @@ function addWordToDB(body, connection) {
   });
 }
 
-export default addWordToDB;
+module.exports = addWordToDB;

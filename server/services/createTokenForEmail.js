@@ -1,4 +1,4 @@
-import { jwtKey } from '../keys/.jwtInfo';
+const jwtKey = require('../keys/.jwtInfo').jwtKey;
 
 function createTokenForEmail(email, jwt) {
   return new Promise((resolve, reject) => {
@@ -20,4 +20,4 @@ function createTokenForEmail(email, jwt) {
   });
 }
 
-export default createTokenForEmail;
+module.exports = createTokenForEmail;

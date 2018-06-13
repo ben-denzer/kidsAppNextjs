@@ -28,4 +28,4 @@ function checkForDuplicateEmail(email, connection) {
   });
 }
 
-export default checkForDuplicateEmail;
+module.exports = checkForDuplicateEmail;

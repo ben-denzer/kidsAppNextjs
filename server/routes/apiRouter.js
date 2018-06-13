@@ -1,6 +1,6 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import userController from '../controllers/userController';
+const express = require('express');
+const bodyParser = require('body-parser');
+const userController = require('../controllers/userController');
 const apiRouter = express.Router();
 const jsonParser = bodyParser.json();
 
@@ -35,4 +35,4 @@ function router(connection) {
   return apiRouter;
 }
 
-export default router;
+module.exports = router;

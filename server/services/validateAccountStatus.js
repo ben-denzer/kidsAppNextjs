@@ -1,6 +1,6 @@
-import getAllData from './getAllData';
-import validateJwt from './validateJwt';
-import jwt from 'jsonwebtoken';
+const getAllData = require('./getAllData');
+const validateJwt = require('./validateJwt');
+const jwt = require('jsonwebtoken');
 
 function validateAccountStatus(body, connection) {
   return new Promise((resolve, reject) => {
@@ -25,4 +25,4 @@ function validateAccountStatus(body, connection) {
   });
 }
 
-export default validateAccountStatus;
+module.exports = validateAccountStatus;

@@ -1,8 +1,8 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import userController from './userController';
+const chai = require('chai');
+const sinon = require('sinon');
+const userController = require('./userController');
 const expect = chai.expect;
 
-describe('Forgot Password Blackbox', function() {
+describe('Forgot Password Blackbox', () => {
   it('NEEDS TESTS');
 });

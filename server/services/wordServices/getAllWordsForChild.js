@@ -1,4 +1,4 @@
-import validateAccountStatus from '../validateAccountStatus';
+const validateAccountStatus = require('../validateAccountStatus');
 
 function getAllWordsForChild(body, connection) {
   const { childId, token } = body;
@@ -35,4 +35,4 @@ function getAllWordsForChild(body, connection) {
   });
 }
 
-export default getAllWordsForChild;
+module.exports = getAllWordsForChild;

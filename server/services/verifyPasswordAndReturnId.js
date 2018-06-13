@@ -1,7 +1,10 @@
 function verifyPasswordAndReturnId(body, connection, bcrypt) {
   return new Promise((resolve, reject) => {
     if (!body || !body.email || !body.password) {
-      logError(body, 'Bad Args To verifyPasswordAndReturnId - should have been caught earlier');
+      logError(
+        body,
+        'Bad Args To verifyPasswordAndReturnId - should have been caught earlier'
+      );
       return reject({ status: 500, error: 'Server Error' });
     }
     if (!connection || !bcrypt) {
@@ -22,14 +25,19 @@ function verifyPasswordAndReturnId(body, connection, bcrypt) {
         }
 
         const { parent_id, password } = data[0]; // eslint-disable-line camelcase
-        bcrypt.compare(body.password, password)
+        bcrypt
+          .compare(body.password, password)
           .then(success => {
             if (success) {
               return resolve(parent_id);
             }
             reject({ status: 401, error: 'Invalid Email Or Password' });
-          }).catch(err => {
-            logError(err, 'error in bcrypt.compare - verifyPasswordAndReturnId');
+          })
+          .catch(err => {
+            logError(
+              err,
+              'error in bcrypt.compare - verifyPasswordAndReturnId'
+            );
             reject({ status: 500, error: 'Server Error' });
           });
       }
@@ -37,4 +45,4 @@ function verifyPasswordAndReturnId(body, connection, bcrypt) {
   });
 }
 
-export default verifyPasswordAndReturnId;
+module.exports = verifyPasswordAndReturnId;

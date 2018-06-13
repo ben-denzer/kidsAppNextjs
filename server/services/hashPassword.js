@@ -1,4 +1,5 @@
-import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
+const MIN_PASSWORD_LENGTH = require('../../globalConfig/globalConfig')
+  .MIN_PASSWORD_LENGTH;
 
 function hashPassword(password, bcrypt) {
   return new Promise((resolve, reject) => {
@@ -25,4 +26,4 @@ function hashPassword(password, bcrypt) {
   });
 }
 
-export default hashPassword;
+module.exports = hashPassword;

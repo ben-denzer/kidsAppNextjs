@@ -8,7 +8,7 @@ function linkWordToChild(childId, wordId, connection) {
     connection.query(
       'INSERT INTO child_word_link (child_fk, word_fk) VALUES (?, ?)',
       [ childId, wordId ],
-      (err) => {
+      err => {
         if (err) {
           logError(err, 'db error in linkWordToChild');
           return reject({ status: 500, error: 'Server Error' });
@@ -20,4 +20,4 @@ function linkWordToChild(childId, wordId, connection) {
   });
 }
 
-export default linkWordToChild;
+module.exports = linkWordToChild;

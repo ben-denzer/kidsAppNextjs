@@ -1,21 +1,21 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import insertParentAndChildren from './insertParentAndChildren';
+const chai = require('chai');
+const sinon = require('sinon');
+const insertParentAndChildren = require('./insertParentAndChildren');
 const expect = chai.expect;
 
-describe('Insert Parent', function() {
+describe('Insert Parent', () => {
   let body;
-  beforeEach('setting up logError and body', function() {
+  beforeEach('setting up logError and body', () => {
     global.logError = sinon.spy();
     body = {
       childCount: '1',
-      children: ['child1'],
+      children: [ 'child1' ],
       email: 'fake@gmail.com',
-      emailList: false,
+      emailList: false
     };
   });
 
-  it('should reject if any arg is undefined', function() {
+  it('should reject if any arg is undefined', () => {
     return insertParentAndChildren(body, '#rewoirjeo33434')
       .then(success => expect(success).to.be.false)
       .catch(e => {
@@ -24,7 +24,7 @@ describe('Insert Parent', function() {
       });
   });
 
-  it('should log each missing arg', function() {
+  it('should log each missing arg', () => {
     return insertParentAndChildren()
       .then(success => expect(success).to.be.false)
       .catch(e => {
@@ -35,7 +35,7 @@ describe('Insert Parent', function() {
       });
   });
 
-  it('should reject if body is missing email', function() {
+  it('should reject if body is missing email', () => {
     body = Object.assign({}, body, { email: '' });
     const connection = {
       query: sinon.stub()
@@ -49,7 +49,7 @@ describe('Insert Parent', function() {
       });
   });
 
-  it('should reject on db error', function() {
+  it('should reject on db error', () => {
     const connection = {
       query: sinon.stub().callsArgWithAsync(2, { error: true })
     };
@@ -63,7 +63,7 @@ describe('Insert Parent', function() {
       });
   });
 
-  it('should reject if it doesnt return an insertId', function() {
+  it('should reject if it doesnt return an insertId', () => {
     const connection = {
       query: sinon.stub().callsArgWithAsync(2, null, {})
     };
@@ -78,25 +78,30 @@ describe('Insert Parent', function() {
       });
   });
 
-  it('should resolve with insertId and childArray', function() {
+  it('should resolve with insertId and childArray', () => {
     const mockId = 10;
-    const connection = { query: () => {}};
+    const connection = { query: () => {} };
     const query = sinon.stub(connection, 'query');
     query.onCall(0).callsArgWithAsync(2, null, { insertId: mockId });
     query.onCall(1).callsArgWithAsync(2, null, { insertId: 1 });
 
-    return insertParentAndChildren(body, 'slfjaoiwj', connection)
-      .then(({ parentId, childArray }) => {
-        expect(query.calledTwice).to.be.true;
-        expect(parentId).to.equal(10);
-        expect(Array.isArray(childArray)).to.be.true;
-        expect(childArray.length).to.equal(1);
-      });
+    return insertParentAndChildren(body, 'slfjaoiwj', connection).then(({
+      parentId,
+      childArray
+    }) => {
+      expect(query.calledTwice).to.be.true;
+      expect(parentId).to.equal(10);
+      expect(Array.isArray(childArray)).to.be.true;
+      expect(childArray.length).to.equal(1);
+    });
   });
 
-  it('should call query as many times as needed for children', function() {
-    body = Object.assign({}, body, { childCount: 3, children: ['child1', 'child2', 'child3'] });
-    const connection = { query: () => {}};
+  it('should call query as many times as needed for children', () => {
+    body = Object.assign({}, body, {
+      childCount: 3,
+      children: [ 'child1', 'child2', 'child3' ]
+    });
+    const connection = { query: () => {} };
     const query = sinon.stub(connection, 'query');
     query.onCall(0).callsArgWithAsync(2, null, { insertId: 1 });
     query.onCall(1).callsArgWithAsync(2, null, { insertId: 1 });
@@ -104,9 +109,11 @@ describe('Insert Parent', function() {
     query.onCall(3).callsArgWithAsync(2, null, { insertId: 1 });
     query.onCall(4).callsArgWithAsync(2, null, { insertId: 1 });
 
-    return insertParentAndChildren(body, 'slfjaoiwj', connection)
-      .then(({ parentId, childArray }) => {
-        expect(query.callCount).to.equal(4);
-      });
+    return insertParentAndChildren(body, 'slfjaoiwj', connection).then(({
+      parentId,
+      childArray
+    }) => {
+      expect(query.callCount).to.equal(4);
+    });
   });
 });

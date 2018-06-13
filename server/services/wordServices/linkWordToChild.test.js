@@ -1,17 +1,17 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import linkWordToChild from './linkWordToChild';
+const chai = require('chai');
+const sinon = require('sinon');
+const linkWordToChild = require('./linkWordToChild');
 const expect = chai.expect;
 
-describe('Link Word To Child', function() {
+describe('Link Word To Child', () => {
   let connection;
 
-  beforeEach('setup', function() {
+  beforeEach('setup', () => {
     connection = { query() {} };
     global.logError = sinon.stub();
   });
 
-  it('should reject 500 on no word || child || connection', function() {
+  it('should reject 500 on no word || child || connection', () => {
     return linkWordToChild('test', undefined, connection)
       .then(ok => expect(ok).to.be.false)
       .catch(err => {
@@ -20,7 +20,7 @@ describe('Link Word To Child', function() {
       });
   });
 
-  it('should reject if db error', function() {
+  it('should reject if db error', () => {
     sinon.stub(connection, 'query').callsArgWithAsync(2, { error: true });
     return linkWordToChild('test', 12, connection)
       .then(ok => expect(ok).to.be.false)
@@ -31,10 +31,11 @@ describe('Link Word To Child', function() {
       });
   });
 
-  it('should resolve with wordId', function() {
+  it('should resolve with wordId', () => {
     const wordId = 222;
     sinon.stub(connection, 'query').callsArgWithAsync(2, null, { wordId });
-    return linkWordToChild('test', wordId, connection)
-      .then(wordVal => expect(wordVal).to.equal(wordId));
+    return linkWordToChild('test', wordId, connection).then(wordVal =>
+      expect(wordVal).to.equal(wordId)
+    );
   });
 });

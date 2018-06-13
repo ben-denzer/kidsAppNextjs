@@ -1,7 +1,8 @@
-import jwt from 'jsonwebtoken';
-import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
-import resetPasswordInDb from './resetPasswordInDb';
-import validateJwt from './validateJwt';
+const jwt = require('jsonwebtoken');
+const MIN_PASSWORD_LENGTH = require('../../globalConfig/globalConfig')
+  .MIN_PASSWORD_LENGTH;
+const resetPasswordInDb = require('./resetPasswordInDb');
+const validateJwt = require('./validateJwt');
 const waitTime = global.MSW_DEV ? 0 : 1500;
 
 function resetPasswordService(body, connection) {
@@ -12,16 +13,18 @@ function resetPasswordService(body, connection) {
         return reject({ status: 500, error: 'Server Error' });
       }
       if (
-        !body.token
-        || !body.password
-        || body.password.length < MIN_PASSWORD_LENGTH
-        || body.password !== body.p2
+        !body.token ||
+        !body.password ||
+        body.password.length < MIN_PASSWORD_LENGTH ||
+        body.password !== body.p2
       ) {
         return reject({ status: 400, error: 'Bad Request' });
       }
 
       validateJwt(body.token, jwt)
-        .then(tokenBody => resetPasswordInDb(tokenBody.email, body.password, connection))
+        .then(tokenBody =>
+          resetPasswordInDb(tokenBody.email, body.password, connection)
+        )
         .then(() => resolve({ success: true }))
         .catch(err => {
           logError(err, 'in resetPasswordService');
@@ -31,4 +34,4 @@ function resetPasswordService(body, connection) {
   });
 }
 
-export default resetPasswordService;
+module.exports = resetPasswordService;

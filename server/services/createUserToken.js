@@ -1,4 +1,5 @@
-import { jwtKey, jwtOptions } from '../keys/.jwtInfo';
+const jwtInfo = require('../keys/.jwtInfo');
+const { jwtKey, jwtOptions } = jwtInfo;
 
 function createUserToken(userId, jwt, extraOptions) {
   return new Promise((resolve, reject) => {
@@ -24,4 +25,4 @@ function createUserToken(userId, jwt, extraOptions) {
   });
 }
 
-export default createUserToken;
+module.exports = createUserToken;

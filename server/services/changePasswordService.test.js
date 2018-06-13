@@ -1,7 +1,7 @@
-import chai from 'chai';
-import sinon from 'sinon';
+const chai = require('chai');
+const sinon = require('sinon');
 const expect = chai.expect;
 
-describe('Change Password Service', function() {
+describe('Change Password Service', () => {
   it('NEEDS TESTS');
 });

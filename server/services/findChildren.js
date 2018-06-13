@@ -19,4 +19,4 @@ function findChildren(userId, connection) {
   });
 }
 
-export default findChildren;
+module.exports = findChildren;

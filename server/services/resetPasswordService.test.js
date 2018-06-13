@@ -1,16 +1,16 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import jwt from 'jsonwebtoken';
-import createUserToken from './createUserToken';
-import resetPasswordService from './resetPasswordService';
+const chai = require('chai');
+const sinon = require('sinon');
+const jwt = require('jsonwebtoken');
+const createUserToken = require('./createUserToken');
+const resetPasswordService = require('./resetPasswordService');
 const expect = chai.expect;
 
-describe('Reset Password Service', function() {
+describe('Reset Password Service', () => {
   let body;
   let connection;
   let token;
 
-  beforeEach('mocking', async function() {
+  beforeEach('mocking', async() => {
     global.logError = sinon.stub();
     connection = { query() {} };
     token = await createUserToken(12, jwt);
@@ -21,7 +21,7 @@ describe('Reset Password Service', function() {
     };
   });
 
-  it('should reject 500 for null arguments', function() {
+  it('should reject 500 for null arguments', () => {
     return resetPasswordService(body)
       .then(success => expect(success).to.be.false)
       .catch(err => {
@@ -30,7 +30,7 @@ describe('Reset Password Service', function() {
       });
   });
 
-  it('should reject 400 if no token', function() {
+  it('should reject 400 if no token', () => {
     body = Object.assign({}, body, { token: undefined });
     return resetPasswordService(body, connection)
       .then(success => expect(success).to.be.false)
@@ -40,7 +40,7 @@ describe('Reset Password Service', function() {
       });
   });
 
-  it('should reject 400 if no password', function() {
+  it('should reject 400 if no password', () => {
     body = Object.assign({}, body, { password: undefined, p2: undefined });
     return resetPasswordService(body, connection)
       .then(success => expect(success).to.be.false)
@@ -50,7 +50,7 @@ describe('Reset Password Service', function() {
       });
   });
 
-  it('should reject 400 if password is too short', function() {
+  it('should reject 400 if password is too short', () => {
     body = Object.assign({}, body, { password: 'abc', p2: 'abc' });
     return resetPasswordService(body, connection)
       .then(success => expect(success).to.be.false)
@@ -60,7 +60,7 @@ describe('Reset Password Service', function() {
       });
   });
 
-  it('should reject 400 if passwords dont match', function() {
+  it('should reject 400 if passwords dont match', () => {
     body = Object.assign({}, body, { password: 'asdofoeoire' });
     return resetPasswordService(body, connection)
       .then(success => expect(success).to.be.false)
@@ -72,5 +72,4 @@ describe('Reset Password Service', function() {
 
   it('should reject on validateJwt error');
   it('should reject on resetPasswordInDb error');
-
 });

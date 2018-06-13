@@ -1,8 +1,9 @@
-import nodemailer from 'nodemailer';
-import mg from 'nodemailer-mailgun-transport';
-import { apiKey, domain } from '../keys/.mailgun_conf.js';
+const nodemailer = require('nodemailer');
+const mg = require('nodemailer-mailgun-transport');
+const mgConf = require('../keys/.mailgun_conf.js');
+const { apiKey, domain } = mgConf;
 const mgAuth = {
   auth: { api_key: apiKey, domain } // eslint-disable-line camelcase
 };
 
-export default nodemailer.createTransport(mg(mgAuth));
+module.exports = nodemailer.createTransport(mg(mgAuth));

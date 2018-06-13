@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import validateJwt from '../validateJwt';
+const jwt = require('jsonwebtoken');
+const validateJwt = require('../validateJwt');
 
 function removeWordFromChild(body, connection) {
   return new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ function removeWordFromChild(body, connection) {
         connection.query(
           'DELETE FROM child_word_link WHERE child_fk = ? AND word_fk = ?',
           [ body.childId, body.wordId ],
-          (err) => {
+          err => {
             if (err) {
               logError(err, 'db error in removeWordFromChild');
               return reject({ status: 500, error: 'Server Error' });
@@ -26,11 +26,11 @@ function removeWordFromChild(body, connection) {
           }
         );
       })
-      .catch((err) => {
+      .catch(err => {
         logError(err, 'removeWordFromChild - in catch');
         return reject(err || { status: 500, error: 'Server Error' });
       });
   });
 }
 
-export default removeWordFromChild;
+module.exports = removeWordFromChild;

@@ -1,19 +1,18 @@
-import addCoinToDB from '../services/addCoinToDB';
-import addWordToDbService from '../services/wordServices/addWordToDbService';
-import changePasswordService from '../services/changePasswordService';
-import getAllParentDataService from '../services/getAllParentDataService';
-import getAllWordsForChild from '../services/wordServices/getAllWordsForChild';
-import login from '../services/login';
-import nodemailerMailgun from '../services/createNodemailerMailgun';
-import removeWordFromChild from '../services/wordServices/removeWordFromChild';
-import resetPasswordService from '../services/resetPasswordService';
-import sendError from '../services/sendError';
-import sendForgotPwEmail from '../services/sendForgotPwEmail';
-import signup from '../services/signup';
-import validateAccountStatus from '../services/validateAccountStatus';
+const addCoinToDB = require('../services/addCoinToDB');
+const addWordToDbService = require('../services/wordServices/addWordToDbService');
+const changePasswordService = require('../services/changePasswordService');
+const getAllParentDataService = require('../services/getAllParentDataService');
+const getAllWordsForChild = require('../services/wordServices/getAllWordsForChild');
+const login = require('../services/login');
+const nodemailerMailgun = require('../services/createNodemailerMailgun');
+const removeWordFromChild = require('../services/wordServices/removeWordFromChild');
+const resetPasswordService = require('../services/resetPasswordService');
+const sendError = require('../services/sendError');
+const sendForgotPwEmail = require('../services/sendForgotPwEmail');
+const signup = require('../services/signup');
+const validateAccountStatus = require('../services/validateAccountStatus');
 
 function userRouter(connection) {
-
   const postToAddCoin = async function postToAddCoinAsync(req, res) {
     try {
       await addCoinToDB(req.body, connection);
@@ -40,7 +39,9 @@ function userRouter(connection) {
       res.status(200).send(JSON.stringify({ success: true }));
     } catch (err) {
       if (err && err.status === 401) {
-        return res.status(401).send(JSON.stringify({ error: 'Invalid Password' }));
+        return res
+          .status(401)
+          .send(JSON.stringify({ error: 'Invalid Password' }));
       }
       logError(err, 'post to changePassword');
       return sendError(err, res);
@@ -53,14 +54,19 @@ function userRouter(connection) {
       return res.status(200).send(JSON.stringify({ success: true }));
     } catch (err) {
       if (err && err.status === 401) {
-        return res.status(401).send(JSON.stringify({ error: 'Email Not On File' }));
+        return res
+          .status(401)
+          .send(JSON.stringify({ error: 'Email Not On File' }));
       }
       logError(err, 'post Forgot PW');
       return sendError(err, res);
     }
   };
 
-  const postToGetAllParentData = async function postToGetAllParentDataAsync(req, res) {
+  const postToGetAllParentData = async function postToGetAllParentDataAsync(
+    req,
+    res
+  ) {
     try {
       const parentData = await getAllParentDataService(req.body, connection);
       return res.status(200).send(JSON.stringify(parentData));
@@ -70,7 +76,10 @@ function userRouter(connection) {
     }
   };
 
-  const postToGetWordsForChild = async function postToGetWordsForChildAsync(req, res) {
+  const postToGetWordsForChild = async function postToGetWordsForChildAsync(
+    req,
+    res
+  ) {
     try {
       const allWords = await getAllWordsForChild(req.body, connection);
       return res.status(200).send(JSON.stringify(allWords));
@@ -86,14 +95,19 @@ function userRouter(connection) {
       return res.status(200).send(JSON.stringify(userData));
     } catch (err) {
       if (err && err.status === 401) {
-        return res.status(401).send(JSON.stringify({ error: 'Invalid Username Or Password ' }));
+        return res
+          .status(401)
+          .send(JSON.stringify({ error: 'Invalid Username Or Password ' }));
       }
       logError(err, 'post user/login');
       return sendError(err, res);
     }
   };
 
-  const postToRemoveWordFromChild = async function postToRemoveWordFromChildAsync(req, res) {
+  const postToRemoveWordFromChild = async function postToRemoveWordFromChildAsync(
+    req,
+    res
+  ) {
     try {
       await removeWordFromChild(req.body, connection);
       return res.send(JSON.stringify({ success: true }));
@@ -127,7 +141,10 @@ function userRouter(connection) {
     }
   };
 
-  const postToValidateAccount = async function postToValidateAccountAsync(req, res) {
+  const postToValidateAccount = async function postToValidateAccountAsync(
+    req,
+    res
+  ) {
     try {
       const status = await validateAccountStatus(req.body, connection);
       return res.status(200).send(JSON.stringify(status));
@@ -152,4 +169,4 @@ function userRouter(connection) {
   };
 }
 
-export default userRouter;
+module.exports = userRouter;

@@ -1,21 +1,21 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import changePasswordInDb from './changePasswordInDb';
+const chai = require('chai');
+const sinon = require('sinon');
+const changePasswordInDb = require('./changePasswordInDb');
 const expect = chai.expect;
 
-describe('Change Password In DB', function() {
+describe('Change Password In DB', () => {
   let connection;
   let id;
   let newPassword;
 
-  beforeEach('setup', function() {
+  beforeEach('setup', () => {
     connection = { query() {} };
     id = 12;
     newPassword = 'abcdefg';
     global.logError = sinon.stub();
   });
 
-  it('should reject if args are missing', function() {
+  it('should reject if args are missing', () => {
     newPassword = undefined;
     return changePasswordInDb(id, newPassword, connection)
       .then(ok => expect(ok).to.be.false)
@@ -25,7 +25,7 @@ describe('Change Password In DB', function() {
       });
   });
 
-  it('should reject on db error', function() {
+  it('should reject on db error', () => {
     sinon.stub(connection, 'query').callsArgWithAsync(2, { error: true });
     return changePasswordInDb(id, newPassword, connection)
       .then(ok => expect(ok).to.be.false)
@@ -36,9 +36,12 @@ describe('Change Password In DB', function() {
       });
   });
 
-  it('should resolve on success', function() {
-    sinon.stub(connection, 'query').callsArgWithAsync(2, null, { success: true });
-    return changePasswordInDb(id, newPassword, connection)
-      .then(ok => expect(Boolean(ok)).to.be.true)
+  it('should resolve on success', () => {
+    sinon
+      .stub(connection, 'query')
+      .callsArgWithAsync(2, null, { success: true });
+    return changePasswordInDb(id, newPassword, connection).then(
+      ok => expect(Boolean(ok)).to.be.true
+    );
   });
 });

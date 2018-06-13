@@ -1,20 +1,20 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { MIN_PASSWORD_LENGTH } from '../../globalConfig/globalConfig';
-import changePasswordInDB from './changePasswordInDb';
-import getAllData from './getAllData';
-import hashPassword from './hashPassword';
-import validateJwt from './validateJwt';
-import validatePasswordAndReturnId from './verifyPasswordAndReturnId';
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { MIN_PASSWORD_LENGTH } = require('../../globalConfig/globalConfig');
+const changePasswordInDB = require('./changePasswordInDb');
+const getAllData = require('./getAllData');
+const hashPassword = require('./hashPassword');
+const validateJwt = require('./validateJwt');
+const validatePasswordAndReturnId = require('./verifyPasswordAndReturnId');
 
 function changePasswordService(body, connection) {
   return new Promise((resolve, reject) => {
     if (
-      !body
-      || !body.token
-      || !body.currentPassword
-      || !body.newPassword
-      || body.newPassword.length < MIN_PASSWORD_LENGTH
+      !body ||
+      !body.token ||
+      !body.currentPassword ||
+      !body.newPassword ||
+      body.newPassword.length < MIN_PASSWORD_LENGTH
     ) {
       logError(body, 'bad request to changePasswordService');
       return reject({ status: 400, error: 'Bad Request' });
@@ -54,4 +54,4 @@ function changePasswordService(body, connection) {
   });
 }
 
-export default changePasswordService;
+module.exports = changePasswordService;

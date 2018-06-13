@@ -1,5 +1,5 @@
-import bcrypt from 'bcrypt';
-import hashPassword from './hashPassword';
+const bcrypt = require('bcrypt');
+const hashPassword = require('./hashPassword');
 
 function resetPasswordInDb(email, password, connection) {
   return new Promise((resolve, reject) => {
@@ -33,4 +33,4 @@ function resetPasswordInDb(email, password, connection) {
   });
 }
 
-export default resetPasswordInDb;
+module.exports = resetPasswordInDb;

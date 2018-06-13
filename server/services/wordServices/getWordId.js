@@ -35,4 +35,4 @@ function getWordId(word, connection) {
   });
 }
 
-export default getWordId;
+module.exports = getWordId;

@@ -1,7 +1,10 @@
 function getAllData(parentId, connection) {
   return new Promise((resolve, reject) => {
     if (!parentId || !connection) {
-      logError({ parentId, connection }, 'No parentId || connection provided to getAllData');
+      logError(
+        { parentId, connection },
+        'No parentId || connection provided to getAllData'
+      );
       return reject({ status: 500, error: 'Server Error' });
     }
 
@@ -25,4 +28,4 @@ function getAllData(parentId, connection) {
   });
 }
 
-export default getAllData;
+module.exports = getAllData;

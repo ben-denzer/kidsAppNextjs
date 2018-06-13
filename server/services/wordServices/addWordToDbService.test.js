@@ -1,19 +1,19 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import addWordToDbService from './addWordToDbService';
+const chai = require('chai');
+const sinon = require('sinon');
+const addWordToDbService = require('./addWordToDbService');
 const expect = chai.expect;
 
-describe('Add Word To DB', function() {
+describe('Add Word To DB', () => {
   let connection;
   let body;
 
-  beforeEach('setup', function() {
+  beforeEach('setup', () => {
     body = { childId: 12, word: 'test', token: 'asdfklasdjf' };
     connection = { query() {} };
     global.logError = sinon.stub();
   });
 
-  it('should reject 400 on no childId or word', function() {
+  it('should reject 400 on no childId or word', () => {
     body = { childId: 12 };
     return addWordToDbService(body, connection)
       .then(ok => expect(ok).to.be.false)
@@ -23,7 +23,7 @@ describe('Add Word To DB', function() {
       });
   });
 
-  it('should reject 500 on no connection', function() {
+  it('should reject 500 on no connection', () => {
     return addWordToDbService(body)
       .then(ok => expect(ok).to.be.false)
       .catch(err => {

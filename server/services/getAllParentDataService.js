@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import validateJwt from './validateJwt';
-import getAllData from './getAllData';
+const jwt = require('jsonwebtoken');
+const validateJwt = require('./validateJwt');
+const getAllData = require('./getAllData');
 
 function getAllParentDataService(body, connection) {
   return new Promise((resolve, reject) => {
@@ -17,4 +17,4 @@ function getAllParentDataService(body, connection) {
   });
 }
 
-export default getAllParentDataService;
+module.exports = getAllParentDataService;

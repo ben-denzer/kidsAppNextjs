@@ -18,7 +18,10 @@ function verifyUserExists(email, connection) {
           return reject({ status: 500, error: 'Server Error #VEUX1' });
         }
         if (!rows || !rows.length || !rows[0].parent_id) {
-          return reject({ status: 401, error: 'We don\'t have that email address on file' });
+          return reject({
+            status: 401,
+            error: 'We don\'t have that email address on file'
+          });
         }
 
         resolve(rows[0].parent_id);
@@ -27,4 +30,4 @@ function verifyUserExists(email, connection) {
   });
 }
 
-export default verifyUserExists;
+module.exports = verifyUserExists;

@@ -1,10 +1,11 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import getAllWordsForChild from './getAllWordsForChild';
+const chai = require('chai');
+const sinon = require('sinon');
+const getAllWordsForChild = require('./getAllWordsForChild');
 const expect = chai.expect;
 
-describe('Get all words for child', function() {
+describe('Get all words for child', () => {
   it('NEEDS TESTS AND MAYBE A REFACTOR');
+
   // let connection;
   // let id;
 

@@ -1,8 +1,8 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import validateAccountStatus from './validateAccountStatus';
+const chai = require('chai');
+const sinon = require('sinon');
+const validateAccountStatus = require('./validateAccountStatus');
 const expect = chai.expect;
 
-describe('Validate Account Status', function() {
+describe('Validate Account Status', () => {
   it('should have tests');
 });

@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import createUserToken from './createUserToken';
-import findChildren from './findChildren';
-import verifyPasswordAndReturnId from './verifyPasswordAndReturnId';
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const createUserToken = require('./createUserToken');
+const findChildren = require('./findChildren');
+const verifyPasswordAndReturnId = require('./verifyPasswordAndReturnId');
 const waitTime = global.MSW_DEV ? 0 : 1000;
 
 function login(body, connection) {
@@ -36,4 +36,4 @@ function login(body, connection) {
   });
 }
 
-export default login;
+module.exports = login;

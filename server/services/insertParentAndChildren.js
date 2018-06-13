@@ -12,7 +12,10 @@ function insertParent(body, hash, connection) {
     const { children, email, emailList } = body;
 
     if (!children || !children.length || !email) {
-      logError(body, 'Bad args in insertParent - should have been caught before this');
+      logError(
+        body,
+        'Bad args in insertParent - should have been caught before this'
+      );
       return reject({ status: 500, error: 'Server Error' });
     }
 
@@ -24,7 +27,14 @@ function insertParent(body, hash, connection) {
     connection.query(
       `INSERT INTO parent (email, email_list, password, children_allowed, signup_utc, expiration_utc)
         VALUES(?,?,?,?,?,?)`,
-      [ email, emailList, hash, childCount, Date.now(), Date.now() + expirationTime ],
+      [
+        email,
+        emailList,
+        hash,
+        childCount,
+        Date.now(),
+        Date.now() + expirationTime
+      ],
       (err, success) => {
         if (err) {
           logError(err, 'db error in insertParent #1');
@@ -54,7 +64,11 @@ function insertParent(body, hash, connection) {
                 logError(success, 'no success || insertId from insertParent');
                 return reject({ status: 500, error: 'Server Error' });
               }
-              childArray.push({ child_id: success.insertId, username: child, coins: 0 });  // eslint-disable-line
+              childArray.push({
+                child_id: success.insertId, // eslint-disable-line
+                username: child,
+                coins: 0
+              });
               childrenLeftToInsert--;
               if (childrenLeftToInsert === 0) {
                 resolve({ parentId, childArray });
@@ -67,4 +81,4 @@ function insertParent(body, hash, connection) {
   });
 }
 
-export default insertParent;
+module.exports = insertParent;

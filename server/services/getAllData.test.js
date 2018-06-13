@@ -1,19 +1,19 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import getAllData from './getAllData';
+const chai = require('chai');
+const sinon = require('sinon');
+const getAllData = require('./getAllData');
 const expect = chai.expect;
 
-describe('Get All Data', function() {
+describe('Get All Data', () => {
   let connection;
   let parentId;
 
-  beforeEach('setup', function() {
+  beforeEach('setup', () => {
     global.logError = sinon.stub();
     connection = { query() {} };
     parentId = 12;
   });
 
-  it('Should reject if it no parentId', function() {
+  it('Should reject if it no parentId', () => {
     parentId = undefined;
     return getAllData(parentId, connection)
       .then(userData => expect(userData).to.be.false)
@@ -23,7 +23,7 @@ describe('Get All Data', function() {
       });
   });
 
-  it('Should reject if no connection', function() {
+  it('Should reject if no connection', () => {
     return getAllData(parentId)
       .then(userData => expect(userData).to.be.false)
       .catch(err => {
@@ -32,7 +32,7 @@ describe('Get All Data', function() {
       });
   });
 
-  it('Should reject on db error', function() {
+  it('Should reject on db error', () => {
     sinon.stub(connection, 'query').callsArgWithAsync(2, { error: true });
     return getAllData(parentId, connection)
       .then(userData => expect(userData).to.be.false)
@@ -43,7 +43,7 @@ describe('Get All Data', function() {
       });
   });
 
-  it('Should reject 401 if no user data found', function() {
+  it('Should reject 401 if no user data found', () => {
     sinon.stub(connection, 'query').callsArgWithAsync(2, null, []);
     return getAllData(parentId, connection)
       .then(userData => expect(userData).to.be.false)
@@ -53,9 +53,12 @@ describe('Get All Data', function() {
       });
   });
 
-  it('Should resolve with user data', function() {
-    sinon.stub(connection, 'query').callsArgWithAsync(2, null, [{ success: true }]);
-    return getAllData(parentId, connection)
-      .then(userData => expect(Boolean(userData)).to.be.true)
+  it('Should resolve with user data', () => {
+    sinon
+      .stub(connection, 'query')
+      .callsArgWithAsync(2, null, [ { success: true } ]);
+    return getAllData(parentId, connection).then(
+      userData => expect(Boolean(userData)).to.be.true
+    );
   });
 });

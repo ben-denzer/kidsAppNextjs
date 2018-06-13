@@ -1,12 +1,15 @@
 /* eslint no-console: 0 */
 
-import express from 'express';
-import apiRouter from './routes/apiRouter';
-import dbInfo from './keys/.dbKeys';
-import logError from './services/logError';
-import mysql from 'mysql';
-import next from 'next';
-import url from 'url';
+const express = require('express');
+const apiRouter = require('./routes/apiRouter');
+const dbInfo = require('./keys/.dbKeys');
+const logError = require('./services/logError');
+const mysql = require('mysql');
+const next = require('next');
+const url = require('url');
+const path = require('path');
+
+logError(path.join(__dirname));
 
 const server = express();
 const port = process.env.PORT || 3000;

@@ -1,9 +1,8 @@
-import jwt from 'jsonwebtoken';
-import createTokenForEmail from './createTokenForEmail';
-import verifyUserExists from './verifyUserExists';
+const jwt = require('jsonwebtoken');
+const createTokenForEmail = require('./createTokenForEmail');
+const verifyUserExists = require('./verifyUserExists');
 
 const sendForgotPwEmail = (reqBody, nodemailerMailgun, connection) => {
-
   return new Promise((resolve, reject) => {
     if (!reqBody || !reqBody.email) {
       logError('no email provided to sendPwReset');
@@ -32,7 +31,7 @@ const sendForgotPwEmail = (reqBody, nodemailerMailgun, connection) => {
             </a>`
         };
 
-        nodemailerMailgun.sendMail(mgOptions, (err) => {
+        nodemailerMailgun.sendMail(mgOptions, err => {
           if (err) {
             logError(err, 'nodemailer error in sendPwReset');
             return reject({ status: 500, error: 'Error Sending Email' });
@@ -47,4 +46,4 @@ const sendForgotPwEmail = (reqBody, nodemailerMailgun, connection) => {
   });
 };
 
-export default sendForgotPwEmail;
+module.exports = sendForgotPwEmail;

@@ -24,4 +24,4 @@ function addCoinToDB(body, connection) {
   });
 }
 
-export default addCoinToDB;
+module.exports = addCoinToDB;

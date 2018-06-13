@@ -9,8 +9,7 @@ const path = require('path');
 
 function logError(err, description = 'none') {
   console.log(err, description); // eslint-disable-line no-console
-  const message =
-`
+  const message = `
 Time: ${new Date().toString()}
 Description: ${description}
 Error: ${JSON.stringify(err)}
@@ -18,9 +17,11 @@ Error: ${JSON.stringify(err)}
 `;
 
   fs.appendFile(
-    path.join(__dirname, '../', 'server', 'log', 'error.log'),
+    path.join(__dirname, '../', 'log', 'error.log'),
     message,
-    (err) => { if (err) console.log('error logging', err); } // eslint-disable-line no-console
+    err => {
+      if (err) console.log('error logging', err); // eslint-disable-line no-console
+    }
   );
 }
 

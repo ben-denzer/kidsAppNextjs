@@ -1,25 +1,26 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import mysql from 'mysql';
-import dbInfo from '../keys/.dbKeys';
-import userControllerModule from './userController';
+const chai = require('chai');
+const sinon = require('sinon');
+const mysql = require('mysql');
+const dbInfo = require('../keys/.dbKeys');
+const userControllerModule = require('./userController');
 const connection = mysql.createConnection(dbInfo);
 const expect = chai.expect;
 const userController = userControllerModule(connection);
 
-describe('Login BlackBox', function() {
+describe('Login BlackBox', () => {
   let req;
   let res;
   let resStatus;
   let resSend;
   let body;
 
-  beforeEach('setting up req and res', function() {
-    req = {},
-    res = {
-      status() { return this },
+  beforeEach('setting up req and res', () => {
+    req = {}, res = {
+      status() {
+        return this;
+      },
       send() {}
-    }
+    };
     resStatus = sinon.spy(res, 'status');
     resSend = sinon.spy(res, 'send');
 
@@ -36,14 +37,12 @@ describe('Login BlackBox', function() {
     req = Object.assign({}, req, { body });
   });
 
-  describe('Login Blackbox', function() {
-
-    it('should fail and send 400 for incorrect arguments', async function() {
+  describe('Login Blackbox', () => {
+    it('should fail and send 400 for incorrect arguments', async() => {
       req.body = Object.assign({}, req.body, { email: '' });
       try {
         await userController.postToLogin(req, res);
-      }
-      catch(e) {
+      } catch (e) {
         expect(e).to.be.null;
       }
 
@@ -52,12 +51,14 @@ describe('Login BlackBox', function() {
       expect(resStatus.firstCall.args[0]).to.equal(400);
     });
 
-    it('should fail and send 401 for invalid credentials', async function() {
-      req.body = Object.assign({}, req.body, { email: 'sdfkj@sldk.com', password: 'swoief' });
+    it('should fail and send 401 for invalid credentials', async() => {
+      req.body = Object.assign({}, req.body, {
+        email: 'sdfkj@sldk.com',
+        password: 'swoief'
+      });
       try {
         await userController.postToLogin(req, res);
-      }
-      catch(e) {
+      } catch (e) {
         expect(e).to.be.null;
       }
 
@@ -79,13 +80,17 @@ describe('Login BlackBox', function() {
 
       req = Object.assign({}, req, { body });
 
-      connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"', () => {});
+      connection.query(
+        'DELETE FROM parent WHERE email = "XXfake@gmail.comXX"',
+        () => {}
+      );
 
       try {
         await userController.postToSignup(req, res);
         await userController.postToLogin(req, res);
+      } catch (e) {
+        expect(e).to.be.null;
       }
-      catch(e) { expect(e).to.be.null; }
 
       expect(resSend.calledTwice).to.be.true;
       const { token, children } = JSON.parse(resSend.secondCall.args[0]);
@@ -94,11 +99,14 @@ describe('Login BlackBox', function() {
       expect(resStatus.calledTwice).to.be.true;
       expect(resStatus.secondCall.args[0]).to.equal(200);
       expect(logError.called).to.be.false;
-      connection.query('DELETE FROM parent WHERE email = "XXfake@gmail.comXX"', () => {});
+      connection.query(
+        'DELETE FROM parent WHERE email = "XXfake@gmail.comXX"',
+        () => {}
+      );
     });
   });
 
-  after('cleanup', function() {
+  after('cleanup', () => {
     connection.end();
   });
 });

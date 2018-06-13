@@ -8,7 +8,7 @@ function changePasswordInDb(id, hash, connection) {
     connection.query(
       'UPDATE parent SET password = ? WHERE parent_id = ?',
       [ hash, id ],
-      (err) => {
+      err => {
         if (err) {
           logError(err, 'DB Error in changePasswordInDb');
           return reject({ status: 500, error: 'Server Error' });
@@ -20,4 +20,4 @@ function changePasswordInDb(id, hash, connection) {
   });
 }
 
-export default changePasswordInDb;
+module.exports = changePasswordInDb;

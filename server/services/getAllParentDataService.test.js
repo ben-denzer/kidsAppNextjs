@@ -1,7 +1,7 @@
-import chai from 'chai';
-import sinon from 'sinon';
+const chai = require('chai');
+const sinon = require('sinon');
 const expect = chai.expect;
 
-describe('Get All Parent Data Service', function() {
+describe('Get All Parent Data Service', () => {
   it('should have tests');
 });
