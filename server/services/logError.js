@@ -4,8 +4,9 @@ const path = require('path');
 // in development, keep logs in same project. In production put logs outside
 // so it doesn't get overwritten/deleted
 
-// const dev = process.env.NODE_ENV === 'development';
-// const logPath = dev ? './server' : '../';
+const dev = process.env.NODE_ENV === 'development';
+console.log('dev is ', dev); // eslint-disable-line
+const logPath = dev ? '../' : '../../../';
 
 function logError(err, description = 'none') {
   console.log(err, description); // eslint-disable-line no-console
@@ -17,7 +18,7 @@ Error: ${JSON.stringify(err)}
 `;
 
   fs.appendFile(
-    path.join(__dirname, '../', 'log', 'error.log'),
+    path.join(__dirname, logPath, 'log', 'error.log'),
     message,
     err => {
       if (err) console.log('error logging', err); // eslint-disable-line no-console
