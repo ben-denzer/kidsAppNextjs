@@ -22,7 +22,7 @@ import {
 
 export default function OnlineBingoPage(props) {
   if (!props.allWords.length) return null;
-  
+
   const {
     activeWords,
     allWords,
@@ -30,21 +30,16 @@ export default function OnlineBingoPage(props) {
     currentIndex,
     handleCheck,
     mute,
-    noWinner,
     openOptions,
     paused,
     pauseGame,
-    showPrize,
-    size,
     spinnerClassName,
-    toggleModal,
-    toggleSound,
-    wonGame,
+    toggleSound
   } = props;
 
   let allBoxes = [];
   for (let i = 0; i < activeWords.length; i++) {
-    const row = activeWords[i].map(a => (
+    const row = activeWords[i].map(a =>
       <Box
         key={a.word}
         className={a.checked ? 'checked' : ''}
@@ -55,7 +50,7 @@ export default function OnlineBingoPage(props) {
       >
         {a.word}
       </Box>
-    ));
+    );
     allBoxes.push(<BoxRow key={i}>{row}</BoxRow>);
   }
 
@@ -98,7 +93,7 @@ export default function OnlineBingoPage(props) {
         />
       </PageContainer>
       <Modal
-        Body={() => (
+        Body={() =>
           <div>
             <img
               src="/static/img/playButton.png"
@@ -106,7 +101,7 @@ export default function OnlineBingoPage(props) {
               onClick={pauseGame}
             />
           </div>
-        )}
+        }
         modalOpen={paused}
         small={true}
         toggleModal={pauseGame}

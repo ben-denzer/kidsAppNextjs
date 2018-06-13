@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
-import MainLayout from '../MainLayout';
 import changePw from '../../api/changePw';
 
 import {
@@ -22,7 +20,7 @@ class ChangePwForm extends Component {
       newPassword: '',
       newPw2: '',
       success: null
-    }
+    };
 
     this.changePwSuccess = this.changePwSuccess.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -39,7 +37,7 @@ class ChangePwForm extends Component {
     });
     setTimeout(() => {
       this.props.toggleChangePwForm();
-      this.setState({ success: null })
+      this.setState({ success: null });
     }, 3000);
   }
 
@@ -63,13 +61,12 @@ class ChangePwForm extends Component {
       return;
     }
     changePw({ currentPassword, newPassword, newPw2, token })
-      .then(success => this.changePwSuccess())
+      .then(() => this.changePwSuccess())
       .catch(err => this.setState({ error: err }));
   }
 
   render() {
     const { currentPassword, error, newPassword, newPw2, success } = this.state;
-    const { changePwFormOpen } = this.props;
     return (
       <AccountForm className="smallForm centered">
         <FormLabel>Current Password</FormLabel>
@@ -93,8 +90,8 @@ class ChangePwForm extends Component {
           type="password"
           value={newPw2}
         />
-        { error && <FormErrorBox>{error}</FormErrorBox> }
-        { success && <FormSuccessBox>Password Changed</FormSuccessBox> }
+        {error && <FormErrorBox>{error}</FormErrorBox>}
+        {success && <FormSuccessBox>Password Changed</FormSuccessBox>}
         <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
       </AccountForm>
     );

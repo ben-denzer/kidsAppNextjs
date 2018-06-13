@@ -8,8 +8,7 @@ import {
   LogoutModalBody,
   NavBar,
   NavItem,
-  NavItemsContainer,
-  SmallTextLink
+  NavItemsContainer
 } from './NavStyles';
 
 export default class Nav extends Component {
@@ -27,9 +26,9 @@ export default class Nav extends Component {
 
   componentDidMount() {
     if (this.props.loggedIn) {
-      this.setState({ allLinks: [...this.pages(), ...this.loggedInLinks()] });
+      this.setState({ allLinks: [ ...this.pages(), ...this.loggedInLinks() ] });
     } else {
-      this.setState({ allLinks: [...this.pages(), ...this.noUserLinks()] });
+      this.setState({ allLinks: [ ...this.pages(), ...this.noUserLinks() ] });
     }
   }
 
@@ -43,7 +42,7 @@ export default class Nav extends Component {
   noUserLinks() {
     return [
       { name: 'Log In', href: '/account/login' },
-      { name: 'Sign Up', href: '/account/signup'}
+      { name: 'Sign Up', href: '/account/signup' }
     ];
   }
 
@@ -68,11 +67,16 @@ export default class Nav extends Component {
     let navItems = [];
 
     if (allLinks.length) {
-      navItems = allLinks.map(a => (
-        <NavItem key={a.name} onClick={a.name === 'Log Out' ? this.showLogoutModal : null}>
-          <Link prefetch href={a.href}><a onClick={a.callback} title={a.name}>{a.name}</a></Link>
+      navItems = allLinks.map(a =>
+        <NavItem
+          key={a.name}
+          onClick={a.name === 'Log Out' ? this.showLogoutModal : null}
+        >
+          <Link prefetch href={a.href}>
+            <a onClick={a.callback} title={a.name}>{a.name}</a>
+          </Link>
         </NavItem>
-      ));
+      );
     }
 
     return [
@@ -90,7 +94,7 @@ export default class Nav extends Component {
       </NavBar>,
       <Modal
         key="b"
-        Body={() => (
+        Body={() =>
           <LogoutModalBody>
             <p>Are You Sure You Want To Sign Out?</p>
             <LogoutButtonRow>
@@ -100,14 +104,12 @@ export default class Nav extends Component {
               >
                 Yes
               </button>
-              <button
-                onClick={() => this.setState({ showLogoutModal: false })}
-              >
+              <button onClick={() => this.setState({ showLogoutModal: false })}>
                 Cancel
               </button>
             </LogoutButtonRow>
           </LogoutModalBody>
-        )}
+        }
         modalOpen={showLogoutModal}
         small={false}
         toggleModal={() => this.setState({ showLogoutModal: false })}

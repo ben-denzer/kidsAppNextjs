@@ -1,5 +1,4 @@
 import AnalyticsWrapper from '../../client/containers/AnalyticsWrapper';
-import MainLayout from '../../client/components/MainLayout';
 import ForgotPwForm from '../../client/components/accountForms/ForgotPwForm';
 import Head from 'next/head';
 

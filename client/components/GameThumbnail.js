@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { color1, color3 } from '../config/globalStyles';
 
 export default function GameThumbnail(props) {
   const { img, title } = props;

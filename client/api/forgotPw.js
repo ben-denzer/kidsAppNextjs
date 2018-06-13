@@ -16,8 +16,8 @@ function forgotPw(body) {
 
     fetch(`${baseUserUrl}/forgotPw`, options)
       .then(res => {
-        if (res.ok) return resolve()
-        if (res.status === 401) return reject('The Email Entered Is Not On File');
+        if (res.ok) return resolve();
+        if (res.status === 401) { return reject('The Email Entered Is Not On File'); }
         return reject('There Was An Error, Please Try Again');
       })
       .catch(() => reject('There Was An Error, Please Try Again'));

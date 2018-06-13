@@ -1,5 +1,4 @@
 import { baseUserUrl } from './apiConfig';
-import { setInStorage } from '../utils/mswLocalStorage';
 
 function userLogin(body) {
   const myHeaders = new Headers({
@@ -15,8 +14,10 @@ function userLogin(body) {
 
     fetch(`${baseUserUrl}/login`, options)
       .then(res => {
-        if (res.ok) return resolve(res.json())
-        if (res.status === 401) return reject('The Email Or Password You Entered Is Incorrect');
+        if (res.ok) return resolve(res.json());
+        if (res.status === 401) {
+          return reject('The Email Or Password You Entered Is Incorrect');
+        }
         return reject('There Was An Error, Please Try Again');
       })
       .catch(() => reject('There Was An Error, Please Try Again'));

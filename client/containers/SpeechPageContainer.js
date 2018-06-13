@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import SpeechPage from '../components/Speech/SpeechPage';
-import defaultWordList from '../config/defaultSightWords';
 import shuffle from '../utils/shuffle';
 
 class SpeachPageContainer extends Component {
@@ -24,14 +23,14 @@ class SpeachPageContainer extends Component {
   componentDidMount() {
     if (this.props.wordList.length) {
       this.setupSpeachRecognition();
-      this.setState({ shuffledWords: shuffle([...this.props.wordList]) });
+      this.setState({ shuffledWords: shuffle([ ...this.props.wordList ]) });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.wordList.length && nextProps.wordList.length) {
       this.setupSpeachRecognition(nextProps.wordList);
-      this.setState({ shuffledWords: shuffle([...nextProps.wordList]) });
+      this.setState({ shuffledWords: shuffle([ ...nextProps.wordList ]) });
     }
   }
 
@@ -80,7 +79,7 @@ class SpeachPageContainer extends Component {
   }
 
   displayError(
-    err = "Sorry, this browser doesn't support speech recognition. Please try again with Google Chrome. (If you are on an IPhone, switching browsers won't help.)"
+    err = 'Sorry, this browser doesn\'t support speech recognition. Please try again with Google Chrome. (If you are on an IPhone, switching browsers won\'t help.)'
   ) {
     this.setState({ error: err });
   }
@@ -90,18 +89,19 @@ class SpeachPageContainer extends Component {
     const newWordIndex = currentWordIndex + 1;
     if (newWordIndex < shuffledWords.length) {
       return newWordIndex;
-    } else {
-      const currentWord = shuffledWords[currentWordIndex];
-      let newShuffle = [];
-
-      do {
-        // don't have the same word twice in a row
-        newShuffle = shuffle(shuffledWords);
-      } while (newShuffle[0] === currentWord);
-
-      this.setState({ shuffledWords: newShuffle });
-      return 0;
     }
+    const currentWord = shuffledWords[currentWordIndex];
+    let newShuffle = [];
+
+    do {
+
+      // don't have the same word twice in a row
+      newShuffle = shuffle(shuffledWords);
+    } while (newShuffle[0] === currentWord);
+
+    this.setState({ shuffledWords: newShuffle });
+    return 0;
+
   }
 
   listen() {
@@ -127,9 +127,12 @@ class SpeachPageContainer extends Component {
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
-    const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechGrammarList =
+      window.SpeechGrammarList || window.webkitSpeechGrammarList;
+    const SpeechRecognitionEvent =
+      window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
     this.recognition = new SpeechRecognition();
     this.recognition.lang = 'en-US';

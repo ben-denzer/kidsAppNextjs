@@ -5,7 +5,9 @@ export default function SpeechHelpText() {
     <div id="helpTextContainer">
       <strong>If The Page Seems Broken</strong>
       <p>
-        <strong>This game only works in Google Chrome, and it also requires you to have a microphone.</strong>
+        <strong>
+          This game only works in Google Chrome, and it also requires you to have a microphone.
+        </strong>
         <br />
         <a href="https://www.google.com/chrome/browser/desktop/index.html">
           Google Chrome

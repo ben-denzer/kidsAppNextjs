@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import makeThumbnailGrid from '../../utils/makeThumbnailGrid';
+import React from 'react';
 import { PageContainer } from '../GameStyles';
 import {
   ChangeSettings,
-  DelayBox,
   Option,
-  OptionHeadline,
   OptionsContainer,
   OptionTitle,
   Restart,
@@ -39,7 +36,7 @@ function OnlineBingoStartScreen(props) {
     );
   }
 
-  const sizeOptions = [[3, 3], [5, 5], [7, 7]];
+  const sizeOptions = [ [ 3, 3 ], [ 5, 5 ], [ 7, 7 ] ];
   const gameOptions = sizeOptions.map(a => {
     return (
       <Option
@@ -52,8 +49,8 @@ function OnlineBingoStartScreen(props) {
     );
   });
 
-  const delayValues = [7, 10, 15, 20, 25, 30];
-  const delayOptions = delayValues.map(a => (
+  const delayValues = [ 7, 10, 15, 20, 25, 30 ];
+  const delayOptions = delayValues.map(a =>
     <Option
       key={a}
       onClick={() => delayChange(a)}
@@ -62,7 +59,7 @@ function OnlineBingoStartScreen(props) {
     >
       <OptionTitle>{`${a}sec`}</OptionTitle>
     </Option>
-  ));
+  );
 
   return (
     <PageContainer>

@@ -30,12 +30,12 @@ function validateAccount(body) {
       .then(json => {
         if (json.membershipValid) {
           return resolve({ membershipValid: true });
-        } else {
-          console.log(json, 'unknown error');
-          setInStorage('token', null);
-          window.location = '/account/login';
-          return reject({ membershipValid: false });
         }
+        console.log(json, 'unknown error');
+        setInStorage('token', null);
+        window.location = '/account/login';
+        return reject({ membershipValid: false });
+
       })
       .catch(() => reject('There Was An Error, Please Try Again'));
   });

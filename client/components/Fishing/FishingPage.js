@@ -5,8 +5,7 @@ import {
   CoinImage,
   MuteButton,
   PageContainer,
-  ScoreContainer,
-  SettingsButton
+  ScoreContainer
 } from '../GameStyles';
 
 import { AboveWater, BelowWater, Fish, FishingBox } from './FishingStyles';

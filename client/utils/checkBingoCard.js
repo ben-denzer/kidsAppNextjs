@@ -1,5 +1,6 @@
 export default function checkBingoCard(x, y, wordArray, size) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
+
     // Check the rows and columns first
     const fullRow = wordArray[y].filter(a => a.checked).length === size;
     const fullColumn = wordArray.filter(a => a[x].checked).length === size;

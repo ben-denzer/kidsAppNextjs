@@ -15,7 +15,7 @@ function ChildThumb(props) {
         <ChildIcon src="/static/img/goldCoin.png" />
       </IconContainer>
     </ChildThumbContainer>
-  )
+  );
 }
 
 export default ChildThumb;

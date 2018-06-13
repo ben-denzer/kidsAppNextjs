@@ -63,7 +63,7 @@ class FlashcardsPage extends Component {
 
       const wordList = words.map(this.normalizeWord);
       this.setState({ wordList });
-    } catch(e) {
+    } catch (e) {
       this.useDefaultWords();
     }
   }
@@ -80,7 +80,7 @@ class FlashcardsPage extends Component {
         if (a.word === b.word) return 0;
         return a.word.toLowerCase() < b.word.toLowerCase() ? -1 : 1;
       })
-      .map(a => (
+      .map(a =>
         <WordToggle key={a.word + Math.random().toString()}>
           <input
             type="checkbox"
@@ -90,7 +90,7 @@ class FlashcardsPage extends Component {
           />
           <label>{a.word}</label>
         </WordToggle>
-      ));
+      );
 
     return (
       <PageContainer>

@@ -5,7 +5,8 @@ import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import checkBingoCard from '../utils/checkBingoCard';
 import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
-import OnlineBingoStartScreen from '../components/OnlineBingo/OnlineBingoStartScreen';
+import OnlineBingoStartScreen
+  from '../components/OnlineBingo/OnlineBingoStartScreen';
 
 class OnlineBingoContainer extends Component {
   constructor() {
@@ -32,9 +33,10 @@ class OnlineBingoContainer extends Component {
       'openOptions',
       'pauseGame',
       'sayWord',
+
       // 'setupSpeech',
       'sizeChange',
-      'startGame',
+      'startGame'
     ];
     boundFunctions.forEach(a => this[a] = this[a].bind(this));
 
@@ -104,11 +106,11 @@ class OnlineBingoContainer extends Component {
 
   makeBoard(wordList = this.props.wordList) {
     const { size } = this.state;
-    const wordCount = (size * size) + Math.floor(size / 2);
+    const wordCount = size * size + Math.floor(size / 2);
     const allWords = this.props.fillWordArray(wordList, wordCount);
-    const shuffledWords = shuffle([...allWords]);
+    const shuffledWords = shuffle([ ...allWords ]);
     const gameWords = shuffledWords.slice(0, wordCount);
-    const tempWords = shuffle([...gameWords]);
+    const tempWords = shuffle([ ...gameWords ]);
     const middle = Math.floor(size / 2);
 
     const activeWords = [];

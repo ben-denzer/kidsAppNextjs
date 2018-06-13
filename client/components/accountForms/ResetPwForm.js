@@ -40,7 +40,8 @@ class ResetPwForm extends Component {
       .then(() => {
         this.setState({ success: true });
         setTimeout(() => window.location = '/account/login', 2000);
-      }).catch(error => this.setState({ error }));
+      })
+      .catch(error => this.setState({ error }));
   }
 
   render() {
@@ -63,9 +64,12 @@ class ResetPwForm extends Component {
             type="password"
             value={p2}
           />
-          { this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox> }
-          { this.state.success && <FormSuccessBox>Your Password Has Been Reset</FormSuccessBox> }
-          <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
+          {this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox>}
+          {this.state.success &&
+            <FormSuccessBox>Your Password Has Been Reset</FormSuccessBox>}
+          <FormButton type="submit" onClick={this.submitForm}>
+            Submit
+          </FormButton>
         </AccountForm>
       </div>
     );

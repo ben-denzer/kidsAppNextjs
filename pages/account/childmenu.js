@@ -1,5 +1,4 @@
 import AnalyticsWrapper from '../../client/containers/AnalyticsWrapper';
-import MainLayout from '../../client/components/MainLayout';
 import ChildMenu from '../../client/components/ChildMenu/ChildMenu';
 import Head from 'next/head';
 

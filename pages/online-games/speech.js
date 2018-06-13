@@ -1,4 +1,3 @@
-import MainLayout from '../../client/components/MainLayout';
 import SpeechPageContainer from '../../client/containers/SpeechPageContainer';
 import AnalyticsWrapper from '../../client/containers/AnalyticsWrapper';
 import Head from 'next/head';

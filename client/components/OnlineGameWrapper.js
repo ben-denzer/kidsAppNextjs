@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import MainLayout from './MainLayout';
 import defaultWordList from '../config/defaultSightWords';
-import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import getWordsForChild from '../api/getWordsForChild';
 import makeAddCoinRequest from '../api/makeAddCoinRequest';

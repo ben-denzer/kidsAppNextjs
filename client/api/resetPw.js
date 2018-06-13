@@ -22,11 +22,11 @@ function resetPw(body) {
     };
 
     fetch(`${baseUserUrl}/resetPw`, options)
-    .then(res => {
-      if (res.ok) return resolve()
-      return reject('There Was An Error, Please Try Again');
-    })
-    .catch(() => reject('There Was An Error, Please Try Again'));
+      .then(res => {
+        if (res.ok) return resolve();
+        return reject('There Was An Error, Please Try Again');
+      })
+      .catch(() => reject('There Was An Error, Please Try Again'));
   });
 }
 

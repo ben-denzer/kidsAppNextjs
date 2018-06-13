@@ -29,7 +29,8 @@ function getAllParentData() {
           }
         }
         resolve(res.json());
-      }).catch(e => reject('There Was An Error, Please Try Again'));
+      })
+      .catch(e => reject('There Was An Error, Please Try Again'));
   });
 }
 

@@ -22,7 +22,11 @@ function removeWordFromDB(body) {
     fetch(`${baseUserUrl}/removeWord`, options)
       .then(res => {
         if (res.ok) return resolve('Success');
-        if (res.status === 401) return reject('Your Session Has Expired, Please Log Out And Log Back In');
+        if (res.status === 401) {
+          return reject(
+            'Your Session Has Expired, Please Log Out And Log Back In'
+          );
+        }
         return reject('There Was An Error, Please Try Again');
       })
       .catch(() => reject('There Was An Error, Please Try Again'));

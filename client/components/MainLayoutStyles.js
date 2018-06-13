@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { headerHeight } from './Header/HeaderStyles';
-import { color2, color4, mainBg } from '../config/globalStyles';
-
-const mobileBgColor = 'lightskyblue';
+import { mainBg } from '../config/globalStyles';
 
 export const ErrorBox = styled.div`
   position: fixed;

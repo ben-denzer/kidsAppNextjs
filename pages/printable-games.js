@@ -1,7 +1,6 @@
 import PrintableGamesPage
   from '../client/components/PrintableGames/PrintableGamesPage';
 import AnalyticsWrapper from '../client/containers/AnalyticsWrapper';
-import MainLayout from '../client/components/MainLayout';
 import Head from 'next/head';
 
 export default function printableGames(props) {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
-import shuffle from '../utils/shuffle';
 import FishingPage from '../components/Fishing/FishingPage';
 
 class FishingContainer extends Component {

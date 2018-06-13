@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
 import MainLayout from '../components/MainLayout';
 import AccountHome from '../components/AccountHome/AccountHome';
 import { getFromStorage } from '../utils/mswLocalStorage';
@@ -23,7 +22,7 @@ class AccountContainer extends Component {
       newWordError: '',
       newWordVal: '',
       parentData: {},
-      wordList: [],
+      wordList: []
     };
 
     this.clearWordList = this.clearWordList.bind(this);
@@ -50,12 +49,17 @@ class AccountContainer extends Component {
       }
     }
     if (wordList.length >= 100) {
-      this.setState({ newWordError: 'You Already Have The Maximum Allowed Words' });
+      this.setState({
+        newWordError: 'You Already Have The Maximum Allowed Words'
+      });
       return;
     }
 
     // optimistic update with temporary word_id
-    const tempWordList = [...wordList, { word_id: Date.now(), word_text: newWordVal }];
+    const tempWordList = [
+      ...wordList,
+      { word_id: Date.now(), word_text: newWordVal }
+    ];
     this.setState({ wordList: tempWordList });
 
     addNewWord({ childId: childOpen, word: newWordVal.trim() })
@@ -66,7 +70,12 @@ class AccountContainer extends Component {
         });
         this.setState({ newWordVal: '', wordList: updatedWordList });
       })
-      .catch(e => this.setState({ newWordError: 'Error Saving Word', wordList: wordList.slice(0, -1) }));
+      .catch(e =>
+        this.setState({
+          newWordError: 'Error Saving Word',
+          wordList: wordList.slice(0, -1)
+        })
+      );
   }
 
   clearWordList() {
@@ -75,20 +84,22 @@ class AccountContainer extends Component {
 
   fetchParentData() {
     getAllParentData()
-    .then(parentData => {
-      const expirationDate = parentData[0].expiration_utc;
-      const currentDate = new Date();
-      const accountExpired = expirationDate < currentDate;
-      const children = accountExpired ? [] : getFromStorage('children');
-      this.setState({ accountExpired, children, parentData: parentData[0] })
-    })
-    .catch(error => {
-      if (typeof error === 'string') {
-        this.setState({ error });
-      } else {
-        this.setState({ error: 'There Was An Error Getting Your Data, Please Try Again' });
-      }
-    });
+      .then(parentData => {
+        const expirationDate = parentData[0].expiration_utc;
+        const currentDate = new Date();
+        const accountExpired = expirationDate < currentDate;
+        const children = accountExpired ? [] : getFromStorage('children');
+        this.setState({ accountExpired, children, parentData: parentData[0] });
+      })
+      .catch(error => {
+        if (typeof error === 'string') {
+          this.setState({ error });
+        } else {
+          this.setState({
+            error: 'There Was An Error Getting Your Data, Please Try Again'
+          });
+        }
+      });
   }
 
   handleInput(e) {
@@ -105,7 +116,7 @@ class AccountContainer extends Component {
         });
         this.setState({ wordList });
       })
-      .catch((e) => this.setState({ newWordError: 'Error Deleting Word' }));
+      .catch(e => this.setState({ newWordError: 'Error Deleting Word' }));
   }
 
   saveInput(inputId) {
@@ -130,10 +141,14 @@ class AccountContainer extends Component {
             if (wordOne === wordTwo) return 0;
             return wordOne < wordTwo ? -1 : 1;
           });
-          this.setState({ wordList, loadingWords: false, newWordVal: '' })
+          this.setState({ wordList, loadingWords: false, newWordVal: '' });
         })
         .catch(e => {
-          this.setState({error: 'Error Loading Words', loadingWords: false, newWordVal: '' });
+          this.setState({
+            error: 'Error Loading Words',
+            loadingWords: false,
+            newWordVal: ''
+          });
         });
     }
   }

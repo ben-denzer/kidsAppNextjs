@@ -25,7 +25,7 @@ class LoginForm extends Component {
       error: '',
       password: '',
       rememberMe: false
-    }
+    };
 
     this.handleCheck = this.handleCheck.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -61,7 +61,8 @@ class LoginForm extends Component {
         if (rememberMe) data = Object.assign(data, { email, password });
         setUserInStorage(data, rememberMe);
         window.location = '/account/childmenu';
-      }).catch(error => this.setState({ error }));
+      })
+      .catch(error => this.setState({ error }));
   }
 
   render() {
@@ -95,8 +96,10 @@ class LoginForm extends Component {
             <FormLabel>Remember Me</FormLabel>
           </RememberMeContainer>
 
-          { this.state.error && <FormErrorBox>{error}</FormErrorBox> }
-          <FormButton type="submit" onClick={this.submitForm}>Log In</FormButton>
+          {this.state.error && <FormErrorBox>{error}</FormErrorBox>}
+          <FormButton type="submit" onClick={this.submitForm}>
+            Log In
+          </FormButton>
           <FormExtraOptions>
             <Link prefetch href={'/account/signup'}>
               <a title="Sign Up">Sign Up</a>

@@ -1,12 +1,5 @@
 import styled from 'styled-components';
-import {
-  color1,
-  color2,
-  color3,
-  color4,
-  light,
-  textColor
-} from '../../config/globalStyles';
+import { color1, color2, light, textColor } from '../../config/globalStyles';
 
 const formStatusBox = bg => {
   return `
@@ -17,7 +10,7 @@ const formStatusBox = bg => {
     padding: 4px;
     text-align: center;
   `;
-}
+};
 
 export const AccountForm = styled.form`
   display: flex;

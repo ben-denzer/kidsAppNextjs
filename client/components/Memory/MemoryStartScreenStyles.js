@@ -6,7 +6,7 @@ export const Card = styled.div`
   width: 10px;
   margin: 2px;
   background-size: cover;
-  backgroung-position: cover;
+  background-position: cover;
 `;
 
 export const CardBack = styled.div`

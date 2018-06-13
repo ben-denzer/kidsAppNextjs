@@ -22,7 +22,7 @@ class ForgotPwForm extends Component {
       error: '',
       password: '',
       success: false
-    }
+    };
 
     this.handleInput = this.handleInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -42,12 +42,15 @@ class ForgotPwForm extends Component {
     forgotPw({ email })
       .then(() => {
         this.setState({ success: true });
-        setTimeout(() => { window.location = '/account/login' }, 5000 );
-      }).catch(error => this.setState({ error }));
+        setTimeout(() => {
+          window.location = '/account/login';
+        }, 5000);
+      })
+      .catch(error => this.setState({ error }));
   }
 
   render() {
-    const { email, error, success } = this.state;
+    const { email, error } = this.state;
     return (
       <div className="whiteBox">
         <AccountForm>
@@ -60,9 +63,12 @@ class ForgotPwForm extends Component {
             value={email}
           />
 
-          { this.state.error && <FormErrorBox>{error}</FormErrorBox> }
-          { this.state.success && <FormSuccessBox>An Email Has Been Sent</FormSuccessBox> }
-          <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
+          {this.state.error && <FormErrorBox>{error}</FormErrorBox>}
+          {this.state.success &&
+            <FormSuccessBox>An Email Has Been Sent</FormSuccessBox>}
+          <FormButton type="submit" onClick={this.submitForm}>
+            Submit
+          </FormButton>
           <FormExtraOptions>
             <Link prefetch href={'/account/login'}>
               <a title="Log In">Log In</a>

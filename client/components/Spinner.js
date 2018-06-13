@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 function Spinner(props) {
@@ -19,11 +19,11 @@ const SpinnerImg = styled.img`
   top: calc(50% - 75px);
   right: calc(50% - 75px);
   z-index: 20;
-  
+
   &.hide {
     display: none;
   }
-  
+
   &.fadeOut {
     top: 10px;
     right: 10px;

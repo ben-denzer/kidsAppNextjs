@@ -1,11 +1,7 @@
 import React from 'react';
 import WordContainer from './WordContainer';
 import { FormErrorBox } from '../accountForms/formStyles';
-import {
-  EditChildContainer,
-  ExpandButton,
-  WordBox
-} from './EditChildStyles';
+import { EditChildContainer, ExpandButton, WordBox } from './EditChildStyles';
 
 function EditChild(props) {
   const {
@@ -27,16 +23,10 @@ function EditChild(props) {
   let words = null;
   if (wordList.length) {
     words = wordList.map(a => {
-      return(
-        <WordContainer
-          key={a.word_id}
-          word={a}
-          removeWord={removeWord}
-        />
-      );
+      return <WordContainer key={a.word_id} word={a} removeWord={removeWord} />;
     });
   } else if (thisChildIsOpen && loadingWords) {
-    words = <p key="loading">Loading...</p>
+    words = <p key="loading">Loading...</p>;
   }
 
   return (
@@ -57,7 +47,7 @@ function EditChild(props) {
       <WordBox>
         {words}
         <h4>Add New Word</h4>
-        { newWordError && <FormErrorBox>{newWordError}</FormErrorBox> }
+        {newWordError && <FormErrorBox>{newWordError}</FormErrorBox>}
         <input
           data-input-id="newWordVal"
           value={newWordVal}

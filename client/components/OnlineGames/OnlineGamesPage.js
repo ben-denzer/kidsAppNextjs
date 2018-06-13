@@ -135,4 +135,4 @@ const Headline = styled.div`
   padding-right: 10px;
 `;
 
-export default MainLayout(OnlineGamesContainer)
+export default MainLayout(OnlineGamesContainer);

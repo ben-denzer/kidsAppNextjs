@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { headerHeight } from './Header/HeaderStyles';
 import { color1 } from '../config/globalStyles';
 
 export const CoinImage = styled.img`

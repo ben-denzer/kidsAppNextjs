@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-import { color1, color2, color3, color4 } from '../../config/globalStyles';
+import { color1, color2 } from '../../config/globalStyles';
 
 export const Card = styled.div`
   height: 10px;
   width: 10px;
   margin: 2px;
   background-size: cover;
-  backgroung-position: cover;
+  background-position: cover;
 `;
 
 export const CardRow = styled.div`

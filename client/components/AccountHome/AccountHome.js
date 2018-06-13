@@ -16,26 +16,19 @@ function AccountHome(props) {
   const {
     accountExpired,
     changePwFormOpen,
-    error,
     loading,
     parentData,
     toggleChangePwForm
   } = props;
 
   const children = props.children.map(a => {
-    return (
-      <EditChild
-        key={a.child_id}
-        child={a}
-        {...props}
-      />
-    );
+    return <EditChild key={a.child_id} child={a} {...props} />;
   });
 
   return (
     <div className="whiteBox">
       <h1>My Account</h1>
-      { props.error && <ErrorBox>{props.error}</ErrorBox> }
+      {props.error && <ErrorBox>{props.error}</ErrorBox>}
       <div className="twoCols">
         <div>
           <DetailTitle>Details</DetailTitle>
@@ -45,7 +38,9 @@ function AccountHome(props) {
           </DetailRow>
           <DetailRow>
             <DetailLabel>Member Since: </DetailLabel>
-            <DetailText>{new Date(parentData.signup_utc).toLocaleDateString()}</DetailText>
+            <DetailText>
+              {new Date(parentData.signup_utc).toLocaleDateString()}
+            </DetailText>
           </DetailRow>
           <DetailRow>
             <DetailLabel>Child Accounts: </DetailLabel>
@@ -53,20 +48,27 @@ function AccountHome(props) {
           </DetailRow>
           <DetailRow>
             <DetailLabel>Membership Expiration: </DetailLabel>
-            <DetailText>{new Date(parentData.expiration_utc).toLocaleDateString()}</DetailText>
-            <SmallText>Beta: Contact <a href="mailto:ben@bdenzer.com">ben@bdenzer.com</a> to extend membership</SmallText>
+            <DetailText>
+              {new Date(parentData.expiration_utc).toLocaleDateString()}
+            </DetailText>
+            <SmallText>
+              Beta: Contact
+              {' '}
+              <a href="mailto:ben@bdenzer.com">ben@bdenzer.com</a>
+              {' '}
+              to extend membership
+            </SmallText>
           </DetailRow>
           <ButtonContainer>
-            <FormButton
-              onClick={toggleChangePwForm}
-              hidden={changePwFormOpen}
-            >
+            <FormButton onClick={toggleChangePwForm} hidden={changePwFormOpen}>
               Change Password
             </FormButton>
           </ButtonContainer>
         </div>
         <div>
-          {accountExpired && !loading ? <h2>Account Expired</h2> : <h2>Custom Word List</h2>}
+          {accountExpired && !loading
+            ? <h2>Account Expired</h2>
+            : <h2>Custom Word List</h2>}
           {children}
         </div>
       </div>

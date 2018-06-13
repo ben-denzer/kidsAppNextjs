@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  DeleteWordButton,
-  WordRow
-} from './WordContainerStyles';
+import { DeleteWordButton, WordRow } from './WordContainerStyles';
 
 class WordContainer extends Component {
   constructor(props) {
@@ -37,10 +34,7 @@ class WordContainer extends Component {
 
     return (
       <WordRow className={waitingToDelete ? 'inactive' : ''}>
-        <DeleteWordButton
-          data-word-id={wordId}
-          onClick={this.handleClick}
-        >
+        <DeleteWordButton data-word-id={wordId} onClick={this.handleClick}>
           {waitingToDelete ? 'UNDO' : 'X'}
         </DeleteWordButton>
         {wordText}

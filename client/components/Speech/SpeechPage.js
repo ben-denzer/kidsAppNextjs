@@ -19,15 +19,13 @@ function SpeechPage(props) {
     currentWordIndex,
     error,
     helpOpen,
-    listen,
     mute,
-    score,
     showPrize,
     shuffledWords,
     skipWord,
     spinnerClassName,
     toggleHelp,
-    toggleSound,
+    toggleSound
   } = props;
 
   const WordDisplay = showPrize
