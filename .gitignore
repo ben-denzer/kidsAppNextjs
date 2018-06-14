@@ -1,3 +1,4 @@
 node_modules
 .next
 server/keys
+server/log/error.log

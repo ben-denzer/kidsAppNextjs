@@ -5,7 +5,6 @@ const path = require('path');
 // so it doesn't get overwritten/deleted
 
 const dev = process.env.NODE_ENV === 'development';
-console.log('dev is ', dev); // eslint-disable-line
 const logPath = dev ? '../' : '../../../';
 
 function logError(err, description = 'none') {
