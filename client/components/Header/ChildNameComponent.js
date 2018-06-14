@@ -11,22 +11,23 @@ function ChildNameComponent(props) {
 
   if (!activeChildName) {
     return (
-      <Link prefetch href="/account/childmenu">
-        <SmallTextLink>Select Child</SmallTextLink>
-      </Link>
+      <NavItem>
+        <strong>PLAYING AS GUEST</strong>
+        &nbsp;
+        <Link prefetch href="/account/childmenu">
+          <SmallTextLink>Select Child</SmallTextLink>
+        </Link>
+      </NavItem>
     );
   }
 
   return (
     <NavItem key={activeChildName}>
       <strong>{activeChildName}</strong>&nbsp;
-      {
-        childCount > 1 && (
-          <Link prefetch href="/account/childmenu">
-            <SmallTextLink>change</SmallTextLink>
-          </Link>
-        )
-      }
+      {childCount > 1 &&
+        <Link prefetch href="/account/childmenu">
+          <SmallTextLink>change</SmallTextLink>
+        </Link>}
     </NavItem>
   );
 }

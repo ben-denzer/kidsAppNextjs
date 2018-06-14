@@ -10,6 +10,7 @@ const logPath = dev ? '../' : '../../../';
 function logError(err, description = 'none') {
   console.log(err, description); // eslint-disable-line no-console
   const message = `
+${dev ? 'FROM DEV - DISCARD...' : ''}
 Time: ${new Date().toString()}
 Description: ${description}
 Error: ${JSON.stringify(err)}

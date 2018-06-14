@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import defaultWordList from '../config/defaultSightWords';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
+import { addTempCoin, getTempCoins } from '../utils/tempUser';
 import getWordsForChild from '../api/getWordsForChild';
 import makeAddCoinRequest from '../api/makeAddCoinRequest';
 
@@ -35,8 +36,13 @@ const OnlineGameWrapper = WrappedComponent => {
 
     addCoin() {
       const { activeChild, children, coins } = this.state;
-      const newCoins = coins + 1;
+      const newCoins = Number(coins) + 1;
       this.addCoinUi(newCoins);
+
+      if (!activeChild) {
+        addTempCoin();
+        return;
+      }
 
       const updatedChildren = children.map(a => {
         if (Number(a.child_id) === Number(activeChild)) {
@@ -87,8 +93,8 @@ const OnlineGameWrapper = WrappedComponent => {
     }
 
     getInitialCoins(activeChild, children) {
-      if (!activeChild || !children || !children.length) {
-        return 0;
+      if (!activeChild || !children.length) {
+        return getTempCoins();
       }
       for (let i in children) {
         if (children.hasOwnProperty(i)) {
@@ -120,11 +126,13 @@ const OnlineGameWrapper = WrappedComponent => {
     }
 
     init() {
-      const activeChild = getFromStorage('activeChild');
+      const activeChild = getFromStorage('activeChild') || null;
       const children = getFromStorage('children') || [];
-      const coins = activeChild
-        ? this.getInitialCoins(activeChild, children)
-        : 0;
+      if (children.length && !activeChild) {
+        window.location.push('/account/childmenu');
+        return;
+      }
+      const coins = this.getInitialCoins(activeChild, children);
       const mute = getFromStorage('mute');
       this.setWordList(activeChild);
       this.setState({ activeChild, children, coins, mute });
