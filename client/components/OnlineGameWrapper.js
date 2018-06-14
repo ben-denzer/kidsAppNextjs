@@ -128,10 +128,6 @@ const OnlineGameWrapper = WrappedComponent => {
     init() {
       const activeChild = getFromStorage('activeChild') || null;
       const children = getFromStorage('children') || [];
-      if (children.length && !activeChild) {
-        window.location.push('/account/childmenu');
-        return;
-      }
       const coins = this.getInitialCoins(activeChild, children);
       const mute = getFromStorage('mute');
       this.setWordList(activeChild);
