@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "@std/esm": "js",
   "scripts": {
     "dev:serve": "NODE_ENV=development nodemon server/server.js",
     "predev:watch": "npm run lint && npm run test-all:dev",
