@@ -8,8 +8,9 @@ class FishingContainer extends Component {
     super(props);
 
     this.state = {
-      currentIndex: null,
+      correctWordIndex: null,
       fishOnBoard: [],
+      previousWord: null,
       winCount: 0
     };
 
@@ -30,13 +31,23 @@ class FishingContainer extends Component {
   }
 
   addFish() {
-    const { fishOnBoard } = this.state;
+    const { fishOnBoard, previousWord } = this.state;
     const { fillWordArray, wordList } = this.props;
     const allWords = wordList.length > 3
       ? wordList
       : fillWordArray(wordList, 3);
-    if (fishOnBoard.length >= 3) return;
+
+    if (fishOnBoard.length >= 3) {
+      let correctWordIndex = this.getRandomIndex();
+      while (fishOnBoard[correctWordIndex] === previousWord) {
+        correctWordIndex = this.getRandomIndex();
+      }
+      this.setState({ correctWordIndex });
+      return;
+    }
+
     const wordIndex = Math.floor(Math.random() * allWords.length);
+
     if (fishOnBoard.indexOf(allWords[wordIndex]) === -1) {
       this.setState(
         { fishOnBoard: [ ...fishOnBoard, allWords[wordIndex] ] },
@@ -47,13 +58,24 @@ class FishingContainer extends Component {
     }
   }
 
+  getRandomIndex() {
+    return Math.floor(Math.random() * 3);
+  }
+
   handleUserChoice(e) {
-    const { currentIndex, fishOnBoard, winCount } = this.state;
+    const { correctWordIndex, fishOnBoard, winCount } = this.state;
+    const currentWord = fishOnBoard[correctWordIndex];
     const target = e.currentTarget;
-    if (target.dataset.wordText === fishOnBoard[currentIndex]) {
+
+    if (target.dataset.wordText === currentWord) {
       this.setState({ winCount: winCount + 1 });
       target.classList.add('caught');
-      this.props.playSuccessSound();
+      if (currentWord.length > 1) {
+        this.props.sayWord(currentWord);
+      }
+      this.props.sayLetters(currentWord);
+      this.setState({ previousWord: currentWord });
+
       setTimeout(() => target.classList.add('reeling'), 700);
       if ((winCount + 1) % 5 === 0) {
         setTimeout(this.props.addCoin, 2500);
@@ -63,13 +85,13 @@ class FishingContainer extends Component {
       }
     } else {
       target.classList.add('incorrect');
+      this.props.sayWord('Try Again!');
       setTimeout(() => target.classList.remove('incorrect'), 500);
     }
   }
 
   setupBoard() {
-    const currentIndex = Math.floor(Math.random() * 3);
-    this.setState({ currentIndex, fishOnBoard: [] }, () => {
+    this.setState({ fishOnBoard: [] }, () => {
       this.addFish();
     });
   }

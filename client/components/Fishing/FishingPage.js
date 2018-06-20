@@ -13,14 +13,14 @@ import { AboveWater, BelowWater, Fish, FishingBox } from './FishingStyles';
 const FishingPage = props => {
   const {
     coins,
-    currentIndex,
+    correctWordIndex,
     fishOnBoard,
     handleUserChoice,
     mute,
     spinnerClassName,
     toggleSound
   } = props;
-  const currentWord = fishOnBoard[currentIndex];
+  const currentWord = fishOnBoard[correctWordIndex];
 
   const choices = fishOnBoard.map((a, i) =>
     <Fish

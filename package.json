@@ -18,7 +18,7 @@
     "test-all": "NODE_ENV=production npm run lint && npm run server-unit-tests && npm run server-integration-tests",
     "test-all:dev": "NODE_ENV=development npm run lint && npm run server-unit-tests:dev && npm run server-integration-tests",
     "server-unit-tests": "mocha './server/**/*.test.js'",
-    "server-unit-tests:dev": "NODE_ENV=development mocha './server/**/*.test.js'",
+    "server-unit-tests:dev": "NODE_ENV=development mocha './server/**/*.test.js' --watch",
     "server-integration-tests": "mocha ./server/**/*.integration.js"
   },
   "author": "Ben Denzer",

@@ -23,9 +23,11 @@ const OnlineGameWrapper = WrappedComponent => {
       };
 
       this.addCoin = this.addCoin.bind(this);
+      this.fillWordArray = this.fillWordArray.bind(this);
       this.playCoinSound = this.playCoinSound.bind(this);
       this.playSuccessSound = this.playSuccessSound.bind(this);
-      this.fillWordArray = this.fillWordArray.bind(this);
+      this.sayLetters = this.sayLetters.bind(this);
+      this.sayWord = this.sayWord.bind(this);
       this.toggleHelp = this.toggleHelp.bind(this);
       this.toggleSound = this.toggleSound.bind(this);
     }
@@ -58,7 +60,9 @@ const OnlineGameWrapper = WrappedComponent => {
     }
 
     addCoinUi(newCoins) {
-      this.playCoinSound();
+      if (!/fishing/.test(window.location.pathname)) {
+        this.playCoinSound();
+      }
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
       setTimeout(
@@ -104,6 +108,30 @@ const OnlineGameWrapper = WrappedComponent => {
         }
       }
       return 0;
+    }
+
+    sayLetters(word, original = word) {
+      if (this.state.mute) {
+        return;
+      }
+      const letter = word[0];
+      const restOfWord = word.slice(1);
+      this.sayWord(letter);
+      setTimeout(() => {
+        if (restOfWord.length) {
+          this.sayLetters(restOfWord, original);
+        } else if (original.length > 1) {
+          this.sayWord(original);
+        }
+      }, 300);
+    }
+
+    sayWord(word) {
+      if (this.state.mute) {
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(word);
+      window.speechSynthesis.speak(utterance);
     }
 
     async setWordList(childId) {
@@ -163,6 +191,8 @@ const OnlineGameWrapper = WrappedComponent => {
           playCoinSound={this.playCoinSound}
           playSuccessSound={this.playSuccessSound}
           fillWordArray={this.fillWordArray}
+          sayLetters={this.sayLetters}
+          sayWord={this.sayWord}
           toggleHelp={this.toggleHelp}
           toggleSound={this.toggleSound}
         />,
