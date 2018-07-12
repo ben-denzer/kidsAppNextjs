@@ -76,6 +76,10 @@ function userRouter(connection) {
     }
   };
 
+  const postToGetCoins = (req, res) => {
+    return res.status(200).send({ coins: 34 });
+  };
+
   const postToGetWordsForChild = async function postToGetWordsForChildAsync(
     req,
     res
@@ -160,6 +164,7 @@ function userRouter(connection) {
     postToChangePw,
     postToForgotPw,
     postToGetAllParentData,
+    postToGetCoins,
     postToGetWordsForChild,
     postToLogin,
     postToRemoveWordFromChild,

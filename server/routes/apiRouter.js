@@ -12,6 +12,7 @@ function router(connection) {
     postToChangePw,
     postToForgotPw,
     postToGetAllParentData,
+    postToGetCoins,
     postToGetWordsForChild,
     postToLogin,
     postToRemoveWordFromChild,
@@ -25,6 +26,7 @@ function router(connection) {
   apiRouter.post('/account/changePw', postToChangePw);
   apiRouter.post('/account/forgotPw', postToForgotPw);
   apiRouter.post('/account/getAllParentData', postToGetAllParentData);
+  apiRouter.post('/account/getCoins', postToGetCoins);
   apiRouter.post('/account/getWordsForChild', postToGetWordsForChild);
   apiRouter.post('/account/login', postToLogin);
   apiRouter.post('/account/removeWord', postToRemoveWordFromChild);

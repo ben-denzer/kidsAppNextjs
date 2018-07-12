@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import defaultWordList from '../config/defaultSightWords';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import { addTempCoin, getTempCoins } from '../utils/tempUser';
+import getCoinsFromServer from '../api/getCoinsFromServer';
 import getWordsForChild from '../api/getWordsForChild';
 import makeAddCoinRequest from '../api/makeAddCoinRequest';
 
@@ -30,6 +31,9 @@ const OnlineGameWrapper = WrappedComponent => {
       this.sayWord = this.sayWord.bind(this);
       this.toggleHelp = this.toggleHelp.bind(this);
       this.toggleSound = this.toggleSound.bind(this);
+      this.updateCoinsForActiveChild = this.updateCoinsForActiveChild.bind(
+        this
+      );
     }
 
     componentDidMount() {
@@ -46,14 +50,7 @@ const OnlineGameWrapper = WrappedComponent => {
         return;
       }
 
-      const updatedChildren = children.map(a => {
-        if (Number(a.child_id) === Number(activeChild)) {
-          return Object.assign({}, a, { coins: newCoins });
-        }
-        return a;
-      });
-      this.setState({ children: updatedChildren });
-      setInStorage('children', updatedChildren);
+      this.updateCoinsForActiveChild(children, activeChild, newCoins);
       makeAddCoinRequest({ childId: activeChild, coins: newCoins }).catch(() =>
         this.setState({ apiError: 'Connection Error' })
       );
@@ -96,18 +93,25 @@ const OnlineGameWrapper = WrappedComponent => {
       return words;
     }
 
-    getInitialCoins(activeChild, children) {
+    async getInitialCoins(activeChild, children) {
       if (!activeChild || !children.length) {
         return getTempCoins();
       }
-      for (let i in children) {
-        if (children.hasOwnProperty(i)) {
-          if (Number(children[i].child_id) === Number(activeChild)) {
-            return children[i].coins;
+      try {
+        const coins = await getCoinsFromServer(activeChild.child_id);
+        this.updateCoinsForActiveChild(children, activeChild, coins);
+        return coins;
+      } catch (e) {
+        console.log(e);
+        let coins = 0;
+        for (let child of children) {
+          if (Number(child.child_id) === Number(activeChild)) {
+            coins = child.coins;
           }
         }
+        this.updateCoinsForActiveChild(children, activeChild, coins);
+        return coins;
       }
-      return 0;
     }
 
     sayLetters(word, original = word) {
@@ -160,6 +164,18 @@ const OnlineGameWrapper = WrappedComponent => {
       const mute = getFromStorage('mute');
       this.setWordList(activeChild);
       this.setState({ activeChild, children, coins, mute });
+    }
+
+    updateCoinsForActiveChild(children, activeChild, coins) {
+      console.log('in update', coins);
+      const updatedChildren = children.map(a => {
+        if (Number(a.child_id) === Number(activeChild)) {
+          return Object.assign({}, a, { coins });
+        }
+        return a;
+      });
+      this.setState({ children: updatedChildren });
+      setInStorage('children', updatedChildren);
     }
 
     playCoinSound() {
