@@ -3,6 +3,7 @@ const addWordToDbService = require('../services/wordServices/addWordToDbService'
 const changePasswordService = require('../services/changePasswordService');
 const getAllParentDataService = require('../services/getAllParentDataService');
 const getAllWordsForChild = require('../services/wordServices/getAllWordsForChild');
+const getCoinsForActiveUser = require('../services/getCoinsForActiveUser');
 const login = require('../services/login');
 const nodemailerMailgun = require('../services/createNodemailerMailgun');
 const removeWordFromChild = require('../services/wordServices/removeWordFromChild');
@@ -76,8 +77,15 @@ function userRouter(connection) {
     }
   };
 
-  const postToGetCoins = (req, res) => {
-    return res.status(200).send({ coins: 34 });
+  const postToGetCoins = async function postToGetCoinsAsync(req, res) {
+    try {
+      const coins = await getCoinsForActiveUser(req.body.childId, connection);
+      const response = JSON.stringify({ coins });
+      return res.status(200).send(response);
+    } catch (err) {
+      logError(err, 'in postToGetCoins');
+      return sendError(err, res);
+    }
   };
 
   const postToGetWordsForChild = async function postToGetWordsForChildAsync(

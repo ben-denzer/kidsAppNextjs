@@ -98,7 +98,7 @@ const OnlineGameWrapper = WrappedComponent => {
         return getTempCoins();
       }
       try {
-        const coins = await getCoinsFromServer(activeChild.child_id);
+        const coins = await getCoinsFromServer(activeChild);
         this.updateCoinsForActiveChild(children, activeChild, coins);
         return coins;
       } catch (e) {
@@ -157,17 +157,16 @@ const OnlineGameWrapper = WrappedComponent => {
       }
     }
 
-    init() {
+    async init() {
       const activeChild = getFromStorage('activeChild') || null;
       const children = getFromStorage('children') || [];
-      const coins = this.getInitialCoins(activeChild, children);
+      const coins = await this.getInitialCoins(activeChild, children);
       const mute = getFromStorage('mute');
       this.setWordList(activeChild);
       this.setState({ activeChild, children, coins, mute });
     }
 
     updateCoinsForActiveChild(children, activeChild, coins) {
-      console.log('in update', coins);
       const updatedChildren = children.map(a => {
         if (Number(a.child_id) === Number(activeChild)) {
           return Object.assign({}, a, { coins });

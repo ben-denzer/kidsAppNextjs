@@ -7,9 +7,6 @@ const logError = require('./services/logError');
 const mysql = require('mysql');
 const next = require('next');
 const url = require('url');
-const path = require('path');
-
-logError(path.join(__dirname));
 
 const server = express();
 const port = process.env.PORT || 3000;
