@@ -20,4 +20,9 @@ export const WordRow = styled.div`
   font-size: 17px;
   display: flex;
   align-items: center;
+
+  &.inactive {
+    background-color: #ccc;
+    color: #606060;
+  }
 `;
