@@ -1,11 +1,10 @@
 const jwtKey = require('../keys/.jwtInfo').jwtKey;
+const jsonWebToken = require('jsonwebtoken');
 
-function validateJwt(token, jwt, options = {}) {
+function validateJwt(token, jwt = jsonWebToken, options = {}) {
   return new Promise((resolve, reject) => {
-    if (!token || !jwt) {
-      logError(
-        '!token || !jwt in validateJwt (token should already be validated)'
-      );
+    if (!token) {
+      logError('!token in validateJwt');
       return reject({ status: 500, error: 'Server Error' });
     }
 

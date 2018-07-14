@@ -1,26 +1,18 @@
-import { baseUserUrl } from './apiConfig';
-import { getFromStorage } from '../utils/mswLocalStorage';
+import sendAuthorizedRequest from './sendAuthorizedRequest';
 
 function getWordsForChild(body) {
-  const myHeaders = new Headers({
-    'Content-Type': 'application/json'
-  });
-
-  const token = getFromStorage('token');
-  body = Object.assign({}, body, { token });
-
   return new Promise((resolve, reject) => {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: myHeaders
-    };
-
-    fetch(`${baseUserUrl}/getWordsForChild`, options)
+    sendAuthorizedRequest('getWordsForChild', JSON.stringify(body))
       .then(res => {
-        if (!res.ok) return console.log('bad response to getWordsForChild');
+        if (!res.ok) {
+          console.log('bad response to getWordsForChild');
+          return reject('error getting words');
+        }
         resolve(res.json());
-      }).catch(e => { console.log(e) });
+      })
+      .catch(e => {
+        console.log(e);
+      });
   });
 }
 

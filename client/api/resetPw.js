@@ -12,7 +12,8 @@ function resetPw(body) {
 
     body.token = window.location.search.slice(1);
     const myHeaders = new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     });
 
     const options = {

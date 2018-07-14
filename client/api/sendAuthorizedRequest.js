@@ -1,20 +1,26 @@
 import { baseUserUrl } from './apiConfig';
 import { getFromStorage } from '../utils/mswLocalStorage';
 
-function makeRequest(url, body, method = 'POST') {
+function sendAuthorizedRequest(
+  url,
+  body = JSON.stringify({}),
+  method = 'POST'
+) {
   const token = getFromStorage('token');
+  if (!token) {
+    throw new Error('no token');
+  }
+
+  // temp
+  const reqBody = JSON.stringify(Object.assign(JSON.parse(body), { token }));
 
   const headers = new Headers({
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`
   });
 
-  if (typeof body !== 'string') {
-    body = JSON.stringify(body);
-  }
-
   const options = {
-    body,
+    body: reqBody,
     headers,
     method
   };
@@ -22,4 +28,4 @@ function makeRequest(url, body, method = 'POST') {
   return fetch(`${baseUserUrl}/${url}`, options);
 }
 
-export default makeRequest;
+export default sendAuthorizedRequest;

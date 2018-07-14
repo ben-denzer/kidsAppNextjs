@@ -58,6 +58,7 @@ export default class Nav extends Component {
   }
 
   toggleNav() {
+    console.log('toggling nav');
     this.setState({ navOpen: !this.state.navOpen });
   }
 
@@ -79,41 +80,44 @@ export default class Nav extends Component {
       );
     }
 
-    return [
-      <NavBar key="a" onClick={this.toggleNav}>
-        <Hamburger><div /><div /><div /></Hamburger>
-        <NavItemsContainer className={navOpen ? 'open' : ''}>
-          <ChildNameComponent
-            activeChildName={activeChildName}
-            childCount={childCount}
-            loggedIn={loggedIn}
-            pathname={pathname}
-          />
-          {navItems}
-        </NavItemsContainer>
-      </NavBar>,
-      <Modal
-        key="b"
-        Body={() =>
-          <LogoutModalBody>
-            <p>Are You Sure You Want To Sign Out?</p>
-            <LogoutButtonRow>
-              <button
-                id="exit"
-                onClick={() => window.location = '/account/logout'}
-              >
-                Yes
-              </button>
-              <button onClick={() => this.setState({ showLogoutModal: false })}>
-                Cancel
-              </button>
-            </LogoutButtonRow>
-          </LogoutModalBody>
-        }
-        modalOpen={showLogoutModal}
-        small={false}
-        toggleModal={() => this.setState({ showLogoutModal: false })}
-      />
-    ];
+    return (
+      <React.Fragment>
+        <NavBar onClick={this.toggleNav}>
+          <Hamburger><div /><div /><div /></Hamburger>
+          <NavItemsContainer className={navOpen ? 'open' : ''}>
+            <ChildNameComponent
+              activeChildName={activeChildName}
+              childCount={childCount}
+              loggedIn={loggedIn}
+              pathname={pathname}
+            />
+            {navItems}
+          </NavItemsContainer>
+        </NavBar>,
+        <Modal
+          Body={() =>
+            <LogoutModalBody>
+              <p>Are You Sure You Want To Sign Out?</p>
+              <LogoutButtonRow>
+                <button
+                  id="exit"
+                  onClick={() => window.location = '/account/logout'}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => this.setState({ showLogoutModal: false })}
+                >
+                  Cancel
+                </button>
+              </LogoutButtonRow>
+            </LogoutModalBody>
+          }
+          modalOpen={showLogoutModal}
+          small={false}
+          toggleModal={() => this.setState({ showLogoutModal: false })}
+        />
+      </React.Fragment>
+    );
   }
 }

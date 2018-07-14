@@ -1,8 +1,6 @@
-const jwt = require('jsonwebtoken');
 const MIN_PASSWORD_LENGTH = require('../../globalConfig/globalConfig')
   .MIN_PASSWORD_LENGTH;
 const resetPasswordInDb = require('./resetPasswordInDb');
-const validateJwt = require('./validateJwt');
 const waitTime = global.MSW_DEV ? 0 : 1500;
 
 function resetPasswordService(body, connection) {
@@ -13,7 +11,6 @@ function resetPasswordService(body, connection) {
         return reject({ status: 500, error: 'Server Error' });
       }
       if (
-        !body.token ||
         !body.password ||
         body.password.length < MIN_PASSWORD_LENGTH ||
         body.password !== body.p2
@@ -21,10 +18,7 @@ function resetPasswordService(body, connection) {
         return reject({ status: 400, error: 'Bad Request' });
       }
 
-      validateJwt(body.token, jwt)
-        .then(tokenBody =>
-          resetPasswordInDb(tokenBody.email, body.password, connection)
-        )
+      resetPasswordInDb(body.email, body.password, connection)
         .then(() => resolve({ success: true }))
         .catch(err => {
           logError(err, 'in resetPasswordService');

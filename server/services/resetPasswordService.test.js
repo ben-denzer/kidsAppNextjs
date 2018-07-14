@@ -30,16 +30,6 @@ describe('Reset Password Service', () => {
       });
   });
 
-  it('should reject 400 if no token', () => {
-    body = Object.assign({}, body, { token: undefined });
-    return resetPasswordService(body, connection)
-      .then(success => expect(success).to.be.false)
-      .catch(err => {
-        expect(logError.called).to.be.false;
-        expect(err.status).to.equal(400);
-      });
-  });
-
   it('should reject 400 if no password', () => {
     body = Object.assign({}, body, { password: undefined, p2: undefined });
     return resetPasswordService(body, connection)

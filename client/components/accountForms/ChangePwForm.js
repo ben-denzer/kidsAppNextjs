@@ -36,8 +36,9 @@ class ChangePwForm extends Component {
       success: true
     });
     setTimeout(() => {
-      this.props.toggleChangePwForm();
-      this.setState({ success: null });
+      this.setState({ success: null }, () => {
+        this.props.toggleChangePwForm();
+      });
     }, 3000);
   }
 

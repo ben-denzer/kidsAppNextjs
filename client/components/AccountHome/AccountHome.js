@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorBox, FormButton } from '../accountForms/formStyles';
+import { FormErrorBox, FormButton } from '../accountForms/formStyles';
 import ChangePwForm from '../accountForms/ChangePwForm';
 import EditChild from './EditChild';
 import Modal from '../Modal/Modal';
@@ -28,7 +28,7 @@ function AccountHome(props) {
   return (
     <div className="whiteBox">
       <h1>My Account</h1>
-      {props.error && <ErrorBox>{props.error}</ErrorBox>}
+      {props.error && <FormErrorBox>{props.error}</FormErrorBox>}
       <div className="twoCols">
         <div>
           <DetailTitle>Details</DetailTitle>

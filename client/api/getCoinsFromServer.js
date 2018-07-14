@@ -1,18 +1,20 @@
-import makeRequest from './makeRequest';
+import sendAuthorizedRequest from './sendAuthorizedRequest';
 
 function getCoinsFromServer(childId) {
   return new Promise((resolve, reject) => {
     if (!childId) {
-      console.log('no child id given to getCoinsFromServer');
       return reject('no child id');
     }
     const body = JSON.stringify({ childId });
-    makeRequest('getCoins', body)
+    sendAuthorizedRequest('getCoins', body)
       .then(res => {
-        return res.json();
+        if (res.ok) {
+          return res.json();
+        }
+        return reject('network error');
+
       })
       .then(json => {
-        console.log('coins is', json.coins);
         resolve(json.coins);
       })
       .catch(err => reject('error getting coins'));

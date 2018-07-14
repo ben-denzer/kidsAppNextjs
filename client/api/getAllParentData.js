@@ -1,25 +1,14 @@
-import { baseUserUrl } from './apiConfig';
+import sendAuthorizedRequest from './sendAuthorizedRequest';
 import { getFromStorage } from '../utils/mswLocalStorage';
 
 function getAllParentData() {
-  const myHeaders = new Headers({
-    'Content-Type': 'application/json'
-  });
-
   return new Promise((resolve, reject) => {
     const token = getFromStorage('token');
     if (!token) {
       window.location = '/account/login';
       return;
     }
-
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({ token }),
-      headers: myHeaders
-    };
-
-    fetch(`${baseUserUrl}/getAllParentData`, options)
+    sendAuthorizedRequest('getAllParentData')
       .then(res => {
         if (!res.ok) {
           if (res.status === 500) return reject('Server Error');

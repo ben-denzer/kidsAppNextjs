@@ -1,19 +1,9 @@
-import { baseUserUrl } from './apiConfig';
 import { setInStorage } from '../utils/mswLocalStorage';
+import sendAuthorizedRequest from './sendAuthorizedRequest';
 
 function validateAccount(body) {
-  const myHeaders = new Headers({
-    'Content-Type': 'application/json'
-  });
-
   return new Promise((resolve, reject) => {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: myHeaders
-    };
-
-    fetch(`${baseUserUrl}/validateAccount`, options)
+    sendAuthorizedRequest('validateAccount', JSON.stringify(body))
       .then(res => {
         if (res.status === 401) {
           setInStorage('token', null);
@@ -35,7 +25,6 @@ function validateAccount(body) {
         setInStorage('token', null);
         window.location = '/account/login';
         return reject({ membershipValid: false });
-
       })
       .catch(() => reject('There Was An Error, Please Try Again'));
   });

@@ -1,9 +1,9 @@
 const validateAccountStatus = require('../validateAccountStatus');
 
 function getAllWordsForChild(body, connection) {
-  const { childId, token } = body;
+  const { childId } = body;
   return new Promise((resolve, reject) => {
-    if (!childId || !token) {
+    if (!childId) {
       logError('no id sent to getAllWordsForChild');
       return reject({ status: 400, error: 'Bad Request' });
     }
@@ -13,7 +13,7 @@ function getAllWordsForChild(body, connection) {
       return reject({ status: 500, error: 'Server Error' });
     }
 
-    validateAccountStatus({ token }, connection)
+    validateAccountStatus(body, connection)
       .then(() => {
         connection.query(
           `SELECT w.word_id, w.word_text FROM words w
