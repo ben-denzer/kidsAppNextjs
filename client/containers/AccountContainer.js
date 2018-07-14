@@ -92,6 +92,10 @@ class AccountContainer extends Component {
     this.state.wordsToDelete.forEach(word =>
       this.removeWord(word, shouldSetState)
     );
+
+    if (shouldSetState) {
+      this.setState({ wordsToDelete: [] });
+    }
   }
 
   clearWordList() {
