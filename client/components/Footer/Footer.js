@@ -37,13 +37,14 @@ export default function Footer(props) {
 
 const FooterContainer = styled.div`
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   display: flex;
   justify-content: space-between;
   font-size: 14px;
   background-color: ${color3};
   color: white;
-
+  padding: 20px 10px 30px;
+  box-sizing: border-box;
   @media (max-width: 900px) {
     flex-direction: column;
     align-items: center;
@@ -64,7 +65,6 @@ const FooterContainer = styled.div`
 const FooterLeft = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 20px;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -77,13 +77,13 @@ const FooterRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 20px;
 
   @media (max-width: 900px) {
+    margin-top: 20px;
     flex-direction: column;
   }
 `;
 
 const Links = styled.div`
-  
+
 `;

@@ -26,7 +26,7 @@ function AccountHome(props) {
   });
 
   return (
-    <div className="whiteBox">
+    <div className="whiteBox allowSelect">
       <h1>My Account</h1>
       {props.error && <FormErrorBox>{props.error}</FormErrorBox>}
       <div className="twoCols">

@@ -16,12 +16,10 @@ export default class Nav extends Component {
     super(props);
     this.state = {
       allLinks: [],
-      showLogoutModal: false,
-      navOpen: false
+      showLogoutModal: false
     };
 
     this.showLogoutModal = this.showLogoutModal.bind(this);
-    this.toggleNav = this.toggleNav.bind(this);
   }
 
   componentDidMount() {
@@ -57,14 +55,15 @@ export default class Nav extends Component {
     this.setState({ showLogoutModal: true });
   }
 
-  toggleNav() {
-    console.log('toggling nav');
-    this.setState({ navOpen: !this.state.navOpen });
-  }
-
   render() {
-    const { allLinks, navOpen, showLogoutModal } = this.state;
-    const { activeChildName, childCount, loggedIn, pathname } = this.props;
+    const { allLinks, showLogoutModal } = this.state;
+    const {
+      activeChildName,
+      childCount,
+      loggedIn,
+      navOpen,
+      pathname
+    } = this.props;
     let navItems = [];
 
     if (allLinks.length) {
@@ -82,8 +81,12 @@ export default class Nav extends Component {
 
     return (
       <React.Fragment>
-        <NavBar onClick={this.toggleNav}>
-          <Hamburger><div /><div /><div /></Hamburger>
+        <NavBar className="navBar">
+          <Hamburger data-click-id="hamburgerMenu">
+            <div data-click-id="hamburgerMenu" />
+            <div data-click-id="hamburgerMenu" />
+            <div data-click-id="hamburgerMenu" />
+          </Hamburger>
           <NavItemsContainer className={navOpen ? 'open' : ''}>
             <ChildNameComponent
               activeChildName={activeChildName}
@@ -93,7 +96,7 @@ export default class Nav extends Component {
             />
             {navItems}
           </NavItemsContainer>
-        </NavBar>,
+        </NavBar>
         <Modal
           Body={() =>
             <LogoutModalBody>

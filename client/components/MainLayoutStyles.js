@@ -74,6 +74,23 @@ export const LayoutContainer = styled.div`
     background: rgba(255, 255, 255, .9);
     border: 3px solid #999;
     border-radius: 20px;
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+
+    &.allowSelect {
+      -webkit-touch-callout: text; /* iOS Safari */
+      -webkit-user-select: text; /* Safari */
+      -khtml-user-select: text; /* Konqueror HTML */
+        -moz-user-select: text; /* Firefox */
+          -ms-user-select: text; /* Internet Explorer/Edge */
+              user-select: text; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+    }
 
     h1,
     h2 {
