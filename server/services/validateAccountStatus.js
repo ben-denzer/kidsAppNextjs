@@ -12,10 +12,11 @@ function validateAccountStatus(body, connection) {
 
     getAllData(body.userId, connection)
       .then(allData => {
-        const expirationDate = allData[0].expiration_utc;
-        if (expirationDate < Date.now()) {
-          return reject({ status: 403, error: 'Membership Expired' });
-        }
+
+        // const expirationDate = allData[0].expiration_utc;
+        // if (expirationDate < Date.now()) {
+        //   return reject({ status: 403, error: 'Membership Expired' });
+        // }
         resolve({ membershipValid: true });
       })
       .catch(err => reject(err));

@@ -24,24 +24,25 @@ class SignupForm extends Component {
     super(props);
 
     this.state = {
-      children: [''],
+      children: [ '' ],
       email: '',
-      emailList: true,
+      emailList: false,
       error: '',
       password: '',
       p2: '',
       rememberMe: false
-    }
+    };
 
     this.addChild = this.addChild.bind(this);
     this.createChildInputs = this.createChildInputs.bind(this);
+    this.handleAddChildKeypress = this.handleAddChildKeypress.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
   addChild() {
-    const children = [...this.state.children, ''];
+    const children = [ ...this.state.children, '' ];
     this.setState({ children });
   }
 
@@ -50,17 +51,26 @@ class SignupForm extends Component {
       return (
         <React.Fragment key={i}>
           <FormLabel>
-            Child #{i+1} Name
+            Child #{i + 1} Name
           </FormLabel>
           <FormTextInput
             data-input-id="children"
             data-input-index={i}
             onChange={this.handleInput}
             value={this.state.children[i]}
+            autoFocus
           />
         </React.Fragment>
       );
     });
+  }
+
+  handleAddChildKeypress(e) {
+    if (e.which === 32 || e.which === 13) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.addChild();
+    }
   }
 
   handleCheck(e) {
@@ -84,17 +94,30 @@ class SignupForm extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    const { email, password, p2, rememberMe } = this.state;
+    const { email, password, rememberMe } = this.state;
     let { children } = this.state;
-    children = children.filter(a => a).map(a => a.trim());
-    verifySignupInfo(this.state)
-      .then(result => signupUser(this.state))
-      .then(data => {
-        if (rememberMe) data = Object.assign(data, { email, password });
-        setUserInStorage(data, rememberMe);
-        window.location = '/account/home';
-      })
-      .catch(error => this.setState({ error }));
+    this.setState(
+      { children: children.map(a => a.trim()).filter(a => a) },
+      () => {
+        verifySignupInfo(this.state)
+          .then(result => signupUser(this.state))
+          .then(data => {
+            if (rememberMe) data = Object.assign(data, { email, password });
+            setUserInStorage(data, rememberMe);
+            if (children.length > 1) {
+              window.location = '/account/childmenu';
+            } else {
+              window.location = '/account/home';
+            }
+          })
+          .catch(error => {
+            if (!this.state.children.length) {
+              this.setState({ children: [ '' ] });
+            }
+            this.setState({ error });
+          });
+      }
+    );
   }
 
   render() {
@@ -108,6 +131,7 @@ class SignupForm extends Component {
             <FormHalf>
               <FormLabel>Email</FormLabel>
               <FormTextInput
+                autoFocus
                 onChange={this.handleInput}
                 data-input-id="email"
                 type="email"
@@ -130,7 +154,13 @@ class SignupForm extends Component {
             </FormHalf>
             <FormHalf>
               {childInputs}
-              <FakeLink onClick={this.addChild}>Add Child</FakeLink>
+              <FakeLink
+                href=""
+                onClick={this.addChild}
+                onKeyDown={this.handleAddChildKeypress}
+              >
+                Add Child
+              </FakeLink>
             </FormHalf>
           </Form2Cols>
           <RememberMeContainer>
@@ -151,8 +181,10 @@ class SignupForm extends Component {
             />
             I would like to receive news about site updates and other learning resources
           </FormLabel>
-          { this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox> }
-          <FormButton type="submit" onClick={this.submitForm}>Submit</FormButton>
+          {this.state.error && <FormErrorBox>{this.state.error}</FormErrorBox>}
+          <FormButton type="submit" onClick={this.submitForm}>
+            Submit
+          </FormButton>
           <FormExtraOptions>
             <Link prefetch href={'/account/login'}>
               <a title="Log In">Log In</a>

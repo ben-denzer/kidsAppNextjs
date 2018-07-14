@@ -115,6 +115,10 @@ const OnlineGameWrapper = WrappedComponent => {
       if (this.state.mute) {
         return;
       }
+      if (word.length > 6) {
+        this.sayWord(word);
+        return;
+      }
       const letter = word[0];
       const restOfWord = word.slice(1);
       this.sayWord(letter);
@@ -124,7 +128,7 @@ const OnlineGameWrapper = WrappedComponent => {
         } else if (original.length > 1) {
           this.sayWord(original);
         }
-      }, 300);
+      }, 100);
     }
 
     sayWord(word) {

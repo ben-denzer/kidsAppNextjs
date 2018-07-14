@@ -9,6 +9,14 @@ export const Children = styled.div`
   margin: 0 auto;
 `;
 
+export const ChildMenuHeader = styled.h1`
+  font-size: 54px;
+  font-family: "Indie Flower", Arial, Helvetica, sans-serif;
+  letter-spacing: 8px;
+  font-weight: bold;
+  padding-bottom: 40px;
+`;
+
 export const PageContainer = styled.div`
   min-height: 600px;
   padding: 50px;

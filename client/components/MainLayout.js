@@ -11,7 +11,7 @@ function MainLayout(Child) {
       super();
 
       this.state = {
-        accountExpired: null,
+        accountExpired: false,
         activeChildName: null,
         childCount: null,
         error: '',
@@ -53,29 +53,31 @@ function MainLayout(Child) {
     }
 
     setUserData({ membershipValid }) {
-      if (membershipValid) {
-        const activeChild = getFromStorage('activeChild');
-        const children = getFromStorage('children');
-        const childCount = children.length;
-        const filteredChildren = children.filter(a => {
-          return Number(a.child_id) === Number(activeChild);
-        });
-        const activeChildName = filteredChildren.length
-          ? filteredChildren[0].username
-          : null;
-        this.setState({
-          activeChildName,
-          childCount,
-          loggedIn: true,
-          accountExpired: false
-        });
-      } else {
-        this.setState({
-          activeChildName: 'Membership Expired',
-          loggedIn: true,
-          accountExpired: true
-        });
-      }
+
+      // if (membershipValid) {
+      const activeChild = getFromStorage('activeChild');
+      const children = getFromStorage('children');
+      const childCount = children.length;
+      const filteredChildren = children.filter(a => {
+        return Number(a.child_id) === Number(activeChild);
+      });
+      const activeChildName = filteredChildren.length
+        ? filteredChildren[0].username
+        : null;
+      this.setState({
+        activeChildName,
+        childCount,
+        loggedIn: true,
+        accountExpired: false
+      });
+
+      // } else {
+      //   this.setState({
+      //     activeChildName: 'Membership Expired',
+      //     loggedIn: true,
+      //     accountExpired: true
+      //   });
+      // }
     }
 
     unsupportedBrowserMessage() {

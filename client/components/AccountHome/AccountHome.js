@@ -46,7 +46,7 @@ function AccountHome(props) {
             <DetailLabel>Child Accounts: </DetailLabel>
             <DetailText>{parentData.children_allowed}</DetailText>
           </DetailRow>
-          <DetailRow>
+          {/* <DetailRow>
             <DetailLabel>Membership Expiration: </DetailLabel>
             <DetailText>
               {new Date(parentData.expiration_utc).toLocaleDateString()}
@@ -58,7 +58,7 @@ function AccountHome(props) {
               {' '}
               to extend membership
             </SmallText>
-          </DetailRow>
+          </DetailRow> */}
           <ButtonContainer>
             <FormButton onClick={toggleChangePwForm} hidden={changePwFormOpen}>
               Change Password

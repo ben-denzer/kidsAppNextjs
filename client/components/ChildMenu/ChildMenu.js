@@ -3,7 +3,7 @@ import { getFromStorage, setInStorage } from '../../utils/mswLocalStorage';
 import MainLayout from '../MainLayout';
 import ChildThumb from './ChildThumb';
 
-import { Children, PageContainer } from './ChildMenuStyles';
+import { Children, ChildMenuHeader, PageContainer } from './ChildMenuStyles';
 
 class ChildMenu extends Component {
   constructor() {
@@ -22,7 +22,9 @@ class ChildMenu extends Component {
     const token = getFromStorage('token');
     const children = getFromStorage('children');
     if (!token) return window.location = '/account/login';
-    if (children.length === 1) { return this.selectChild(null, children[0].child_id); }
+    if (children.length === 1) {
+      return this.selectChild(null, children[0].child_id);
+    }
     this.setState({ children });
   }
 
@@ -56,6 +58,7 @@ class ChildMenu extends Component {
     const childThumbs = this.makeThumbs(children);
     return (
       <PageContainer className="whiteBox">
+        <ChildMenuHeader>Who Is Playing?</ChildMenuHeader>
         <Children>
           {childThumbs}
         </Children>

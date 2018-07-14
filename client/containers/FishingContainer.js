@@ -70,9 +70,7 @@ class FishingContainer extends Component {
     if (target.dataset.wordText === currentWord) {
       this.setState({ winCount: winCount + 1 });
       target.classList.add('caught');
-      if (currentWord.length > 1) {
-        this.props.sayWord(currentWord);
-      }
+
       this.props.sayLetters(currentWord);
       this.setState({ previousWord: currentWord });
 

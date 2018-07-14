@@ -12,7 +12,7 @@ class AccountContainer extends Component {
     super(props);
 
     this.state = {
-      accountExpired: true,
+      accountExpired: false,
       changePwFormOpen: false,
       children: [],
       childNameText: '',
@@ -87,9 +87,10 @@ class AccountContainer extends Component {
       .then(parentData => {
         const expirationDate = parentData[0].expiration_utc;
         const currentDate = new Date();
-        const accountExpired = expirationDate < currentDate;
-        const children = accountExpired ? [] : getFromStorage('children');
-        this.setState({ accountExpired, children, parentData: parentData[0] });
+
+        // const accountExpired = expirationDate < currentDate;
+        const children = /* accountExpired ? [] : */ getFromStorage('children');
+        this.setState({ children, parentData: parentData[0] });
       })
       .catch(error => {
         if (typeof error === 'string') {
