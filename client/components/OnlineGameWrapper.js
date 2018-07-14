@@ -26,7 +26,6 @@ const OnlineGameWrapper = WrappedComponent => {
       this.addCoin = this.addCoin.bind(this);
       this.fillWordArray = this.fillWordArray.bind(this);
       this.playCoinSound = this.playCoinSound.bind(this);
-      this.playSuccessSound = this.playSuccessSound.bind(this);
       this.sayLetters = this.sayLetters.bind(this);
       this.sayWord = this.sayWord.bind(this);
       this.toggleHelp = this.toggleHelp.bind(this);
@@ -57,9 +56,7 @@ const OnlineGameWrapper = WrappedComponent => {
     }
 
     addCoinUi(newCoins) {
-      if (!/fishing/.test(window.location.pathname)) {
-        this.playCoinSound();
-      }
+      this.playCoinSound();
       this.setState({ showPrize: true, spinnerClassName: 'show' });
       setTimeout(() => this.setState({ spinnerClassName: 'fadeOut' }), 3000);
       setTimeout(
@@ -182,11 +179,6 @@ const OnlineGameWrapper = WrappedComponent => {
       this.coinSound.play();
     }
 
-    playSuccessSound() {
-      if (this.state.mute) return;
-      this.successSound.play();
-    }
-
     toggleHelp() {
       this.setState({ helpOpen: !this.state.helpOpen });
     }
@@ -197,37 +189,28 @@ const OnlineGameWrapper = WrappedComponent => {
     }
 
     render() {
-      return [
-        <WrappedComponent
-          key="game"
-          {...this.props}
-          {...this.state}
-          addCoin={this.addCoin}
-          playCoinSound={this.playCoinSound}
-          playSuccessSound={this.playSuccessSound}
-          fillWordArray={this.fillWordArray}
-          sayLetters={this.sayLetters}
-          sayWord={this.sayWord}
-          toggleHelp={this.toggleHelp}
-          toggleSound={this.toggleSound}
-        />,
-        <audio
-          key="audio1"
-          type="audio/mp3"
-          src="/static/media/shootingStar.mp3"
-          ref={successSound => {
-            this.successSound = successSound;
-          }}
-        />,
-        <audio
-          key="audio2"
-          type="audio/mp3"
-          src="/static/media/cheer.mp3"
-          ref={coinSound => {
-            this.coinSound = coinSound;
-          }}
-        />
-      ];
+      return (
+        <React.Fragment>
+          <WrappedComponent
+            {...this.props}
+            {...this.state}
+            addCoin={this.addCoin}
+            playCoinSound={this.playCoinSound}
+            fillWordArray={this.fillWordArray}
+            sayLetters={this.sayLetters}
+            sayWord={this.sayWord}
+            toggleHelp={this.toggleHelp}
+            toggleSound={this.toggleSound}
+          />
+          <audio
+            type="audio/mp3"
+            src="/static/media/cheer.mp3"
+            ref={coinSound => {
+              this.coinSound = coinSound;
+            }}
+          />
+        </React.Fragment>
+      );
     }
   };
 };

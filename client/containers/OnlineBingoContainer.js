@@ -32,9 +32,6 @@ class OnlineBingoContainer extends Component {
       'noWinner',
       'openOptions',
       'pauseGame',
-      'sayWord',
-
-      // 'setupSpeech',
       'sizeChange',
       'startGame'
     ];
@@ -125,6 +122,7 @@ class OnlineBingoContainer extends Component {
       }
       activeWords.push(tempArray);
     }
+
     this.setState({ activeWords, allWords: gameWords });
   }
 
@@ -139,18 +137,13 @@ class OnlineBingoContainer extends Component {
   pauseGame() {
     if (this.state.paused) {
       this.gameTimer = setInterval(() => {
+        this.props.sayLetters(this.state.allWords[this.state.currentIndex + 1]);
         this.setState({ currentIndex: this.state.currentIndex + 1 });
-        this.sayWord(this.state.allWords[this.state.currentIndex + 1]);
       }, this.state.delay * 1000);
     } else {
       clearInterval(this.gameTimer);
     }
     this.setState({ paused: !this.state.paused });
-  }
-
-  sayWord(word) {
-    this.props.playSuccessSound();
-    if (!this.synth) return;
   }
 
   sizeChange(newSize) {
@@ -160,7 +153,6 @@ class OnlineBingoContainer extends Component {
   }
 
   startGame() {
-    this.props.playSuccessSound();
     this.setState({
       currentIndex: 0,
       gameOver: false,
@@ -171,32 +163,17 @@ class OnlineBingoContainer extends Component {
     if (this.gameTimer) {
       clearInterval(this.gameTimer);
     }
+
+    setTimeout(() => {
+      this.props.sayLetters(this.state.allWords[0]);
+    }, 500);
+
     this.gameTimer = setInterval(() => {
       const newIndex = this.state.currentIndex + 1;
-      this.sayWord(this.state.allWords[newIndex]);
+      this.props.sayLetters(this.state.allWords[newIndex]);
       this.setState({ currentIndex: newIndex });
     }, this.state.delay * 1000);
   }
-
-  // setupSpeech() {
-  //   console.log('setupSpeech called');
-  //   const synth = window.speechSynthesis;
-  //   if (typeof window.speechSynthesis === 'undefined') {
-  //     console.log('it is undefined');
-  //     return;
-  //   }
-
-  //   const voices = synth.getVoices();
-  //   console.log('voices', voices);
-
-  //   for (let i = 0; i < voices.length; i++) {
-  //     console.log(voices[i].name + ' (' + voices[i].lang + ')');
-
-  //     if (voices[i].default) {
-  //       console.log(' -- DEFAULT');
-  //     }
-  //   }
-  // }
 
   render() {
     if (this.state.gameOver) {

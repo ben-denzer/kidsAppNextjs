@@ -62,7 +62,7 @@ class MemoryContainer extends Component {
       if (hiddenCards.length === cards.length) {
         setTimeout(this.gameOver, 300);
       } else {
-        this.props.playSuccessSound();
+        this.props.sayLetters(flippedCards[0].word);
       }
     } else {
       finalCards = cards.map(a => {

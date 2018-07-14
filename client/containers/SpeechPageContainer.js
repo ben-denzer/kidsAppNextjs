@@ -3,6 +3,7 @@ import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import SpeechPage from '../components/Speech/SpeechPage';
 import shuffle from '../utils/shuffle';
+import successPhrases from '../config/successPhrases';
 
 class SpeachPageContainer extends Component {
   constructor(props) {
@@ -68,7 +69,9 @@ class SpeachPageContainer extends Component {
     if (newScore % 3 === 0) {
       this.props.addCoin();
     } else {
-      this.props.playSuccessSound();
+      const index = Math.floor(Math.random() * successPhrases.length);
+      const phrase = successPhrases[index];
+      this.props.sayWord(phrase);
     }
 
     this.setState({
@@ -101,7 +104,6 @@ class SpeachPageContainer extends Component {
 
     this.setState({ shuffledWords: newShuffle });
     return 0;
-
   }
 
   listen() {
