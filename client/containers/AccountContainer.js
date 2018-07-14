@@ -15,27 +15,32 @@ class AccountContainer extends Component {
       accountExpired: false,
       changePwFormOpen: false,
       children: [],
-      childNameText: '',
       childOpen: null,
-      editingChildName: false,
       error: '',
       newWordError: '',
       newWordVal: '',
       parentData: {},
-      wordList: []
+      wordList: [],
+      wordsToDelete: []
     };
 
+    this.cleanupDeletedWords = this.cleanupDeletedWords.bind(this);
     this.clearWordList = this.clearWordList.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.removeWord = this.removeWord.bind(this);
     this.saveInput = this.saveInput.bind(this);
     this.selectChild = this.selectChild.bind(this);
     this.submitOnEnter = this.submitOnEnter.bind(this);
+    this.tempRemoveWord = this.tempRemoveWord.bind(this);
     this.toggleChangePwForm = this.toggleChangePwForm.bind(this);
   }
 
   componentDidMount() {
     this.fetchParentData();
+  }
+
+  componentWillUnmount() {
+    this.cleanupDeletedWords(false);
   }
 
   addWord() {
@@ -78,7 +83,19 @@ class AccountContainer extends Component {
       );
   }
 
+  cleanupDeletedWords(shouldSetState = true) {
+    if (!this.state.childOpen) {
+      return;
+    }
+
+    // should set state if not called from componentWillUnmount()
+    this.state.wordsToDelete.forEach(word =>
+      this.removeWord(word, shouldSetState)
+    );
+  }
+
   clearWordList() {
+    this.cleanupDeletedWords();
     this.setState({ wordList: [] });
   }
 
@@ -108,16 +125,22 @@ class AccountContainer extends Component {
     this.setState({ [dataset.inputId]: value, newWordError: '' });
   }
 
-  removeWord(wordId) {
+  removeWord(wordId, shouldSetState = true) {
     const { childOpen: childId } = this.state;
     removeWordFromDB({ childId, wordId })
       .then(() => {
         const wordList = this.state.wordList.filter(a => {
           return Number(a.word_id) !== Number(wordId) && a;
         });
-        this.setState({ wordList });
+        if (shouldSetState) {
+          this.setState({ wordList });
+        }
       })
-      .catch(e => this.setState({ newWordError: 'Error Deleting Word' }));
+      .catch(e => {
+        if (shouldSetState) {
+          this.setState({ newWordError: 'Error Deleting Word' });
+        }
+      });
   }
 
   saveInput(inputId) {
@@ -127,6 +150,9 @@ class AccountContainer extends Component {
   selectChild(e) {
     const { childOpen } = this.state;
     const id = e.target.dataset.childId;
+    if (childOpen) {
+      this.cleanupDeletedWords();
+    }
 
     if (childOpen === id) {
       this.setState({ childOpen: null });
@@ -154,6 +180,17 @@ class AccountContainer extends Component {
     }
   }
 
+  tempRemoveWord(wordId) {
+    const { wordsToDelete } = this.state;
+    if (wordsToDelete.indexOf(wordId) > -1) {
+      const updated = wordsToDelete.filter(id => id !== wordId);
+      this.setState({ wordsToDelete: updated });
+    } else {
+      const updated = [ ...wordsToDelete, wordId ];
+      this.setState({ wordsToDelete: updated });
+    }
+  }
+
   submitOnEnter(e) {
     if (e.which === 13 || e.keycode === 13) this.saveInput();
   }
@@ -168,10 +205,10 @@ class AccountContainer extends Component {
         {...this.props}
         {...this.state}
         handleInput={this.handleInput}
-        removeWord={this.removeWord}
         saveInput={this.saveInput}
         selectChild={this.selectChild}
         submitOnEnter={this.submitOnEnter}
+        tempRemoveWord={this.tempRemoveWord}
         toggleChangePwForm={this.toggleChangePwForm}
       />
     );

@@ -11,11 +11,12 @@ function EditChild(props) {
     loadingWords,
     newWordError,
     newWordVal,
-    removeWord,
     saveInput,
     selectChild,
     submitOnEnter,
-    wordList
+    tempRemoveWord,
+    wordList,
+    wordsToDelete
   } = props;
   const childId = child.child_id;
 
@@ -23,7 +24,14 @@ function EditChild(props) {
   let words = null;
   if (wordList.length) {
     words = wordList.map(a => {
-      return <WordContainer key={a.word_id} word={a} removeWord={removeWord} />;
+      return (
+        <WordContainer
+          key={a.word_id}
+          word={a}
+          tempRemoveWord={tempRemoveWord}
+          wordsToDelete={wordsToDelete}
+        />
+      );
     });
   } else if (thisChildIsOpen && loadingWords) {
     words = <p key="loading">Loading...</p>;
