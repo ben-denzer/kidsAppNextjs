@@ -67,6 +67,7 @@ export default function OnlineBingoPage(props) {
           <BoxContainer>
             {allBoxes}
           </BoxContainer>
+          {/* Current Word is included in ListContainer */}
           <ListContainer>
             {alreadyCalled}
           </ListContainer>

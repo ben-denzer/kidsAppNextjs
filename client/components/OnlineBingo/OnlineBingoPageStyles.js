@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { color2 } from '../../config/globalStyles';
+import { color2, light } from '../../config/globalStyles';
 
 const boxBorder = '1px solid black';
 
@@ -7,7 +7,7 @@ export const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   height: 75px;
   width: 75px;
   border-right: ${boxBorder};
@@ -41,25 +41,25 @@ export const Box = styled.div`
   @media (max-width: 400px) {
     height: 60px;
     width: 60px;
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 
 export const BoxContainer = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-@media (max-width: 767px) {
-  margin-bottom: 100px;
-}
+  @media (max-width: 767px) {
+    margin-bottom: 100px;
+  }
 `;
 
 export const BoxRow = styled.div`
-display: flex;
+  display: flex;
 
-&:nth-child(1) {
-  border-top: ${boxBorder};
-}
+  &:nth-child(1) {
+    border-top: ${boxBorder};
+  }
 `;
 
 export const GameContainer = styled.div`
@@ -75,6 +75,8 @@ export const ListContainer = styled.div`
   flex-direction: column;
   padding-left: 50px;
   min-width: 150px;
+  min-height: 40px;
+  z-index: 2;
 
   @media (max-width: 767px) {
     padding-left: 0;
@@ -101,6 +103,10 @@ export const OldWord = styled.div`
 
     @media (max-width: 767px) {
       margin-bottom: 20px;
+      text-align: center;
+    }
+    @media (max-width: 700px) {
+      background-color: white;
     }
   }
 `;
