@@ -13,9 +13,12 @@ const port = process.env.PORT || 3000;
 global.MSW_DEV = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev: MSW_DEV });
 
-// const handle = nextApp.getRequestHandler();
-
 const connection = mysql.createConnection(dbInfo);
+
+connection.on('error', e => {
+  logError(e, 'db connection error');
+  connection = mysql.createConnection(dbInfo);
+});
 
 global.logError = logError;
 
