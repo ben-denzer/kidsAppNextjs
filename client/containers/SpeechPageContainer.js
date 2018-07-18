@@ -17,21 +17,20 @@ class SpeachPageContainer extends Component {
     };
 
     this.displayError = this.displayError.bind(this);
+    this.init = this.init.bind(this);
     this.listen = this.listen.bind(this);
     this.skipWord = this.skipWord.bind(this);
   }
 
   componentDidMount() {
     if (this.props.wordList.length) {
-      this.setupSpeachRecognition();
-      this.setState({ shuffledWords: shuffle([ ...this.props.wordList ]) });
+      this.init(this.props.wordList);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.wordList.length && nextProps.wordList.length) {
-      this.setupSpeachRecognition(nextProps.wordList);
-      this.setState({ shuffledWords: shuffle([ ...nextProps.wordList ]) });
+  componentDidUpdate(prevProps) {
+    if (!prevProps.wordList.length && this.props.wordList.length) {
+      this.init(this.props.wordList);
     }
   }
 
@@ -82,7 +81,7 @@ class SpeachPageContainer extends Component {
   }
 
   displayError(
-    err = 'Sorry, this browser doesn\'t support speech recognition. Please try again with Google Chrome. (If you are on an IPhone, switching browsers won\'t help.)'
+    err = "Sorry, this browser doesn't support speech recognition. Please try again with Google Chrome. (If you are on an IPhone, switching browsers won't help.)"
   ) {
     this.setState({ error: err });
   }
@@ -97,13 +96,18 @@ class SpeachPageContainer extends Component {
     let newShuffle = [];
 
     do {
-
       // don't have the same word twice in a row
       newShuffle = shuffle(shuffledWords);
     } while (newShuffle[0] === currentWord);
 
     this.setState({ shuffledWords: newShuffle });
     return 0;
+  }
+
+  init(wordList) {
+    const allowedWords = wordList.filter(word => word.length);
+    this.setupSpeachRecognition(allowedWords);
+    this.setState({ shuffledWords: shuffle([...allowedWords]) });
   }
 
   listen() {
@@ -141,7 +145,9 @@ class SpeachPageContainer extends Component {
     this.recognition.interimResults = false;
     this.recognition.maxAlternatives = 15;
 
-    const grammar = `#JSGF V1.0; grammar words; public <words> = ${wordList.join(' | ')} ;`;
+    const grammar = `#JSGF V1.0; grammar words; public <words> = ${wordList.join(
+      ' | '
+    )} ;`;
     this.speechRecognitionList = new SpeechGrammarList();
     this.speechRecognitionList.addFromString(grammar, 1);
 

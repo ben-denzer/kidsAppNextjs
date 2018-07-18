@@ -9,7 +9,7 @@ export const SkipWordButton = styled.img`
 
   &:hover {
     cursor: pointer;
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
 

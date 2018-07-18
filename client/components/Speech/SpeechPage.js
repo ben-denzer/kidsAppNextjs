@@ -28,9 +28,11 @@ function SpeechPage(props) {
     toggleSound
   } = props;
 
-  const WordDisplay = showPrize
-    ? <Spinner spinnerClassName={spinnerClassName} />
-    : shuffledWords[currentWordIndex];
+  const WordDisplay = showPrize ? (
+    <Spinner spinnerClassName={spinnerClassName} />
+  ) : (
+    shuffledWords[currentWordIndex]
+  );
 
   return (
     <div>
@@ -44,9 +46,7 @@ function SpeechPage(props) {
         <ScoreContainer>
           {coins} <CoinImage src="/static/img/goldCoin.png" alt="Coins" />
         </ScoreContainer>
-        <WordContainer>
-          {WordDisplay}
-        </WordContainer>
+        <WordContainer>{WordDisplay}</WordContainer>
         <HelpButton
           src="/static/img/help.png"
           alt="Help"
