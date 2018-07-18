@@ -5,8 +5,8 @@ import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import checkBingoCard from '../utils/checkBingoCard';
 import OnlineBingoPage from '../components/OnlineBingo/OnlineBingoPage';
-import OnlineBingoStartScreen
-  from '../components/OnlineBingo/OnlineBingoStartScreen';
+import OnlineBingoText from '../components/OnlineBingo/OnlineBingoText';
+import OnlineBingoStartScreen from '../components/OnlineBingo/OnlineBingoStartScreen';
 
 class OnlineBingoContainer extends Component {
   constructor() {
@@ -35,7 +35,7 @@ class OnlineBingoContainer extends Component {
       'sizeChange',
       'startGame'
     ];
-    boundFunctions.forEach(a => this[a] = this[a].bind(this));
+    boundFunctions.forEach(a => (this[a] = this[a].bind(this)));
 
     this.gameTimer = null;
     this.synth;
@@ -105,9 +105,9 @@ class OnlineBingoContainer extends Component {
     const { size } = this.state;
     const wordCount = size * size + Math.floor(size / 2);
     const allWords = this.props.fillWordArray(wordList, wordCount);
-    const shuffledWords = shuffle([ ...allWords ]);
+    const shuffledWords = shuffle([...allWords]);
     const gameWords = shuffledWords.slice(0, wordCount);
-    const tempWords = shuffle([ ...gameWords ]);
+    const tempWords = shuffle([...gameWords]);
     const middle = Math.floor(size / 2);
 
     const activeWords = [];
@@ -209,4 +209,7 @@ class OnlineBingoContainer extends Component {
   }
 }
 
-export default MainLayout(OnlineGameWrapper(OnlineBingoContainer));
+export default MainLayout(
+  OnlineGameWrapper(OnlineBingoContainer),
+  OnlineBingoText
+);
