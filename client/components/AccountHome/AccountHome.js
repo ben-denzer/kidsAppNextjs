@@ -54,7 +54,7 @@ function AccountHome(props) {
             <SmallText>
               Beta: Contact
               {' '}
-              <a href="mailto:ben@bdenzer.com">ben@bdenzer.com</a>
+              <a href="mailto:denzer.ben@gmail.com">denzer.ben@gmail.com</a>
               {' '}
               to extend membership
             </SmallText>
@@ -66,9 +66,11 @@ function AccountHome(props) {
           </ButtonContainer>
         </div>
         <div>
-          {accountExpired && !loading
-            ? <h2>Account Expired</h2>
-            : <h2>Custom Word List</h2>}
+          {accountExpired && !loading ? (
+            <h2>Account Expired</h2>
+          ) : (
+            <h2>Custom Word List</h2>
+          )}
           {children}
         </div>
       </div>

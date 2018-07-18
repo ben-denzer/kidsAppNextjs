@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MainLayout from '../components/MainLayout';
 import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import SpeechPage from '../components/Speech/SpeechPage';
+import SpeechPageInstructions from '../components/Speech/SpeechPageInstructions';
 import shuffle from '../utils/shuffle';
 import successPhrases from '../config/successPhrases';
 
@@ -176,4 +177,7 @@ class SpeachPageContainer extends Component {
   }
 }
 
-export default MainLayout(OnlineGameWrapper(SpeachPageContainer));
+export default MainLayout(
+  OnlineGameWrapper(SpeachPageContainer),
+  SpeechPageInstructions
+);

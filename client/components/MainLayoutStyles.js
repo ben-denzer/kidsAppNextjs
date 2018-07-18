@@ -13,7 +13,7 @@ export const ErrorBox = styled.div`
   left: 0;
   height: 200px;
   width: 100%;
-  background-color: rgba(255, 0, 0, .9);
+  background-color: rgba(255, 0, 0, 0.9);
   color: white;
   font-size: 22px;
   padding: 10px;
@@ -71,24 +71,24 @@ export const LayoutContainer = styled.div`
     margin: 20px auto;
     min-height: calc(70vh - ${headerHeight}px);
     padding: 25px;
-    background: rgba(255, 255, 255, .9);
+    background: rgba(255, 255, 255, 0.9);
     border: 3px solid #999;
     border-radius: 20px;
     -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-      -khtml-user-select: none; /* Konqueror HTML */
-        -moz-user-select: none; /* Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
 
     &.allowSelect {
       -webkit-touch-callout: text; /* iOS Safari */
       -webkit-user-select: text; /* Safari */
       -khtml-user-select: text; /* Konqueror HTML */
-        -moz-user-select: text; /* Firefox */
-          -ms-user-select: text; /* Internet Explorer/Edge */
-              user-select: text; /* Non-prefixed version, currently
+      -moz-user-select: text; /* Firefox */
+      -ms-user-select: text; /* Internet Explorer/Edge */
+      user-select: text; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
     }
 
@@ -120,7 +120,7 @@ export const LayoutContainer = styled.div`
       flex-flow: row wrap;
       justify-content: space-between;
 
-      >div {
+      > div {
         width: 45%;
 
         @media (max-width: 767px) {
@@ -129,5 +129,23 @@ export const LayoutContainer = styled.div`
         }
       }
     }
+  }
+`;
+
+export const UnderGameTextContainer = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 20px;
+  font-size: 16px;
+
+  h1 {
+    text-align: center;
+    font-size: 28px;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 18px;
   }
 `;
