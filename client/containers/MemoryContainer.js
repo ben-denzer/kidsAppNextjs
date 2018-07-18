@@ -4,6 +4,7 @@ import OnlineGameWrapper from '../components/OnlineGameWrapper';
 import shuffle from '../utils/shuffle';
 import { getFromStorage, setInStorage } from '../utils/mswLocalStorage';
 import MemoryPage from '../components/Memory/MemoryPage';
+import MemoryPageText from '../components/Memory/MemoryPageText';
 import MemoryStartScreen from '../components/Memory/MemoryStartScreen';
 
 class MemoryContainer extends Component {
@@ -12,7 +13,7 @@ class MemoryContainer extends Component {
     this.state = {
       cardList: [],
       cardBack: 1,
-      gameSize: [ 4, 3 ],
+      gameSize: [4, 3],
       gameOver: true,
       optionsOpen: true,
       score: 0
@@ -27,11 +28,11 @@ class MemoryContainer extends Component {
       'sizeChange'
     ];
 
-    boundFunctions.forEach(a => this[a] = this[a].bind(this));
+    boundFunctions.forEach(a => (this[a] = this[a].bind(this)));
   }
 
   componentDidMount() {
-    const gameSize = getFromStorage('memoryGameSize') || [ 4, 3 ];
+    const gameSize = getFromStorage('memoryGameSize') || [4, 3];
     const cardBack = getFromStorage('memoryCardBack') || 1;
     this.setState({ cardBack, gameSize });
   }
@@ -79,7 +80,6 @@ class MemoryContainer extends Component {
   }
 
   flipCard(e) {
-
     // early return if there are already 2 cards filpped
     const cards = this.state.cardList.slice(0);
     const flippedCards = cards.filter(a => a.status === 'faceUp' && a);
@@ -110,10 +110,10 @@ class MemoryContainer extends Component {
   setupCards() {
     const { gameSize } = this.state;
     const { fillWordArray, wordList } = this.props;
-    const numberOfWords = gameSize[0] * gameSize[1] / 2;
+    const numberOfWords = (gameSize[0] * gameSize[1]) / 2;
     const allWords = fillWordArray(wordList, numberOfWords);
     const words = shuffle(allWords).slice(0, numberOfWords);
-    const cardList = shuffle([ ...words, ...words ]).map((a, i) => ({
+    const cardList = shuffle([...words, ...words]).map((a, i) => ({
       cardId: i,
       word: a,
       status: 'faceDown'
@@ -166,4 +166,4 @@ class MemoryContainer extends Component {
   }
 }
 
-export default MainLayout(OnlineGameWrapper(MemoryContainer));
+export default MainLayout(OnlineGameWrapper(MemoryContainer), MemoryPageText);
