@@ -37,7 +37,7 @@ const OnlineGamesPageText = () =>
     <strong>Intermediate Readers</strong><br />
     The
     {' '}
-    <Link href="/online-games/matching"><a>Memory Match</a></Link>
+    <Link href="/online-games/memory"><a>Memory Match</a></Link>
     {' '}
     and
     {' '}
