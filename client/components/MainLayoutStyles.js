@@ -148,4 +148,23 @@ export const UnderGameTextContainer = styled.div`
     text-align: center;
     font-size: 18px;
   }
+
+  .onlineGamesPageText {
+    font-size: 16px;
+
+    h3 {
+      margin-bottom: -15px;
+      padding-bottom: 0;
+    }
+
+    ul {
+      margin-top: 0px;
+      margin-left: -20px;
+    }
+
+    .centered {
+      font-weight: bold;
+      text-align: center;
+    }
+  }
 `;
