@@ -16,9 +16,12 @@ const nextApp = next({ dev: MSW_DEV });
 let connection = mysql.createConnection(dbInfo);
 
 connection.on('error', e => {
-  console.log('connection error', JSON.stringify(e));
   logError(e, 'db connection error');
-  connection = mysql.createConnection(dbInfo);
+  if (e.code === 'PROTOCOL_CONNECTION_LOST') {
+    connection = mysql.createConnection(dbInfo);
+  } else {
+    throw e;
+  }
 });
 
 global.logError = logError;
