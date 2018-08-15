@@ -13,16 +13,11 @@ const port = process.env.PORT || 3000;
 global.MSW_DEV = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev: MSW_DEV });
 
-let connection = mysql.createConnection(dbInfo);
+const connection = mysql.createConnection(dbInfo);
 
-connection.on('error', e => {
-  logError(e, 'db connection error');
-  if (e.code === 'PROTOCOL_CONNECTION_LOST') {
-    connection = mysql.createConnection(dbInfo);
-  } else {
-    throw e;
-  }
-});
+setInterval(() => {
+  connection.query('SELECT COUNT(*) FROM parent');
+}, 60 * 60 * 1000);
 
 global.logError = logError;
 
