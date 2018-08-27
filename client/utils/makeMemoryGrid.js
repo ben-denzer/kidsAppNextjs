@@ -4,14 +4,14 @@ function makeCard(a, cardBack, flipCard) {
   return (
     <Card
       key={a.cardId}
-      className={a.status}
+      className={`${a.status} preschoolFont`}
       data-cardid={a.cardId}
       onClick={flipCard}
       style={
         a.status === 'faceDown'
           ? {
-              backgroundImage: `url("/static/img/cardBacks/cardBack-${cardBack}.jpg")`
-            }
+            backgroundImage: `url("/static/img/cardBacks/cardBack-${cardBack}.jpg")`
+          }
           : {}
       }
     >
@@ -21,7 +21,7 @@ function makeCard(a, cardBack, flipCard) {
 }
 
 function makeMemoryGrid({ cardBack, cardList, flipCard, gameSize }) {
-  const [width, height] = gameSize;
+  const [ width, height ] = gameSize;
   const mutableCards = cardList.slice(0);
   const gridArray = [];
 

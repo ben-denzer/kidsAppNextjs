@@ -15,7 +15,7 @@ export const Card = styled.div`
   align-items: center;
   border: 2px solid black;
   border-radius: 5px;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: bold;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -27,14 +27,13 @@ export const Card = styled.div`
     height: 100px;
     width: 100px;
     margin: 8px;
-    font-size: 18px;
   }
 
   @media (max-width: 900px) {
     height: 75px;
     width: 75px;
     margin: 4px;
-    font-size: 16px;
+    font-size: 22px;
   }
 
   &.faceDown {
