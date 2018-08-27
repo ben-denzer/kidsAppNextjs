@@ -42,7 +42,7 @@ export default function OnlineBingoPage(props) {
     const row = activeWords[i].map(a =>
       <Box
         key={a.word}
-        className={a.checked ? 'checked' : ''}
+        className={`preschoolFont${a.checked ? ' checked' : ''}`}
         data-word={a.word}
         data-x={a.x}
         data-y={a.y}
@@ -68,7 +68,7 @@ export default function OnlineBingoPage(props) {
             {allBoxes}
           </BoxContainer>
           {/* Current Word is included in ListContainer */}
-          <ListContainer>
+          <ListContainer className="preschoolFont">
             {alreadyCalled}
           </ListContainer>
         </GameContainer>

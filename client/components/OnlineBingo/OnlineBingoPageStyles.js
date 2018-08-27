@@ -7,7 +7,7 @@ export const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  font-size: 20px;
   height: 75px;
   width: 75px;
   border-right: ${boxBorder};
@@ -41,7 +41,7 @@ export const Box = styled.div`
   @media (max-width: 400px) {
     height: 60px;
     width: 60px;
-    font-size: 12px;
+    font-size: 18px;
   }
 `;
 
@@ -89,7 +89,7 @@ export const ListContainer = styled.div`
 `;
 
 export const OldWord = styled.div`
-  font-size: 18px;
+  font-size: 36px;
 
   @media (max-width: 767px) {
     display: none;
@@ -98,7 +98,7 @@ export const OldWord = styled.div`
   &:first-child {
     display: block;
     margin-bottom: 50px;
-    font-size: 48px;
+    font-size: 68px;
     font-weight: bold;
 
     @media (max-width: 767px) {

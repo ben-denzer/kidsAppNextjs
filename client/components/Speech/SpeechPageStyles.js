@@ -14,6 +14,6 @@ export const SkipWordButton = styled.img`
 `;
 
 export const WordContainer = styled.div`
-  font-size: 60px;
+  font-size: 70px;
   font-weight: bold;
 `;
