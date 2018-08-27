@@ -39,6 +39,15 @@ const OnlineGameWrapper = WrappedComponent => {
       this.init();
     }
 
+    async init() {
+      const activeChild = getFromStorage('activeChild') || null;
+      const children = getFromStorage('children') || [];
+      const coins = await this.getInitialCoins(activeChild, children);
+      const mute = getFromStorage('mute');
+      this.setWordList(activeChild);
+      this.setState({ activeChild, children, coins, mute });
+    }
+
     addCoin() {
       const { activeChild, children, coins } = this.state;
       const newCoins = Number(coins) + 1;
@@ -156,15 +165,6 @@ const OnlineGameWrapper = WrappedComponent => {
       } catch (e) {
         this.setState({ wordList: defaultWordList });
       }
-    }
-
-    async init() {
-      const activeChild = getFromStorage('activeChild') || null;
-      const children = getFromStorage('children') || [];
-      const coins = await this.getInitialCoins(activeChild, children);
-      const mute = getFromStorage('mute');
-      this.setWordList(activeChild);
-      this.setState({ activeChild, children, coins, mute });
     }
 
     updateCoinsForActiveChild(children, activeChild, coins) {

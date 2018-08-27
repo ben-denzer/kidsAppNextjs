@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const fishWidth = 150;
-const fontFamily = '\'Questrial\', \'Lato\', Arial, Helvetica, sans-serif';
+const fontFamily = '\'Print Clearly\', \'Lato\', Arial, Helvetica, sans-serif';
 const letterSpacing = '.05em';
 
 export const AboveWater = styled.div`

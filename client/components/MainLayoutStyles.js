@@ -29,6 +29,11 @@ export const LayoutContainer = styled.div`
   background-size: cover;
   background-position: center;
 
+  @font-face {
+    font-family: 'Print Clearly';
+    src: url('/static/media/PrintClearly_TT.ttf') format('truetype');
+  }
+
   &.memory {
     background-image: url('/static/img/neighborhoodBg.jpg');
 
@@ -63,6 +68,10 @@ export const LayoutContainer = styled.div`
 
   @media (max-width: 700px) {
     background-image: none;
+  }
+
+  .preschoolFont {
+    font-family: 'Print Clearly', Arial, Helvetica, sans-serif;
   }
 
   .whiteBox {

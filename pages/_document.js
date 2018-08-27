@@ -46,7 +46,7 @@ export default class MyDocument extends Document {
           />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Lato:400,700|Indie+Flower|Questrial"
+            href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Lato:400,700|Indie+Flower"
             rel="stylesheet"
           />
           <link
@@ -60,6 +60,7 @@ export default class MyDocument extends Document {
               margin: 0;
               font-family: Lato, Arial, Helvetica, sans-serif;
             }
+
           `}</style>
         </Head>
 
