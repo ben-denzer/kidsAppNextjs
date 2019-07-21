@@ -53,7 +53,7 @@ class AccountContainer extends Component {
         return;
       }
     }
-    if (wordList.length >= 100) {
+    if (wordList.length >= 200) {
       this.setState({
         newWordError: 'You Already Have The Maximum Allowed Words'
       });
@@ -61,10 +61,7 @@ class AccountContainer extends Component {
     }
 
     // optimistic update with temporary word_id
-    const tempWordList = [
-      ...wordList,
-      { word_id: Date.now(), word_text: newWordVal }
-    ];
+    const tempWordList = [...wordList, { word_id: Date.now(), word_text: newWordVal }];
     this.setState({ wordList: tempWordList });
 
     addNewWord({ childId: childOpen, word: newWordVal.trim() })
@@ -89,9 +86,7 @@ class AccountContainer extends Component {
     }
 
     // should set state if not called from componentWillUnmount()
-    this.state.wordsToDelete.forEach(word =>
-      this.removeWord(word, shouldSetState)
-    );
+    this.state.wordsToDelete.forEach(word => this.removeWord(word, shouldSetState));
 
     if (shouldSetState) {
       this.setState({ wordsToDelete: [] });
@@ -190,7 +185,7 @@ class AccountContainer extends Component {
       const updated = wordsToDelete.filter(id => id !== wordId);
       this.setState({ wordsToDelete: updated });
     } else {
-      const updated = [ ...wordsToDelete, wordId ];
+      const updated = [...wordsToDelete, wordId];
       this.setState({ wordsToDelete: updated });
     }
   }
