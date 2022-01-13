@@ -12,19 +12,22 @@ export default function Footer(props) {
         <div>
           <div>© {year} - Ben Denzer</div>
           <div>
-            Questions, Comments, or Problems with the site? Email me at
-            {' '}
-            <Link href="mailto:denzer.ben@gmail.com">
-              <a>denzer.ben@gmail.com</a>
+            Questions, Comments, or Problems with the site? Email me at{' '}
+            <Link href="mailto:support@mysightwords.com">
+              <a>support@mysightwords.com</a>
             </Link>
           </div>
         </div>
       </FooterLeft>
       <FooterRight>
         <Links>
-          <Link href="/online-games"><a>Online Games</a></Link>
+          <Link href="/online-games">
+            <a>Online Games</a>
+          </Link>
           {' | '}
-          <Link href="/printable-games"><a>Printable Games</a></Link>
+          <Link href="/printable-games">
+            <a>Printable Games</a>
+          </Link>
           {/*
           {' | '}
           <Link href="/articles"><a>Tips For Teaching Your Child</a></Link>
@@ -84,6 +87,4 @@ const FooterRight = styled.div`
   }
 `;
 
-const Links = styled.div`
-
-`;
+const Links = styled.div``;
